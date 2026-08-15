@@ -1,0 +1,19 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-single
+clutchless.html
+*.tsbuildinfo
+
+# Full-resolution photo originals (35+ MB). The site only needs the optimized
+# WebP files in public/images/bikes/, which are committed. Regenerate them from
+# originals with: node scripts/optimize-images.mjs
+images-src/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+*.local

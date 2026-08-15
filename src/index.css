@@ -1,0 +1,279 @@
+@import "tailwindcss";
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * CLUTCHLESS design tokens
+ *
+ * One dark, editorial palette. The accent is used for exactly three things:
+ * the current point of action, the automatic-vs-manual verdict, and prices.
+ * Everything else stays in the grey ramp.
+ * ──────────────────────────────────────────────────────────────────────────*/
+@theme {
+  --color-ink: #09090b; /* --background   */
+  --color-panel: #101014; /* --surface      */
+  --color-raised: #17171c; /* --surface-elevated */
+  --color-line: #232329; /* --border       */
+  --color-line-bright: #35353e;
+  --color-fg: #ececee; /* --text-primary */
+  --color-muted: #9a9aa3; /* --text-secondary */
+  --color-dim: #5f5f6a;
+
+  --color-accent: #ff4d12; /* --accent */
+  --color-accent-deep: #cc3a08;
+
+  --color-auto: #3dd68c; /* --success */
+  --color-semi: #f2b01e; /* --warning */
+  --color-manual: #f2685c; /* --danger  */
+
+  --font-display: "Anton", "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-condensed: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-data: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --radius-card: 4px;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--color-ink);
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-ink);
+    color: var(--color-fg);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* Film grain over the whole page — barely there, kills the flat-SaaS look. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    margin: 0;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: rgba(255, 77, 18, 0.32);
+  }
+
+  ::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line-bright);
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  /* Flat editorial panel: hairline border, no glow, almost no radius. */
+  .panel {
+    background: var(--color-panel);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+  }
+
+  .panel-hover {
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+  .panel-hover:hover {
+    border-color: var(--color-line-bright);
+    background: var(--color-raised);
+  }
+
+  /* Technical eyebrow label — reads like a spec plate. */
+  .eyebrow {
+    font-family: var(--font-data);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-dim);
+  }
+
+  /* Eyebrow with a leading accent tick — used to open sections. */
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-data);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .kicker::before {
+    content: "";
+    width: 22px;
+    height: 2px;
+    background: var(--color-accent);
+  }
+
+  .data {
+    font-family: var(--font-data);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Oversized spec number — the number is the design element. */
+  .bignum {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: 0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Ghosted giant section index (01, 02 …) behind editorial sections. */
+  .ghost-index {
+    font-family: var(--font-display);
+    line-height: 0.8;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--color-line-bright);
+    user-select: none;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    padding: 0.8rem 1.4rem;
+    transition:
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      color 0.18s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--color-accent-deep);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    border-color: var(--color-line-bright);
+    color: var(--color-fg);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-fg);
+  }
+
+  /* Photographic frame: fixed ratio, cover-fit, gentle hover zoom. */
+  .photo-frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-raised);
+  }
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+  a:hover .photo-frame img,
+  .photo-frame:hover img {
+    transform: scale(1.045);
+  }
+
+  /* Bottom scrim so type can sit on photography. */
+  .scrim-b::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 30%, rgba(9, 9, 11, 0.92) 96%);
+    pointer-events: none;
+  }
+  .scrim-l::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(9, 9, 11, 0.9) 0%, rgba(9, 9, 11, 0.35) 45%, transparent 75%);
+    pointer-events: none;
+  }
+
+  /* Scroll-reveal primitives. `useReveal` adds .is-visible. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.7s ease,
+      transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+  .reveal-late {
+    transition-delay: 0.15s;
+  }
+  .reveal-later {
+    transition-delay: 0.3s;
+  }
+  .is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Hairline horizontal rule with a technical feel. */
+  .rule {
+    height: 1px;
+    background: var(--color-line);
+  }
+}
+
+/* Reduced motion: no parallax, no reveal offsets, no zooms. `useParallax`
+ * and `useReveal` also check this in JS — this is the belt to their braces. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
