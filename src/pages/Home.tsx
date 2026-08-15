@@ -27,7 +27,7 @@ const SECTIONS = [
   { id: "final-cta", label: "Get started" },
 ] as const;
 
-/** Applies proximity scroll-snap to the document only while Home is mounted. */
+/** Applies mandatory section snapping to the document only while Home is mounted. */
 function useHomeSnap() {
   useEffect(() => {
     document.documentElement.classList.add("snap-home");
@@ -168,12 +168,12 @@ function HeroSection() {
         }}
       />
 
-      <div className={`relative pb-24 pt-36 ${GUTTER}`}>
+      <div className={`pb-20 pt-28 ${GUTTER}`}>
         <div ref={headRef} className="max-w-2xl will-change-transform">
           <p className="data text-[11px] uppercase tracking-[0.24em] text-dim">
             01 / Discover · motorcycle matching · 2026
           </p>
-          <h1 className="display-light mt-6 font-medium text-[clamp(2.9rem,7.5vw,6rem)] uppercase leading-[1.02] text-fg">
+          <h1 className="display-light hero-headline mt-6 font-medium uppercase leading-[1.02] text-fg">
             Find your
             <br />
             perfect ride.
@@ -205,7 +205,7 @@ function HeroSection() {
 
         <Link
           to={`/bikes/${bike.id}`}
-          className="group mt-12 inline-flex items-center gap-3 rounded-full border border-line-bright bg-ink/60 py-2 pl-4 pr-2 backdrop-blur-sm transition-colors hover:border-accent md:absolute md:bottom-10 md:right-8 md:mt-0"
+          className="group mt-12 inline-flex items-center gap-3 rounded-full border border-line-bright bg-ink/60 py-2 pl-4 pr-2 backdrop-blur-sm transition-colors hover:border-accent md:absolute md:bottom-8 md:right-8 md:mt-0"
         >
           <span className="text-left">
             <span className="data block text-[9px] uppercase tracking-[0.22em] text-dim">Featured bike</span>
@@ -309,7 +309,7 @@ function HowItWorksSection() {
     <section
       id="how-it-works"
       ref={ref}
-      className="snap-section flex min-h-[100svh] flex-col justify-center scroll-mt-14 py-16"
+      className="snap-section section-viewport flex flex-col justify-center scroll-mt-14 py-8"
     >
       <div className={GUTTER}>
         {/* Feature / value strip */}
@@ -327,13 +327,13 @@ function HowItWorksSection() {
           ))}
         </div>
 
-        <div className="mt-16 grid items-center gap-12 lg:grid-cols-[1.45fr_1fr]">
+        <div className="mt-12 grid items-center gap-12 lg:grid-cols-[1.45fr_1fr]">
           <div>
             <h2 className="display-light reveal font-medium text-[clamp(1.7rem,3.2vw,2.4rem)] uppercase">
               How it works
             </h2>
 
-            <ol className="mt-12 grid gap-x-0 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            <ol className="mt-10 grid gap-x-0 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
               {STEPS.map(([title, body], i) => (
                 <li key={title} className="relative pr-6">
                   <div className="flex items-center">
@@ -471,17 +471,17 @@ function PerfectMatchSection() {
     <section
       id="perfect-match"
       ref={ref}
-      className="snap-section flex min-h-[100svh] flex-col justify-center scroll-mt-14 py-16"
+      className="snap-section section-viewport flex flex-col justify-center scroll-mt-14 py-6"
     >
       <div className={GUTTER}>
         <div
-          className="rounded-3xl border border-line p-6 md:p-10"
+          className="rounded-3xl border border-line p-5 md:p-7"
           style={{
             background:
               "radial-gradient(900px 420px at 85% -10%, rgba(217,194,154,0.05), transparent 60%), var(--color-panel)",
           }}
         >
-          <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.55fr_0.9fr]">
+          <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.55fr_0.9fr]">
             {/* Pitch */}
             <div>
               <h2 className="display-light reveal font-medium text-[clamp(1.8rem,3.4vw,2.6rem)] uppercase">
@@ -493,7 +493,7 @@ function PerfectMatchSection() {
                 Take our short quiz and discover the motorcycles that fit your style, your needs and
                 your life.
               </p>
-              <dl className="reveal reveal-late mt-7 space-y-4">
+              <dl className="reveal reveal-late mt-6 space-y-3">
                 {(
                   [
                     ["12", "questions"],
@@ -507,7 +507,7 @@ function PerfectMatchSection() {
                   </div>
                 ))}
               </dl>
-              <Link to="/find-my-bike" className="btn btn-primary reveal reveal-late mt-8">
+              <Link to="/find-my-bike" className="btn btn-primary reveal reveal-late mt-6">
                 Start the quiz <span aria-hidden>→</span>
               </Link>
             </div>
@@ -515,12 +515,12 @@ function PerfectMatchSection() {
             {/* Best match — fixed, always rank #1 */}
             <div className="reveal overflow-hidden rounded-2xl border border-line bg-raised">
               <div className="relative">
-                <BikePhoto bike={best.bike} kind="studio" ratio="16/9" />
+                <BikePhoto bike={best.bike} kind="studio" ratio="2/1" />
                 <span className="data absolute left-4 top-4 rounded-full bg-accent px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-[var(--color-on-accent)]">
                   Best match
                 </span>
               </div>
-              <div className="p-6">
+              <div className="p-5">
                 <div className="flex flex-wrap items-end justify-between gap-4">
                   <div>
                     <div className="data text-[10px] uppercase tracking-[0.2em] text-dim">
@@ -536,7 +536,7 @@ function PerfectMatchSection() {
                     <div className="data text-[9px] uppercase tracking-[0.2em] text-dim">Match score</div>
                   </div>
                 </div>
-                <ul className="mt-5 space-y-1.5 border-t border-line pt-4">
+                <ul className="mt-4 space-y-1.5 border-t border-line pt-3.5">
                   {shortReasons(best).map((r) => (
                     <li key={r} className="flex gap-2 text-[13px] leading-relaxed text-muted">
                       <span className="text-auto" aria-hidden>✓</span>
@@ -544,7 +544,7 @@ function PerfectMatchSection() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
+                <div className="mt-4 flex items-center justify-between border-t border-line pt-3.5">
                   <Link
                     to={`/bikes/${best.bike.id}`}
                     className="data text-[11px] uppercase tracking-[0.18em] text-fg underline-offset-4 hover:text-accent hover:underline"
@@ -731,7 +731,7 @@ function BrowseByStyleSection() {
     <section
       id="browse-style"
       ref={ref}
-      className="snap-section flex min-h-[100svh] flex-col justify-center scroll-mt-14 py-16"
+      className="snap-section section-viewport flex flex-col justify-center scroll-mt-14 py-8"
     >
       <div className={GUTTER}>
         <div className="flex flex-wrap items-end justify-between gap-4">
@@ -787,11 +787,11 @@ function BrowseByStyleSection() {
 const FEATURED_IDS = ["yamaha-mt-07", "honda-nc750x-dct", "cfmoto-450cl-c", "triumph-street-triple-765-rs"];
 
 function Featured() {
-  const ref = useReveal<HTMLElement>(".reveal");
+  const ref = useReveal<HTMLDivElement>(".reveal");
   const bikes = FEATURED_IDS.map(getBike).filter(Boolean);
 
   return (
-    <section ref={ref} className={`pt-28 ${GUTTER}`}>
+    <div ref={ref} className={GUTTER}>
       <span className="data text-[11px] uppercase tracking-[0.24em] text-dim">Featured motorcycles</span>
       <h2 className="display-light mt-4 font-medium text-[clamp(1.7rem,3.2vw,2.4rem)] uppercase">
         Four very different answers
@@ -829,7 +829,7 @@ function Featured() {
           </Link>
         ))}
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -841,9 +841,9 @@ const WHY: [string, string][] = [
 ];
 
 function WhyMotoMatch() {
-  const ref = useReveal<HTMLElement>(".reveal");
+  const ref = useReveal<HTMLDivElement>(".reveal");
   return (
-    <section ref={ref} className={`pt-28 ${GUTTER}`}>
+    <div ref={ref} className={`mt-16 ${GUTTER}`}>
       <div className="grid gap-x-8 gap-y-8 border-t border-line pt-10 sm:grid-cols-2 xl:grid-cols-4">
         {WHY.map(([title, body], i) => (
           <div key={title} className="reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
@@ -852,6 +852,18 @@ function WhyMotoMatch() {
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+/** Featured + Why: editorial content between primary sections 04 and 05.
+ *  It participates in snapping (so mandatory snap can rest here) but is
+ *  deliberately absent from the section navigator. */
+function EditorialInterlude() {
+  return (
+    <section className="snap-section section-viewport flex flex-col justify-center scroll-mt-14 py-10">
+      <Featured />
+      <WhyMotoMatch />
     </section>
   );
 }
@@ -867,7 +879,7 @@ function FinalCtaSection() {
     <section
       id="final-cta"
       ref={ref}
-      className="snap-section flex min-h-[100svh] flex-col justify-center scroll-mt-14 py-16"
+      className="snap-section section-viewport flex flex-col justify-center scroll-mt-14 py-8"
     >
       <div className={GUTTER}>
         <div className="relative overflow-hidden rounded-3xl border border-line">
@@ -913,8 +925,7 @@ export default function Home() {
       <HowItWorksSection />
       <PerfectMatchSection />
       <BrowseByStyleSection />
-      <Featured />
-      <WhyMotoMatch />
+      <EditorialInterlude />
       <FinalCtaSection />
     </>
   );

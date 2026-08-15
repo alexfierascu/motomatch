@@ -35,6 +35,12 @@
 }
 
 @layer base {
+  :root {
+    /* Height of the sticky header (h-14). Section sizing must subtract it —
+     * a section that lands below the header cannot also be a full 100svh. */
+    --header-h: 3.5rem;
+  }
+
   * {
     border-color: var(--color-line);
   }
@@ -212,6 +218,19 @@
     line-height: 1.04;
   }
 
+  /* A primary homepage section that lands below the sticky header:
+   * header + section = exactly one viewport. svh (not dvh) so mobile browser
+   * chrome collapsing never makes content taller than the guaranteed space. */
+  .section-viewport {
+    min-height: calc(100svh - var(--header-h));
+  }
+
+  /* Hero headline: scales with width, steps down on short viewports so the
+   * full hero composition (through the featured-bike chip) fits the fold. */
+  .hero-headline {
+    font-size: clamp(2.9rem, 7.5vw, 6rem);
+  }
+
   /* Horizontal line that draws itself in when revealed (how-it-works timeline). */
   .line-reveal {
     transform: scaleX(0);
@@ -255,15 +274,25 @@
   }
 }
 
-/* Homepage section snapping: native scrolling plus proximity snap, so primary
- * sections settle at the viewport top without hijacking the wheel. Large
- * screens only — small screens scroll freely. */
+/* Short desktop viewports: tighten the hero's vertical rhythm instead of
+ * letting the composition overflow the fold. */
+@media (max-height: 800px) {
+  .hero-headline {
+    font-size: clamp(2.5rem, 6.5vw, 4.6rem);
+  }
+}
+
+/* Homepage section snapping: native scrolling plus mandatory snap, so a
+ * section is always fully settled the moment it becomes active — never
+ * "scroll a little more to fix it". snap-stop keeps flings from skipping
+ * sections. Large screens only — small screens scroll freely. */
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
   html.snap-home {
-    scroll-snap-type: y proximity;
+    scroll-snap-type: y mandatory;
   }
   .snap-section {
     scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 }
 
