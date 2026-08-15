@@ -1,5 +1,5 @@
 import { JSDOM, VirtualConsole } from "jsdom"; import fs from "node:fs";
-const html=fs.readFileSync(new URL("../clutchless.html", import.meta.url).pathname,"utf8");
+const html=fs.readFileSync(new URL("../motomatch.html", import.meta.url).pathname,"utf8");
 const errs=[]; const vc=new VirtualConsole(); vc.on("jsdomError",e=>errs.push(e.message));
 const dom=new JSDOM(html,{url:"http://localhost/#/browse",runScripts:"dangerously",pretendToBeVisual:true,virtualConsole:vc,resources:undefined});
 dom.window.scrollTo=()=>{};

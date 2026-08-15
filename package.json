@@ -1,5 +1,5 @@
 {
-  "name": "clutchless",
+  "name": "motomatch",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -9,7 +9,7 @@
     "typecheck": "tsc -b --noEmit",
     "preview": "vite preview",
     "build:single": "node scripts/build-single.mjs",
-    "test": "npm run build && node tests/routes.test.mjs && node tests/interactions.test.mjs"
+    "test": "npm run build && node tests/routes.test.mjs && node tests/interactions.test.mjs && node tests/personas.test.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

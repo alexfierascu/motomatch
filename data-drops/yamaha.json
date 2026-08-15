@@ -1,0 +1,311 @@
+[
+  {
+    "id": "yamaha-r7",
+    "manufacturer": "Yamaha",
+    "model": "R7",
+    "variant": null,
+    "year": 2026,
+    "category": "sport",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 689,
+      "cylinders": 2,
+      "horsepower": 73,
+      "torque": 68,
+      "powerNote": "54.0 kW (73.4 PS) @ 8,750 rpm; official 35.0 kW (47.6 PS) restricted version sold in Europe for A2 licence holders"
+    },
+    "dimensions": {
+      "weight": 189,
+      "seatHeight": 830,
+      "fuelCapacity": 14
+    },
+    "transmission": {
+      "type": "manual",
+      "fullyAutomatic": false,
+      "manualOverride": true,
+      "clutchLever": true
+    },
+    "performance": {
+      "fuelConsumption": 4.1
+    },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Hydraulic dual 298 mm front discs, single 245 mm rear disc, ABS",
+      "suspension": "41 mm telescopic front fork (120 mm travel), link-type rear monoshock (121 mm travel)"
+    },
+    "price": {
+      "eur": 10900,
+      "country": "RO",
+      "confidence": "approximate",
+      "note": "Yamaha Romania importer list price for the 2026 R7 (EUR 10,900); Germany lists EUR 10,999. The 35 kW A2 version is listed at the same price in Romania."
+    },
+    "a2Compatible": true,
+    "a2Note": "Yamaha sells an official factory-restricted R7 35kW version in Europe (35.0 kW / 47.6 PS @ 4,500 rpm) for A2 licence holders; the full-power 54 kW bike itself is not A2-compliant.",
+    "beginnerRating": 5,
+    "beginnerNote": "The CP2 twin is forgiving and the 35 kW A2 version makes it legally accessible, but committed clip-on ergonomics and supersport geometry are tiring around town — better as a second bike or for a very sport-focused novice.",
+    "ridingStyles": ["sport", "weekend", "mountain"],
+    "passengerSuitability": 2,
+    "practicality": 3,
+    "performanceLevel": 6,
+    "whoFor": "Riders who want genuine R-Series supersport feel and track-day ability without litre-bike power, insurance or intimidation.",
+    "notFor": "Maybe not for you if you commute daily or carry a passenger — the riding position and tiny pillion pad are uncompromising.",
+    "about": "The R7 wraps Yamaha's 689cc CP2 parallel twin in a slim full-fairing supersport chassis, updated for 2026 with next-generation R-Series styling and R1-derived technology. At 189 kg wet with 73 PS it prioritises corner speed and rider involvement over outright power. It is one of the few faired supersports still offered with an official 35 kW A2 version in Europe.",
+    "pros": [
+      "Real supersport chassis and looks at middleweight cost",
+      "Torquey, easy-going CP2 twin",
+      "Light (189 kg wet) and slim, great on twisty roads and track days",
+      "Official 35 kW A2 version available",
+      "Frugal: 4.1 l/100 km published"
+    ],
+    "cons": [
+      "Aggressive clip-on riding position tires you in town",
+      "Practically no passenger or luggage capability",
+      "73 PS is modest next to 4-cylinder rivals"
+    ],
+    "sources": [
+      "Yamaha Motor Europe specifications for the 2026 R7 (yamaha-motor.eu product page and product data API)",
+      "Yamaha Romania and Yamaha Germany list prices from Yamaha Motor Europe country catalogues, August 2026"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://www.yamaha-motor.eu/gb/en/motorcycles/supersport/pdp/r7/",
+      "sourceName": "Yamaha Motor Europe",
+      "license": "press/product photo",
+      "alt": "A rider leans a blue Yamaha R7 through a corner on a race track.",
+      "visualDescription": "Hero: Icon Blue R7 on track, knee down, 'R7' logo clearly visible on the fairing, R-Series front with central intake. Studio: front 3/4 shot of the same Icon Blue bike on white background, R7 fairing badge, gold USD fork, blue wheels. Both from Yamaha's official 2026 YZF700R7 asset folder (cdn2.yamaha-motor.eu).",
+      "files": ["images-src/yamaha-r7-hero.jpg", "images-src/yamaha-r7-studio.jpg"]
+    }
+  },
+  {
+    "id": "yamaha-mt-07",
+    "manufacturer": "Yamaha",
+    "model": "MT-07",
+    "variant": null,
+    "year": 2025,
+    "category": "naked",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 689,
+      "cylinders": 2,
+      "horsepower": 73,
+      "torque": 68,
+      "powerNote": "54.0 kW (73.4 PS) @ 8,750 rpm; official 35 kW restricted version sold in Europe for A2 licence holders"
+    },
+    "dimensions": {
+      "weight": 183,
+      "seatHeight": 805,
+      "fuelCapacity": 14
+    },
+    "transmission": {
+      "type": "manual",
+      "fullyAutomatic": false,
+      "manualOverride": true,
+      "clutchLever": true
+    },
+    "performance": {
+      "fuelConsumption": 4.1
+    },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Hydraulic dual 298 mm front discs, single 245 mm rear disc, ABS",
+      "suspension": "41 mm upside-down front fork (130 mm travel), link-type rear monoshock (130 mm travel)"
+    },
+    "price": {
+      "eur": 8120,
+      "country": "RO",
+      "confidence": "approximate",
+      "note": "Yamaha Romania importer list price for the 2025 MT-07 with standard 6-speed manual gearbox (EUR 8,120); Germany lists EUR 8,589."
+    },
+    "a2Compatible": true,
+    "a2Note": "Yamaha sells an official factory-restricted MT-07 35kW version in Europe for A2 licence holders; the full-power 54 kW bike itself exceeds A2 limits.",
+    "beginnerRating": 7,
+    "beginnerNote": "Light, slim, low-seated and famously easy to ride — one of the default first big bikes in Europe, though the punchy low-end torque and soft-ish suspension reward a little restraint early on.",
+    "ridingStyles": ["city", "commuting", "weekend", "mountain"],
+    "passengerSuitability": 5,
+    "practicality": 5,
+    "performanceLevel": 6,
+    "whoFor": "New and returning riders who want one friendly, affordable naked that does town, commute and Sunday twisties with real character.",
+    "notFor": "Maybe not for you if you ride long motorway distances — there is no wind protection and no cruise control.",
+    "about": "This is the standard manual-gearbox version of Yamaha's best-selling middleweight naked (the Y-AMT automated version is a separate model). Fully redesigned for 2025, it gained new MT-family styling, a 41 mm USD fork, a 5-inch TFT with smartphone navigation and revised ergonomics while keeping the 689cc CP2 crossplane twin. At 183 kg wet with 68 Nm it remains the benchmark easy-fun middleweight.",
+    "pros": [
+      "Punchy, characterful CP2 twin with strong midrange",
+      "Light and slim, 805 mm seat suits most riders",
+      "2025 update added USD fork, 5-inch TFT and Garmin StreetCross navigation",
+      "Official 35 kW A2 version available",
+      "Excellent value and cheap to run (4.1 l/100 km)"
+    ],
+    "cons": [
+      "No wind protection for motorway work",
+      "No cruise control even as an option",
+      "Rider aids are basic next to some rivals"
+    ],
+    "sources": [
+      "Yamaha Motor Europe specifications for the 2025 MT-07 (yamaha-motor.eu product page and product data API)",
+      "Yamaha Romania and Yamaha Germany list prices from Yamaha Motor Europe country catalogues, August 2026"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://www.yamaha-motor.eu/gb/en/motorcycles/hyper-naked/pdp/mt-07/",
+      "sourceName": "Yamaha Motor Europe",
+      "license": "press/product photo",
+      "alt": "A rider on a silver Yamaha MT-07 with blue wheels rides through a city at night under an overpass.",
+      "visualDescription": "Hero: Ice Storm (silver/black) 2025 MT-07 ridden at night in a Japanese cityscape, MT-07 tank badge and lit projector headlight visible, bright blue wheels. Studio: front 3/4 of the same Ice Storm bike, new-generation front cowl, black USD fork, MT-07 tank graphic. Distinct files from the MT-07 Y-AMT images already in the dataset (different checksums; this is the manual MT07A product page set).",
+      "files": ["images-src/yamaha-mt-07-hero.jpg", "images-src/yamaha-mt-07-studio.jpg"]
+    }
+  },
+  {
+    "id": "yamaha-tenere-700",
+    "manufacturer": "Yamaha",
+    "model": "Ténéré 700",
+    "variant": null,
+    "year": 2026,
+    "category": "adventure",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 689,
+      "cylinders": 2,
+      "horsepower": 73,
+      "torque": 68,
+      "powerNote": "54.0 kW (73.4 PS) @ 9,000 rpm; no official A2 version of the current generation"
+    },
+    "dimensions": {
+      "weight": 208,
+      "seatHeight": 875,
+      "fuelCapacity": 16
+    },
+    "transmission": {
+      "type": "manual",
+      "fullyAutomatic": false,
+      "manualOverride": true,
+      "clutchLever": true
+    },
+    "performance": {
+      "fuelConsumption": 4.3
+    },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Hydraulic dual 282 mm front discs, single 245 mm rear disc, switchable ABS",
+      "suspension": "43 mm upside-down front fork (210 mm travel), link-type rear shock (200 mm travel)"
+    },
+    "price": {
+      "eur": 11640,
+      "country": "RO",
+      "confidence": "approximate",
+      "note": "Yamaha Romania importer list price for the 2026 Ténéré 700 (EUR 11,640); Germany lists EUR 11,699."
+    },
+    "a2Compatible": false,
+    "a2Note": "Yamaha does not list an official 35 kW version of the current Ténéré 700 in Europe (spec sheet states limited power version: N/A).",
+    "beginnerRating": 5,
+    "beginnerNote": "The engine is friendly and the electronics simple, but an 875 mm seat and 208 kg wet make it a physically demanding first bike, especially off-road or for shorter riders (a factory Low version with 860 mm seat exists).",
+    "ridingStyles": ["offroad", "touring", "weekend", "mountain"],
+    "passengerSuitability": 6,
+    "practicality": 8,
+    "performanceLevel": 5,
+    "whoFor": "Riders who genuinely take their adventure bike onto gravel and trails and want a mechanically simple, rally-style twin that can still tour.",
+    "notFor": "Maybe not for you if you are short-legged, mostly ride tarmac, or want radar/IMU-era electronics.",
+    "about": "The Ténéré 700 pairs the 689cc CP2 twin with a genuine rally-bred chassis: 21/18-inch spoked wheels, long-travel suspension and 240 mm ground clearance. The current generation (2025 redesign, carried into 2026) added ride-by-wire with two throttle maps, a 6.3-inch vertical TFT with MyRide turn-by-turn navigation, switchable ABS and USB-C. It stays deliberately simple and mechanical where rivals pile on electronics.",
+    "pros": [
+      "Real off-road ability: 21/18-inch wheels, 210/200 mm travel, 240 mm clearance",
+      "Proven, low-stress CP2 engine with easy torque",
+      "16-litre tank and 4.3 l/100 km give ~350 km range",
+      "6.3-inch TFT with turn-by-turn navigation and switchable ABS",
+      "Strong value against bigger adventure bikes"
+    ],
+    "cons": [
+      "Tall 875 mm seat and 208 kg wet intimidate shorter riders",
+      "Modest 73 PS for fully-loaded two-up motorway touring",
+      "No cruise control or IMU-based rider aids",
+      "No official A2 version"
+    ],
+    "sources": [
+      "Yamaha Motor Europe specifications for the 2026 Ténéré 700 (yamaha-motor.eu product page and product data API)",
+      "Yamaha Romania and Yamaha Germany list prices from Yamaha Motor Europe country catalogues, August 2026"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://www.yamaha-motor.eu/gb/en/motorcycles/adventure/pdp/t-n-r-700/",
+      "sourceName": "Yamaha Motor Europe",
+      "license": "press/product photo",
+      "alt": "A rider stands on the pegs of a blue Yamaha Ténéré 700 sliding along a gravel road in a rocky canyon.",
+      "visualDescription": "Hero: Icon Blue Ténéré 700 ridden standing up on a dirt road, quad LED headlights lit, white handguards, knobbly tyres. Studio: front 3/4 of the Icon Blue bike showing 'Ténéré 700' side graphic, 21-inch blue-rimmed spoked front wheel, rally screen, aluminium skid plate. Both from Yamaha's official 2026 XTZ700 asset folder (cdn2.yamaha-motor.eu).",
+      "files": ["images-src/yamaha-tenere-700-hero.jpg", "images-src/yamaha-tenere-700-studio.jpg"]
+    }
+  },
+  {
+    "id": "yamaha-xsr700",
+    "manufacturer": "Yamaha",
+    "model": "XSR700",
+    "variant": null,
+    "year": 2024,
+    "category": "retro",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 689,
+      "cylinders": 2,
+      "horsepower": 73,
+      "torque": 67,
+      "powerNote": "54.0 kW (73.4 PS) @ 8,750 rpm; official 35 kW restricted version sold in Europe for A2 licence holders"
+    },
+    "dimensions": {
+      "weight": 188,
+      "seatHeight": 835,
+      "fuelCapacity": 14
+    },
+    "transmission": {
+      "type": "manual",
+      "fullyAutomatic": false,
+      "manualOverride": true,
+      "clutchLever": true
+    },
+    "performance": {
+      "fuelConsumption": 4.3
+    },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Hydraulic dual 298 mm front discs, single 245 mm rear disc, ABS",
+      "suspension": "Telescopic front fork (130 mm travel), link-type rear monoshock (130 mm travel)"
+    },
+    "price": {
+      "eur": 8499,
+      "country": "IT",
+      "confidence": "approximate",
+      "note": "Yamaha Italy/Spain list price for the current XSR700 (EUR 8,499); France lists EUR 8,799. Not listed in the Romanian importer catalogue at time of verification."
+    },
+    "a2Compatible": true,
+    "a2Note": "Yamaha sells an official factory-restricted XSR700 35kW version in several European markets for A2 licence holders; the full-power 54 kW bike itself exceeds A2 limits.",
+    "beginnerRating": 7,
+    "beginnerNote": "Mechanically an MT-07 in vintage clothes: light, friendly and torquey with a natural upright riding position, though the 835 mm seat is a touch taller than the MT-07's.",
+    "ridingStyles": ["city", "commuting", "weekend", "mountain"],
+    "passengerSuitability": 5,
+    "practicality": 4,
+    "performanceLevel": 6,
+    "whoFor": "Riders who want MT-07 ease and running costs wrapped in 1970s-flavoured styling they can customise.",
+    "notFor": "Maybe not for you if you want modern-naked tech — the XSR700 keeps a round LED headlight and simple electronics, with no TFT dash or ride modes.",
+    "about": "The XSR700 is Yamaha's Sport Heritage take on the CP2 platform: the same 689cc crossplane twin and lightweight chassis as the previous-generation MT-07, dressed with a round LED headlight, sculpted metal tank covers and a flat two-tone seat. It rides light and playful at 188 kg wet, and its simplicity is the point — analogue character with modern reliability.",
+    "pros": [
+      "Characterful CP2 twin with easy, flexible torque",
+      "Timeless retro styling with quality metal detailing",
+      "Light and agile, confidence-inspiring handling",
+      "Official 35 kW A2 version available",
+      "Popular base for tasteful customisation"
+    ],
+    "cons": [
+      "Minimal wind protection and small tank limit touring",
+      "Basic LCD instruments and no rider modes",
+      "Still based on the pre-2025 MT-07 platform"
+    ],
+    "sources": [
+      "Yamaha Motor Europe specifications for the current XSR700 (yamaha-motor.eu product page and product data API, 2024 model year listing)",
+      "Yamaha Italy, Spain and France list prices from Yamaha Motor Europe country catalogues, August 2026"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://www.yamaha-motor.eu/gb/en/motorcycles/sport-heritage/pdp/xsr700/",
+      "sourceName": "Yamaha Motor Europe",
+      "license": "press/product photo",
+      "alt": "A rider in a cream helmet rides a white Yamaha XSR700 with red speed-block stripes past stacked shipping containers.",
+      "visualDescription": "Hero: Historic White XSR700 with red speed-block tank graphic and round headlight, ridden through a container port. Studio: front 3/4 of the same Historic White bike on white background — round LED headlight, YAMAHA tank logo, flat retro seat, CP2 engine visible. Both from Yamaha's official 2024 XS700 asset folder (cdn2.yamaha-motor.eu), the imagery used on the current XSR700 product page.",
+      "files": ["images-src/yamaha-xsr700-hero.jpg", "images-src/yamaha-xsr700-studio.jpg"]
+    }
+  }
+]

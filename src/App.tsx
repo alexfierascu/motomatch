@@ -1,10 +1,20 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { HashRouter, Link, NavLink, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  HashRouter,
+  Link,
+  NavLink,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import Home from "./pages/Home";
-import Browse from "./pages/Browse";
+import Explore from "./pages/Explore";
 import BikeDetail from "./pages/BikeDetail";
 import Compare from "./pages/Compare";
-import Recommend from "./pages/Recommend";
+import FindMyBike from "./pages/FindMyBike";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import { getBike } from "./data/motorcycles";
 import { useScrollProgress } from "./lib/motion";
@@ -59,16 +69,16 @@ function CompareProvider({ children }: { children: React.ReactNode }) {
 /* ──────────────────────────────── chrome ──────────────────────────────────*/
 
 const NAV = [
-  { to: "/", label: "Home", end: true },
-  { to: "/browse", label: "Browse" },
+  { to: "/find-my-bike", label: "Find My Bike" },
+  { to: "/explore", label: "Explore" },
   { to: "/compare", label: "Compare" },
-  { to: "/recommendation", label: "Find my bike" },
+  { to: "/about", label: "About" },
 ];
 
 function Wordmark() {
   return (
     <span className="font-display text-[19px] tracking-[0.04em]">
-      CLUTCH<span className="text-accent">LESS</span>
+      MOTO<span className="text-accent">MATCH</span>
     </span>
   );
 }
@@ -95,7 +105,6 @@ function Header() {
             <NavLink
               key={n.to}
               to={n.to}
-              end={n.end}
               className={({ isActive }) =>
                 `data relative py-4 text-[11px] uppercase tracking-[0.18em] transition-colors ${
                   isActive ? "text-fg" : "text-dim hover:text-muted"
@@ -117,6 +126,9 @@ function Header() {
               )}
             </NavLink>
           ))}
+          <Link to="/find-my-bike" className="btn btn-primary px-4 py-2 text-[11px]">
+            Find my motorcycle
+          </Link>
         </nav>
 
         <button
@@ -143,7 +155,6 @@ function Header() {
             <NavLink
               key={n.to}
               to={n.to}
-              end={n.end}
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
                 `data block px-3 py-3 text-[12px] uppercase tracking-[0.18em] ${
@@ -202,14 +213,14 @@ function Footer() {
           <div>
             <Wordmark />
             <p className="mt-3 max-w-xl text-xs leading-relaxed text-dim">
-              Specifications are manufacturer figures. Prices are indicative on-the-road figures
-              shown with a “~” unless confirmed against an official importer pricelist — always
-              check the current Romanian price with the dealer before deciding. Photography:
+              Specifications are manufacturer figures. Prices are indicative European on-the-road
+              figures shown with a “~” unless confirmed against an official importer pricelist —
+              always check the current local price with a dealer before deciding. Photography:
               official manufacturer press and product images; each bike's page credits its source.
             </p>
           </div>
           <div className="text-right">
-            <div className="eyebrow">Automatic motorcycles · Romania</div>
+            <div className="eyebrow">Find the motorcycle that fits you</div>
             <p className="data mt-2 text-[11px] text-dim">Last verified: August 2026</p>
           </div>
         </div>
@@ -226,25 +237,44 @@ function ScrollToTop() {
   return null;
 }
 
+/** Old deployments and bookmarks used hash routes — map them to clean URLs. */
+function LegacyHashRedirect() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const h = window.location.hash;
+    if (!h.startsWith("#/")) return;
+    let path = h.slice(1);
+    path = path.replace(/^\/browse/, "/explore").replace(/^\/recommendation/, "/find-my-bike");
+    navigate(path, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return null;
+}
+
+/** BrowserRouter for the web; HashRouter keeps the single-file build working from file://. */
+const Router = typeof window !== "undefined" && window.location.protocol === "file:" ? HashRouter : BrowserRouter;
+
 export default function App() {
   return (
-    <HashRouter>
+    <Router>
       <CompareProvider>
         <ScrollToTop />
+        <LegacyHashRedirect />
         <Header />
         <main className="pb-24">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/browse" element={<Browse />} />
+            <Route path="/find-my-bike" element={<FindMyBike />} />
+            <Route path="/explore" element={<Explore />} />
             <Route path="/bikes/:id" element={<BikeDetail />} />
             <Route path="/compare" element={<Compare />} />
-            <Route path="/recommendation" element={<Recommend />} />
+            <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <CompareBar />
         <Footer />
       </CompareProvider>
-    </HashRouter>
+    </Router>
   );
 }

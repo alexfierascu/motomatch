@@ -9,7 +9,20 @@ export type Category =
   | "sport"
   | "adventure"
   | "touring"
+  | "retro"
+  | "dual-sport"
   | "scooter";
+
+/** The kinds of riding a bike can genuinely be good at. */
+export type RidingStyle =
+  | "city"
+  | "commuting"
+  | "weekend"
+  | "touring"
+  | "mountain"
+  | "sport"
+  | "offroad"
+  | "cruising";
 
 export type VehicleType = "motorcycle" | "scooter";
 
@@ -104,6 +117,22 @@ export interface Motorcycle {
   /** 1–10. Weighted blend of weight, seat height, power delivery and gearbox workload. */
   beginnerRating: number;
   beginnerNote: string;
+
+  /** The kinds of riding this bike is genuinely good at (2–5 entries). */
+  ridingStyles: RidingStyle[];
+  /** 1–10: pillion seat, ergonomics and power reserve for two-up riding. */
+  passengerSuitability: number;
+  /** 1–10: storage, weather protection, range, luggage options, everyday usability. */
+  practicality: number;
+  /** 1–10: 1–3 relaxed, 4–6 mid-size fun, 7–8 genuinely fast, 9–10 flagship. */
+  performanceLevel: number;
+
+  /** Editorial: the rider this bike genuinely suits. */
+  whoFor: string;
+  /** Editorial: "maybe not for you if …" */
+  notFor: string;
+  /** Editorial: 2–3 factual sentences on what the bike is and how it rides. */
+  about: string;
 
   pros: string[];
   cons: string[];

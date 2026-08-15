@@ -1,0 +1,334 @@
+[
+  {
+    "id": "triumph-trident-660",
+    "manufacturer": "Triumph",
+    "model": "Trident 660",
+    "variant": null,
+    "year": 2025,
+    "category": "naked",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 660,
+      "cylinders": 3,
+      "horsepower": 81,
+      "torque": 64,
+      "powerNote": "81 PS (59.6 kW) @ 10,250 rpm, 64 Nm @ 6,250 rpm; 2025 update added Sport mode, cornering ABS/TC, Triumph Shift Assist and cruise control as standard"
+    },
+    "dimensions": { "weight": 190, "seatHeight": 805, "fuelCapacity": 14 },
+    "transmission": { "type": "manual", "fullyAutomatic": false, "manualOverride": true, "clutchLever": true },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Twin 310 mm front discs with 2-piston sliding calipers, 255 mm rear disc, optimised cornering ABS",
+      "suspension": "Showa 41 mm USD separate-function big-piston (SFF-BP) forks; Showa monoshock with preload adjustment"
+    },
+    "price": {
+      "eur": 8295,
+      "country": "DE",
+      "confidence": "approximate",
+      "note": "Based on the German list price (UVP) of EUR 8,295 for the 2025 model; UK price GBP 7,895 OTR. Romanian importer pricing not published online."
+    },
+    "a2Compatible": true,
+    "a2Note": "59.6 kW natively, but Triumph offers an official A2 restrictor kit in European markets that can be fitted and removed by a dealer.",
+    "beginnerRating": 7,
+    "beginnerNote": "One of the friendliest middleweight nakeds: light, low-ish seat and a forgiving throttle, though 81 PS still deserves respect as a first bike straight after the licence.",
+    "ridingStyles": ["city", "commuting", "weekend", "mountain"],
+    "passengerSuitability": 5,
+    "practicality": 5,
+    "performanceLevel": 6,
+    "whoFor": "New or returning riders who want one bike that commutes all week and entertains on Sunday, with real triple-cylinder character and a full modern electronics suite at a fair price.",
+    "notFor": "Maybe not for you if you need wind protection and luggage capacity for regular two-up touring.",
+    "about": "The Trident 660 is Triumph's entry-point roadster, built around a 660cc triple that combines low-down twin-like torque with a free-revving top end. The 2025 update added cornering ABS and traction control, a quickshifter, Sport riding mode, cruise control and My Triumph connectivity as standard. It remains light-steering, compact and confidence-inspiring, with premium Showa suspension unusual at this price.",
+    "pros": [
+      "Charismatic, flexible 81 PS triple engine",
+      "2025 spec adds quickshifter, cornering ABS/TC and cruise control at no extra cost",
+      "Neutral, easy handling with quality Showa suspension",
+      "Official A2 restrictor kit available",
+      "Strong value against Japanese rivals"
+    ],
+    "cons": [
+      "Modest wind protection and practicality typical of a naked",
+      "805 mm seat may be tall for shorter riders",
+      "Rear shock is preload-adjustable only"
+    ],
+    "sources": [
+      "Triumph Motorcycles official press release and technical specification for the 2025 Trident 660 (triumph-mediakits.com)",
+      "German 2025 list price as announced with the MY25 reveal (UVP EUR 8,295)"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://triumph-mediakits.com/en/news-articles/more-tech,-more-spec,-more-fun-triumph-updates-trident-660-for-2025.html",
+      "sourceName": "Triumph Motorcycles media site",
+      "license": "press/product photo",
+      "alt": "A Cosmic Yellow 2025 Triumph Trident 660 parked on an empty rooftop road at dusk with a city skyline behind it.",
+      "visualDescription": "Verified MY25 Trident 660 in Cosmic Yellow in both images: round headlight, TRIDENT tank logo and 660 radiator-cowl badge, triple exhaust headers, black USD forks. Hero is an 8486px static beauty press shot; studio is the official 9600px right-side profile PNG of the same MY25 colourway.",
+      "files": ["images-src/triumph-trident-660-hero.jpg", "images-src/triumph-trident-660-studio.png"]
+    }
+  },
+  {
+    "id": "triumph-speed-twin-900",
+    "manufacturer": "Triumph",
+    "model": "Speed Twin 900",
+    "variant": null,
+    "year": 2025,
+    "category": "retro",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 900,
+      "cylinders": 2,
+      "horsepower": 65,
+      "torque": 80,
+      "powerNote": "65 PS (47.8 kW) @ 7,500 rpm; high-torque 270-degree Bonneville twin with 80 Nm at just 3,800 rpm"
+    },
+    "dimensions": { "weight": 216, "seatHeight": 780, "fuelCapacity": 12 },
+    "transmission": { "type": "manual", "fullyAutomatic": false, "manualOverride": true, "clutchLever": true },
+    "performance": { "fuelConsumption": 4.0 },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Single 320 mm front floating disc with 4-piston radial caliper, 255 mm rear disc, optimised cornering ABS",
+      "suspension": "43 mm Marzocchi USD forks; twin Marzocchi piggyback rear shocks with preload adjustment"
+    },
+    "price": {
+      "eur": 9995,
+      "country": "DE",
+      "confidence": "approximate",
+      "note": "Based on the German list price (UVP) of EUR 9,995 for the 2025 model (multicolour schemes +EUR 350); UK price GBP 9,195 OTR."
+    },
+    "a2Compatible": true,
+    "a2Note": "47.8 kW natively; an official accessory restrictor kit brings it within the 35 kW A2 limit.",
+    "beginnerRating": 8,
+    "beginnerNote": "Low 780 mm seat, soft low-rev torque and unintimidating manners make it one of the easiest 'big' bikes to start on; only its 216 kg wet weight asks for some care at walking pace.",
+    "ridingStyles": ["city", "commuting", "weekend", "cruising"],
+    "passengerSuitability": 6,
+    "practicality": 5,
+    "performanceLevel": 4,
+    "whoFor": "Riders who value timeless Bonneville style with modern reliability, an easy-going torquey twin, and a low seat - ideal as a stylish first big bike or a relaxed weekend machine.",
+    "notFor": "Maybe not for you if you want sharp modern-naked performance or plan long motorway trips - the 12-litre tank and upright ergonomics limit range and comfort at speed.",
+    "about": "The Speed Twin 900 is Triumph's most accessible Modern Classic, thoroughly updated for 2025 with USD Marzocchi forks, an aluminium swingarm, piggyback rear shocks and cornering ABS. The 900cc high-torque parallel twin majors on relaxed low-rev grunt rather than outright power. It blends genuine retro looks with a slim new bench seat and a discreet TFT-hybrid dash.",
+    "pros": [
+      "Effortless 80 Nm of torque from low revs",
+      "Low 780 mm seat suits shorter riders",
+      "2025 chassis upgrade: USD forks, aluminium swingarm, piggyback shocks",
+      "Timeless styling with modern electronics and A2 kit option",
+      "Frugal 4.0 l/100km published consumption"
+    ],
+    "cons": [
+      "216 kg wet is porky for the class",
+      "Small 12-litre tank limits touring range",
+      "5-speed gearbox and modest outright performance"
+    ],
+    "sources": [
+      "Triumph Motorcycles official press release and technical specification for the 2025 Speed Twin 900 (triumph-mediakits.com)",
+      "German 2025 list price as announced with the MY25 reveal (UVP EUR 9,995)"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://triumph-mediakits.com/en/news-articles/triumph-reveals-updated-speed-twin-900.html",
+      "sourceName": "Triumph Motorcycles media site",
+      "license": "press/product photo",
+      "alt": "A 2025 Triumph Speed Twin 900 in Pure White with an orange and blue racing stripe parked inside a sunlit industrial building.",
+      "visualDescription": "Verified MY25 Speed Twin 900 in both images: round LED headlight, SPEED TWIN 900 side-panel badge, 900 clutch-cover roundel, single front disc (distinguishes it from the twin-disc Speed Twin 1200), USD forks and twin piggyback shocks of the 2025 update. Hero is a 2736px environmental press shot; studio is the official 9600px right-side profile PNG in Aluminium Silver with red tank flash.",
+      "files": ["images-src/triumph-speed-twin-900-hero.jpg", "images-src/triumph-speed-twin-900-studio.png"]
+    }
+  },
+  {
+    "id": "triumph-street-triple-765-rs",
+    "manufacturer": "Triumph",
+    "model": "Street Triple 765",
+    "variant": "RS",
+    "year": 2025,
+    "category": "naked",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 765,
+      "cylinders": 3,
+      "horsepower": 130,
+      "torque": 80,
+      "powerNote": "130 PS (95.6 kW) @ 12,000 rpm with Moto2-derived engine internals; 80 Nm @ 9,500 rpm"
+    },
+    "dimensions": { "weight": 188, "seatHeight": 836, "fuelCapacity": 15 },
+    "transmission": { "type": "manual", "fullyAutomatic": false, "manualOverride": true, "clutchLever": true },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Twin 310 mm floating front discs with Brembo Stylema 4-piston monobloc calipers, 220 mm rear disc, cornering ABS",
+      "suspension": "Fully adjustable Showa 41 mm big-piston USD forks; fully adjustable Ohlins STX40 piggyback monoshock"
+    },
+    "price": {
+      "eur": 12795,
+      "country": "DE",
+      "confidence": "approximate",
+      "note": "Based on the German 2025 list price of EUR 12,795 for the Street Triple 765 RS."
+    },
+    "a2Compatible": false,
+    "a2Note": "95.6 kW output is far beyond A2 limits and no restricted version is offered.",
+    "beginnerRating": 3,
+    "beginnerNote": "A 130 PS track-bred hyper-naked with razor throttle response and a tall 836 mm seat - superbly rewarding for experienced riders, but too fast and too sharp to learn on.",
+    "ridingStyles": ["sport", "mountain", "weekend"],
+    "passengerSuitability": 3,
+    "practicality": 4,
+    "performanceLevel": 8,
+    "whoFor": "Experienced riders who want near-supersport pace and track-day ability in an everyday naked package, with top-shelf Ohlins/Brembo hardware and Moto2 pedigree.",
+    "notFor": "Maybe not for you if you are new to bigger bikes, ride mostly two-up, or want a relaxed commuter.",
+    "about": "The Street Triple 765 RS is the sharpest series-production Street Triple, its 765cc triple developed alongside Triumph's Moto2 race engines and delivering a category-leading 130 PS. The chassis pairs fully adjustable Showa big-piston forks with an Ohlins STX40 shock and Brembo Stylema calipers. At 188 kg wet with aggressive geometry, it is a genuine track-capable naked that remains civil enough for the road.",
+    "pros": [
+      "130 PS Moto2-derived triple with ferocious top end",
+      "Ohlins/Showa/Brembo Stylema chassis hardware as standard",
+      "Light 188 kg wet weight and agile geometry",
+      "Full IMU electronics with track mode and quickshifter"
+    ],
+    "cons": [
+      "Tall 836 mm seat and committed riding position",
+      "Cramped, high-set pillion perch",
+      "Premium price for a middleweight naked",
+      "Firm suspension setup for everyday roads"
+    ],
+    "sources": [
+      "Triumph Motorcycles official press release and technical specification for the 2023-on Street Triple 765 RS (triumph-mediakits.com)",
+      "German 2025 list price for the Street Triple 765 RS as reported by the German motorcycle press"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://triumph-mediakits.com/en/news-articles/the-new-2023-street-triple-765-range-race-powered-naked-sports-perfection.html",
+      "sourceName": "Triumph Motorcycles media site",
+      "license": "press/product photo",
+      "alt": "A rider leans a Carnival Red Triumph Street Triple 765 RS through a fast desert-road corner.",
+      "visualDescription": "Verified current-generation (2023-on) Street Triple 765 RS in both images: distinctive naked twin bug-eye LED headlights with no nose fairing, RS tank and 765 tail graphics, gullwing swingarm, Ohlins piggyback shock and Brembo Stylema radial calipers, belly pan. Hero is a 3000px riding press shot in Carnival Red; studio is the official 9600px right-side profile PNG in Silver Ice with orange RS decals.",
+      "files": ["images-src/triumph-street-triple-765-rs-hero.jpg", "images-src/triumph-street-triple-765-rs-studio.png"]
+    }
+  },
+  {
+    "id": "royal-enfield-interceptor-650",
+    "manufacturer": "Royal Enfield",
+    "model": "Interceptor 650",
+    "variant": null,
+    "year": 2025,
+    "category": "retro",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 648,
+      "cylinders": 2,
+      "horsepower": 47,
+      "torque": 52,
+      "powerNote": "34.9 kW (47 bhp) @ 7,250 rpm and 52.3 Nm @ 5,150 rpm from the air-cooled 270-degree SOHC twin"
+    },
+    "dimensions": { "weight": 217, "seatHeight": 805, "fuelCapacity": 13.7 },
+    "transmission": { "type": "manual", "fullyAutomatic": false, "manualOverride": true, "clutchLever": true },
+    "performance": { "fuelConsumption": 4.21 },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "320 mm front disc, 240 mm rear disc, dual-channel ABS",
+      "suspension": "41 mm telescopic forks; twin gas-charged rear shocks with adjustable preload"
+    },
+    "price": {
+      "eur": 7200,
+      "country": "RO",
+      "confidence": "approximate",
+      "note": "Based on Romanian importer list prices of roughly EUR 7,000-7,500 depending on colour/wheel variant; UK prices GBP 6,599-7,099."
+    },
+    "a2Compatible": true,
+    "a2Note": "34.9 kW output is natively within the 35 kW A2 limit - no restrictor needed; Royal Enfield markets it as A2-ready.",
+    "beginnerRating": 8,
+    "beginnerNote": "Docile throttle, flat torque curve and neutral handling make it a superb A2-friendly first big twin; its 217 kg kerb weight and modest ground clearance are the only real caveats.",
+    "ridingStyles": ["city", "commuting", "weekend", "cruising"],
+    "passengerSuitability": 6,
+    "practicality": 5,
+    "performanceLevel": 4,
+    "whoFor": "Riders who want authentic 1960s roadster style and a characterful, unstressed twin at a bargain price - especially A2 licence holders who never want to feel short-changed.",
+    "notFor": "Maybe not for you if you expect modern electronics, strong outright performance or light low-speed handling.",
+    "about": "The Interceptor 650 (INT 650 in some markets) is Royal Enfield's retro roadster twin, built around an air-cooled 648cc parallel twin with a 270-degree crank and a slick 6-speed gearbox. It delivers its 47 bhp gently and tunefully, backed by a steel double-cradle frame tuned with input from Harris Performance. Simple, honest and affordable, it has been one of Europe's best-selling A2 machines since 2019, gaining LED headlamp and alloy-wheel options in its latest update.",
+    "pros": [
+      "Characterful 270-degree air-cooled twin with easy torque",
+      "Natively A2 compliant - no restriction kit needed",
+      "Outstanding value and simple, robust engineering",
+      "Classic styling with quality chrome tank options",
+      "Neutral, stable handling"
+    ],
+    "cons": [
+      "Heavy for its class at 217 kg kerb",
+      "Basic suspension and brakes by modern standards",
+      "No rider aids beyond dual-channel ABS",
+      "Limited wind protection for motorway work"
+    ],
+    "sources": [
+      "Royal Enfield UK official Interceptor 650 technical specification PDF (royalenfield.com)",
+      "Royal Enfield UK product page for Interceptor 650 pricing and features",
+      "Romanian importer price announcements for the Interceptor 650"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://www.royalenfield.com/uk/en/motorcycles/interceptor/",
+      "sourceName": "Royal Enfield (official product page)",
+      "license": "press/product photo",
+      "alt": "A rider in a leather jacket leans on a blacked-out Royal Enfield Interceptor 650 parked by a stormy coastline, with a second Interceptor in the background.",
+      "visualDescription": "Verified Interceptor 650 in both images: upright roadster bars and bench seat (not the Continental GT 650's clip-ons and cafe seat), round headlamp, fork gaiters, twin shocks and air-cooled twin with INTERCEPTOR side-panel badging. Hero is the official 1920px 'smooth operator' environmental shot; studio is the official 1920px right-side product render in chrome/red with INTERCEPTOR badge clearly visible.",
+      "files": ["images-src/royal-enfield-interceptor-650-hero.jpg", "images-src/royal-enfield-interceptor-650-studio.png"]
+    }
+  },
+  {
+    "id": "royal-enfield-meteor-350",
+    "manufacturer": "Royal Enfield",
+    "model": "Meteor 350",
+    "variant": null,
+    "year": 2025,
+    "category": "cruiser",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 349,
+      "cylinders": 1,
+      "horsepower": 20,
+      "torque": 27,
+      "powerNote": "14.87 kW (20.2 bhp) @ 6,100 rpm and 27 Nm @ 4,000 rpm from the air-oil-cooled J-series single"
+    },
+    "dimensions": { "weight": 191, "seatHeight": 765, "fuelCapacity": 15 },
+    "transmission": { "type": "manual", "fullyAutomatic": false, "manualOverride": true, "clutchLever": true },
+    "performance": { "topSpeed": 114, "fuelConsumption": 2.79 },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "300 mm front disc with twin-piston caliper, 270 mm rear disc, dual-channel ABS",
+      "suspension": "41 mm telescopic forks (130 mm travel); twin emulsion rear shocks with 6-step preload adjustment"
+    },
+    "price": {
+      "eur": 4500,
+      "country": "RO",
+      "confidence": "approximate",
+      "note": "Romanian distributor (ASP Group East) lists the Meteor 350 from EUR 4,500; UK prices GBP 4,099-4,249 by variant."
+    },
+    "a2Compatible": true,
+    "a2Note": "14.87 kW is far below the 35 kW A2 limit; also rideable on an A1-upgraded progression path in some markets thanks to its modest power-to-weight.",
+    "beginnerRating": 9,
+    "beginnerNote": "About as unintimidating as real motorcycles get: 765 mm seat, gentle 20 bhp, smooth fuelling and relaxed cruiser ergonomics - a nearly foolproof first bike.",
+    "ridingStyles": ["city", "commuting", "cruising"],
+    "passengerSuitability": 5,
+    "practicality": 6,
+    "performanceLevel": 2,
+    "whoFor": "New riders and easy-going commuters who want laid-back small-cruiser style, a very low seat and sub-3 l/100km running costs, with the Tripper navigation pod as a practical bonus.",
+    "notFor": "Maybe not for you if your riding regularly includes motorways - the official top speed is 114 km/h, so overtaking reserve is minimal.",
+    "about": "The Meteor 350 is Royal Enfield's budget-friendly small cruiser, powered by the smooth J-series 349cc air-oil-cooled single with an unusually refined long-stroke character. It carries genuine cruiser proportions - 19-inch front wheel, teardrop tank, low 765 mm seat - plus a digi-analogue dash with the Tripper turn-by-turn navigation pod fitted as standard from MY24. Performance is modest but delivery is friendly, and fuel economy of 2.79 l/100km gives a huge range from the 15-litre tank.",
+    "pros": [
+      "Very low price point and running costs",
+      "Low 765 mm seat and light controls ideal for beginners",
+      "Refined, vibration-free 350 single for the class",
+      "Tripper navigation and dual-channel ABS standard",
+      "500 km+ realistic range from 15-litre tank"
+    ],
+    "cons": [
+      "20 bhp means limited motorway and overtaking ability",
+      "5-speed gearbox and official 114 km/h top speed",
+      "191 kg is not light for 20 bhp",
+      "Basic suspension with preload-only adjustment"
+    ],
+    "sources": [
+      "Royal Enfield UK official Meteor 350 technical specification PDF (royalenfield.com)",
+      "Royal Enfield UK product page for Meteor 350 pricing",
+      "ASP Group East (Royal Enfield distributor for Romania) price listing"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://www.royalenfield.com/uk/en/motorcycles/meteor/",
+      "sourceName": "Royal Enfield (official product page)",
+      "license": "press/product photo",
+      "alt": "A rider in a white open-face helmet rides a Fireball orange Royal Enfield Meteor 350 down a tree-lined street, with a second rider behind.",
+      "visualDescription": "Verified Meteor 350 in both images: small-cruiser stance with 19in front / 17in rear alloy wheels, teardrop tank, round headlamp and METEOR 350 side-panel badge. Hero is the official 1920px gallery riding shot of the Fireball variant; studio is the official 1920px right-side product image of the Supernova Red variant with its standard windscreen and pillion backrest.",
+      "files": ["images-src/royal-enfield-meteor-350-hero.jpg", "images-src/royal-enfield-meteor-350-studio.webp"]
+    }
+  }
+]

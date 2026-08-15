@@ -1,0 +1,308 @@
+[
+  {
+    "id": "ktm-390-duke",
+    "manufacturer": "KTM",
+    "model": "390 Duke",
+    "variant": null,
+    "year": 2025,
+    "category": "naked",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 399,
+      "cylinders": 1,
+      "horsepower": 45,
+      "torque": 39,
+      "powerNote": "398.7 cc LC4c single; 45 PS (33 kW) — A2 compliant at full power"
+    },
+    "dimensions": {
+      "weight": 165,
+      "seatHeight": 820,
+      "fuelCapacity": 15
+    },
+    "transmission": {
+      "type": "manual",
+      "fullyAutomatic": false,
+      "manualOverride": true,
+      "clutchLever": true
+    },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "320 mm front disc with four-piston radial caliper, 240 mm rear disc, cornering ABS with Supermoto mode",
+      "suspension": "WP APEX 43 mm USD fork (compression/rebound adjustable) and WP APEX monoshock (rebound/preload adjustable), 150 mm travel front and rear"
+    },
+    "price": {
+      "eur": 6299,
+      "country": "DE",
+      "confidence": "approximate",
+      "note": "German list price on ktm.com (6,299 EUR incl. VAT, promotional price 5,399 EUR at time of research); Romanian importer does not publish list prices online"
+    },
+    "a2Compatible": true,
+    "a2Note": "33 kW (45 PS) and 165 kg fully fuelled sit exactly on the A2 power and power-to-weight limits; sold as an A2 model in Europe.",
+    "beginnerRating": 7,
+    "beginnerNote": "Light, slim and A2-legal with friendly electronics, but the eager single and sharp chassis reward a bit of restraint — a great first bike for a committed learner rather than a nervous one.",
+    "ridingStyles": ["city", "commuting", "weekend", "mountain"],
+    "passengerSuitability": 4,
+    "practicality": 5,
+    "performanceLevel": 5,
+    "whoFor": "New or A2 riders who want the sharpest, most grown-up-feeling small naked — urban scratching in the week, twisty backroads at the weekend.",
+    "notFor": "Maybe not for you if you regularly carry a passenger or need wind protection for motorway miles.",
+    "about": "The third-generation 390 Duke (2024 onwards) is 90% new, with a 398.7 cc single, a stiffer trellis frame, an off-centre WP shock and the distinctive split LED headlight. It packs a 5-inch TFT dash, ride modes, cornering ABS with Supermoto mode and launch control — equipment unheard of in the class. At 165 kg fully fuelled with 45 hp, it is one of the quickest-steering, most engaging A2 machines on sale.",
+    "pros": [
+      "Class-leading electronics (TFT, ride modes, cornering ABS)",
+      "Very light and agile — 165 kg fully fuelled",
+      "Strong 45 hp single uses the full A2 allowance",
+      "15 l tank gives real-world range for a small naked",
+      "Adjustable WP APEX suspension"
+    ],
+    "cons": [
+      "Firm seat and no wind protection on longer rides",
+      "Single-cylinder vibration at sustained motorway speeds",
+      "Small pillion accommodation",
+      "Quickshifter costs extra"
+    ],
+    "sources": [
+      "KTM 2025 390 Duke technical specifications page (ktm.com)",
+      "KTM Germany 390 Duke product page for list price, August 2026",
+      "KTM press material on the 2024 model generation change"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://www.ktm.com/en-qa/models/naked-bike/2025-ktm-390-duke.html",
+      "sourceName": "KTM (product page CDN)",
+      "license": "press/product photo",
+      "alt": "Rider accelerating a 2024-generation KTM 390 Duke in orange along a city street.",
+      "visualDescription": "Hero: official MY24 action shot, orange 390 Duke with DUKE tank graphics, new-generation bodywork, orange trellis frame and off-centre side shock — clearly the 2024+ bike (companion shots on the same page show the new vertical split headlight). Studio: MY24 Atlantic Blue bike, right side, 'DUKE 390' graphics, split-headlight mask visible in profile, no watermark.",
+      "files": ["images-src/ktm-390-duke-hero.jpg", "images-src/ktm-390-duke-studio.png"]
+    }
+  },
+  {
+    "id": "ktm-390-adventure",
+    "manufacturer": "KTM",
+    "model": "390 Adventure",
+    "variant": "X",
+    "year": 2026,
+    "category": "adventure",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 399,
+      "cylinders": 1,
+      "horsepower": 45,
+      "torque": 39,
+      "powerNote": "398.7 cc LC4c single; 45 PS (33 kW) — A2 compliant at full power"
+    },
+    "dimensions": {
+      "weight": 176,
+      "seatHeight": 825,
+      "fuelCapacity": 14
+    },
+    "transmission": {
+      "type": "manual",
+      "fullyAutomatic": false,
+      "manualOverride": true,
+      "clutchLever": true
+    },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "320 mm front disc with ByBre two-piston caliper, 240 mm rear disc, switchable offroad ABS",
+      "suspension": "WP APEX 43 mm open-cartridge USD fork and WP APEX emulsion monoshock with preload adjustment, 200 mm travel front and rear"
+    },
+    "price": {
+      "eur": 5699,
+      "country": "DE",
+      "confidence": "approximate",
+      "note": "German list price on ktm.com for the 390 Adventure X (5,699 EUR incl. VAT, promotional price 5,099 EUR at time of research)"
+    },
+    "a2Compatible": true,
+    "a2Note": "33 kW (45 PS) and 176 kg fully fuelled — comfortably inside A2 power-to-weight limits.",
+    "beginnerRating": 8,
+    "beginnerNote": "Upright ergonomics, an 825 mm seat that is low for the class, smooth power and generous suspension travel make this one of the friendliest ways into adventure biking.",
+    "ridingStyles": ["commuting", "touring", "weekend", "offroad"],
+    "passengerSuitability": 6,
+    "practicality": 7,
+    "performanceLevel": 4,
+    "whoFor": "New and A2 riders who want one do-it-all bike — daily commuting, light touring and the occasional gravel road — without big-bike weight or cost.",
+    "notFor": "Maybe not for you if you want serious off-road ability (the spoked-wheel 390 Adventure R is the harder-core sibling) or strong motorway overtaking reserve.",
+    "about": "The 2025-generation 390 Adventure was redesigned around the new LC4c 399 cc single, with rally-inspired bodywork, a 19/17-inch cast wheel setup and 200 mm of WP APEX travel at both ends. The X trim keeps the essentials — ride modes, offroad ABS, TFT dash and a windscreen — at a sharp price. It is light, economical and unintimidating, yet genuinely capable on rough tracks.",
+    "pros": [
+      "200 mm suspension travel and 232 mm ground clearance",
+      "Friendly 45 hp delivery with offroad ABS and ride modes",
+      "Accessible 825 mm seat and light 176 kg wet weight",
+      "Excellent value for an adventure-styled A2 bike",
+      "Rally-style bodywork with usable wind protection"
+    ],
+    "cons": [
+      "Cast 19/17 wheels and road-biased tyres limit hard off-roading",
+      "Single cylinder runs out of breath at motorway pace",
+      "Basic (non-adjustable) suspension on the X trim",
+      "14 l tank is adequate rather than generous for touring"
+    ],
+    "sources": [
+      "KTM 2026 390 Adventure X technical specifications page (ktm.com)",
+      "KTM Germany 390 Adventure X product page for list price, August 2026"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://www.ktm.com/en-int/models/adventure/2026-ktm-390-adventurex.html",
+      "sourceName": "KTM (product page CDN)",
+      "license": "press/product photo",
+      "alt": "Rider leaning a white-and-orange KTM 390 Adventure X through a paved corner on a training track.",
+      "visualDescription": "Hero: official action shot of the 2025+ 390 Adventure X — new-generation bodywork with '390 X' fairing graphics, high orange front fender, alloy skid plate, cast wheels with trail tyres. Studio: right-side product shot of the white/orange X model, same generation cues (tall screen, rally fairing, WP fork), clean background, no watermark.",
+      "files": ["images-src/ktm-390-adventure-hero.jpg", "images-src/ktm-390-adventure-studio.png"]
+    }
+  },
+  {
+    "id": "aprilia-rs-457",
+    "manufacturer": "Aprilia",
+    "model": "RS 457",
+    "variant": null,
+    "year": 2026,
+    "category": "sport",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 457,
+      "cylinders": 2,
+      "horsepower": 47.6,
+      "torque": 43.5,
+      "powerNote": "35 kW (47.6 CV) at 9,400 rpm — designed to the A2 limit; 82% of torque from 3,000 rpm"
+    },
+    "dimensions": {
+      "weight": 175,
+      "seatHeight": 800,
+      "fuelCapacity": 13
+    },
+    "transmission": {
+      "type": "manual",
+      "fullyAutomatic": false,
+      "manualOverride": true,
+      "clutchLever": true
+    },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "320 mm floating front disc with ByBre four-piston radial caliper, 220 mm rear disc, dual-channel ABS with dual maps",
+      "suspension": "41 mm USD fork with adjustable preload (120 mm travel) and preload-adjustable monoshock (130 mm travel)"
+    },
+    "price": {
+      "eur": 6999,
+      "country": "DE",
+      "confidence": "approximate",
+      "note": "Based on German dealer list price of 6,999 EUR for the standard RS 457; GP Replica livery costs more"
+    },
+    "a2Compatible": true,
+    "a2Note": "Homologated at exactly 35 kW with 175 kg wet weight — Aprilia markets it as the best power-to-weight ratio available on an A2 licence.",
+    "beginnerRating": 7,
+    "beginnerNote": "Deliberately designed for A2 riders — smooth ride-by-wire twin, slipper clutch, traction control and unintimidating power — though the sporty crouch and track focus suit an enthusiastic learner more than a pure commuter.",
+    "ridingStyles": ["sport", "weekend", "mountain", "commuting"],
+    "passengerSuitability": 3,
+    "practicality": 4,
+    "performanceLevel": 5,
+    "whoFor": "A2 riders who dream of the RSV4 and want the most genuinely sporty small sportbike — aluminium frame, real electronics and track-day credibility included.",
+    "notFor": "Maybe not for you if you prioritise comfort, pillion space or upright ergonomics over cornering feel.",
+    "about": "The RS 457 is Aprilia's ground-up A2 sportbike: a 457 cc parallel twin producing 35 kW in a dual-beam aluminium frame — chassis architecture borrowed from its supersport heritage and rare in this class. It carries ride-by-wire with three riding modes, traction control, dual-map ABS and a 5-inch TFT. At 175 kg wet with 47.6 hp, it is one of the quickest and best-handling bikes a new licence holder can buy.",
+    "pros": [
+      "Aluminium twin-spar frame — unique at this price point",
+      "Class-leading power-to-weight for A2",
+      "Full electronics suite: ride modes, traction control, dual-map ABS",
+      "Characterful 270-degree parallel twin with slipper clutch",
+      "Genuine track-day ability with approachable manners"
+    ],
+    "cons": [
+      "Committed riding position tires on long commutes",
+      "Minimal pillion and luggage provision",
+      "Quickshifter is optional, not standard",
+      "13 l tank limits touring range"
+    ],
+    "sources": [
+      "Aprilia RS 457 official technical sheet PDF (aprilia.com/wlassets)",
+      "Piaggio Group press release 'Aprilia RS 457, a new chapter in the Aprilia RS saga'",
+      "German dealer list pricing for the 2025/2026 RS 457"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://press.piaggiogroup.com/en_EN/post/show/274835/aprilia-rs-457-a-new-chapter-i.html",
+      "sourceName": "Piaggio Group press (Aprilia RS 457 press kit)",
+      "license": "press/product photo",
+      "alt": "Aprilia RS 457 in Racing Stripes livery standing on paddock stands at a race track at dusk.",
+      "visualDescription": "Hero: RS 457 in black/red Racing Stripes livery on orange paddock stands trackside — RS fairing graphics, twin-headlight nose with central DRL, 'aprilia racing' belly pan; from the official RS 457 press kit. Studio: left-side still life of the same Racing Stripes bike on white background, aluminium dual-beam frame and steel swingarm visible. Confirmed RS 457 (not RS 660 — conventional swingarm, ByBre axial rear caliper, 457 press kit provenance).",
+      "files": ["images-src/aprilia-rs-457-hero.jpg", "images-src/aprilia-rs-457-studio.jpg"]
+    }
+  },
+  {
+    "id": "bmw-s-1000-rr",
+    "manufacturer": "BMW",
+    "model": "S 1000 RR",
+    "variant": null,
+    "year": 2026,
+    "category": "sport",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 999,
+      "cylinders": 4,
+      "horsepower": 210,
+      "torque": 113,
+      "powerNote": "154 kW (210 hp) at 13,750 rpm with ShiftCam variable valve timing; EU5+"
+    },
+    "dimensions": {
+      "weight": 198,
+      "seatHeight": 832,
+      "fuelCapacity": 16.5
+    },
+    "transmission": {
+      "type": "manual",
+      "fullyAutomatic": false,
+      "manualOverride": true,
+      "clutchLever": true
+    },
+    "performance": {
+      "topSpeed": 303,
+      "fuelConsumption": 6.4
+    },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Twin 320 mm front discs with four-piston fixed calipers, 220 mm rear disc, Race ABS Pro with Brake Slide Assist",
+      "suspension": "Fully adjustable 45 mm USD fork and Full Floater Pro monoshock (120/118 mm travel), optional electronic DDC"
+    },
+    "price": {
+      "eur": 21150,
+      "country": "DE",
+      "confidence": "approximate",
+      "note": "German list price 'from 21,150 EUR' on bmw-motorrad.de; M package and options raise it substantially"
+    },
+    "a2Compatible": false,
+    "a2Note": "Far above the 35 kW A2 ceiling and cannot legally be restricted (base power exceeds 70 kW).",
+    "beginnerRating": 1,
+    "beginnerNote": "A 210 hp, 303 km/h homologated superbike is emphatically not a first motorcycle, however sophisticated its electronics safety net.",
+    "ridingStyles": ["sport", "mountain", "weekend"],
+    "passengerSuitability": 2,
+    "practicality": 3,
+    "performanceLevel": 10,
+    "whoFor": "Experienced sport riders and track-day regulars who want a WorldSBK-derived flagship that is still remarkably rideable on the road.",
+    "notFor": "Maybe not for you if you commute, tour two-up, or hold anything less than full confidence in your throttle discipline.",
+    "about": "BMW's flagship superbike pairs a 999 cc ShiftCam inline-four making 210 hp with winglets, a 6.5-inch TFT and one of the deepest electronics packages in production motorcycling — seven riding modes, cornering ABS Pro, slide control and a pit-lane limiter. The latest update added the M quick-action throttle and Brake Slide Assist from the M 1000 RR. It laps circuits with world-class pace yet remains more forgiving than its numbers suggest.",
+    "pros": [
+      "210 hp ShiftCam engine with immense, flexible delivery",
+      "Benchmark electronics: Race Pro modes, slide control, launch control, pit limiter",
+      "Standard bidirectional Shift Assistant Pro",
+      "Aerodynamic winglets and Brake Slide Assist from the M programme",
+      "Surprisingly civil ergonomics for a superbike"
+    ],
+    "cons": [
+      "Superbike ergonomics punish long road stints",
+      "Token pillion seat",
+      "Expensive once M package and options are added",
+      "Performance is unusable on public roads without restraint"
+    ],
+    "sources": [
+      "BMW Motorrad UK S 1000 RR 'Data and equipment' technical page",
+      "BMW Motorrad Germany S 1000 RR product page for list price, August 2026"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://www.bmw-motorrad.co.uk/en/models/sport/s1000rr.html",
+      "sourceName": "BMW Motorrad (product page gallery)",
+      "license": "press/product photo",
+      "alt": "Two BMW S 1000 RR superbikes cornering in formation on a desert race track at dusk.",
+      "visualDescription": "Hero: official gallery photo of two current-generation S 1000 RRs (Light White/M Motorsport livery with 'RR' fairing decal, plus a Blackstorm bike) cornering on track — winglets and split-face front confirm the 2023+ K67 facelift; real photography, not a render. Studio image: static 3/4 front-left product shot of the M-package S 1000 RR (S1000RR decal, winglets, blue M calipers, M carbon wheels) on paddock stands — this is the S model with M package, not the M 1000 RR. Both saved at full resolution from the BMW product-page gallery (the site blocks direct downloads, so the files were re-encoded at high JPEG quality from the page's own decoded image data).",
+      "files": ["images-src/bmw-s-1000-rr-hero.jpg", "images-src/bmw-s-1000-rr-studio.jpg"]
+    }
+  }
+]

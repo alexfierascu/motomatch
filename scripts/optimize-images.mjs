@@ -48,9 +48,15 @@ function widthOf(file) {
 
 function makeWebp(input, outFile, maxWidth, quality) {
   let source = input;
-  if (widthOf(input) > maxWidth) {
-    const resized = path.join(tmp, path.basename(outFile) + path.extname(input));
-    execFileSync("sips", ["--resampleWidth", String(maxWidth), input, "--out", resized], {
+  // sips reads WebP but cannot write it — decode to PNG first so it can resize.
+  if (/\.webp$/i.test(source)) {
+    const decoded = path.join(tmp, path.basename(outFile) + ".src.png");
+    execFileSync("dwebp", [source, "-o", decoded], { stdio: "pipe" });
+    source = decoded;
+  }
+  if (widthOf(source) > maxWidth) {
+    const resized = path.join(tmp, path.basename(outFile) + path.extname(source));
+    execFileSync("sips", ["--resampleWidth", String(maxWidth), source, "--out", resized], {
       stdio: "pipe",
     });
     source = resized;

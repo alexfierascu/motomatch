@@ -1,6 +1,8 @@
 import type { Motorcycle } from "../data/types";
+import { MOTORCYCLES } from "../data/motorcycles";
 
 export interface FilterState {
+  manufacturer: string[];
   transmission: string[]; // "automatic" | "dct" | "y-amt" | "cvt" | "e-clutch" | "manual"
   engine: string[]; // bucket ids
   power: string[];
@@ -11,6 +13,7 @@ export interface FilterState {
 }
 
 export const EMPTY_FILTERS: FilterState = {
+  manufacturer: [],
   transmission: [],
   engine: [],
   power: [],
@@ -26,7 +29,15 @@ export interface FilterGroup {
   options: { id: string; label: string; hint?: string }[];
 }
 
+/** Manufacturers present in the dataset, alphabetical — options stay in sync automatically. */
+const MANUFACTURERS = Array.from(new Set(MOTORCYCLES.map((b) => b.manufacturer))).sort();
+
 export const FILTER_GROUPS: FilterGroup[] = [
+  {
+    key: "manufacturer",
+    label: "Manufacturer",
+    options: MANUFACTURERS.map((m) => ({ id: m, label: m })),
+  },
   {
     key: "transmission",
     label: "Transmission",
@@ -79,6 +90,8 @@ export const FILTER_GROUPS: FilterGroup[] = [
       { id: "sport", label: "Sport" },
       { id: "adventure", label: "Adventure" },
       { id: "touring", label: "Touring" },
+      { id: "retro", label: "Retro" },
+      { id: "dual-sport", label: "Dual-sport" },
       { id: "scooter", label: "Scooter" },
     ],
   },
@@ -126,6 +139,7 @@ export function applyFilters(bikes: Motorcycle[], f: FilterState): Motorcycle[] 
     const eur = b.price.eur;
 
     return (
+      matchGroup(f.manufacturer, (id) => b.manufacturer === id) &&
       matchGroup(f.transmission, (id) =>
         id === "automatic" ? b.transmission.fullyAutomatic : b.transmission.type === id,
       ) &&

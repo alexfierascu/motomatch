@@ -7,8 +7,9 @@ const html = fs.readFileSync(path.join(dist, "index.html"), "utf8");
 const jsFile = fs.readdirSync(path.join(dist, "assets")).find((f) => f.endsWith(".js"));
 const js = fs.readFileSync(path.join(dist, "assets", jsFile), "utf8");
 
-const routes = ["#/", "#/browse", "#/bikes/yamaha-mt-07-y-amt", "#/bikes/cfmoto-450sr",
-                "#/bikes/honda-nc750x-dct", "#/compare", "#/recommendation", "#/bikes/nope-does-not-exist"];
+const routes = ["/", "/explore", "/find-my-bike", "/compare", "/about",
+                "/bikes/yamaha-mt-07-y-amt", "/bikes/cfmoto-450sr",
+                "/bikes/honda-nc750x-dct", "/bikes/nope-does-not-exist"];
 
 let failures = 0;
 for (const route of routes) {
@@ -18,7 +19,7 @@ for (const route of routes) {
   vc.on("error", (m) => errors.push(String(m)));
 
   const dom = new JSDOM(html.replace(/<script[^>]*src="[^"]*"[^>]*><\/script>/, ""), {
-    url: "http://localhost/" + route,
+    url: "http://localhost" + route,
     runScripts: "dangerously",
     pretendToBeVisual: true,
     virtualConsole: vc,

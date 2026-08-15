@@ -9,6 +9,7 @@ import { A2Badge, ShiftRail, TransmissionBadge, VehicleTypeBadge, verdictColor }
 import { Price } from "../components/BikeCard";
 import { useCompare } from "../App";
 import { useParallax, useReveal } from "../lib/motion";
+import { usePageMeta } from "../lib/seo";
 import NotFound from "./NotFound";
 
 const GUTTER = "mx-auto max-w-[1400px] px-4 md:px-8";
@@ -106,15 +107,17 @@ export default function BikeDetail() {
   const { isSelected, toggle, full } = useCompare();
   const revealRef = useReveal<HTMLDivElement>(".reveal");
 
+  usePageMeta({
+    title: bike ? `${bikeName(bike)} — MotoMatch` : "Motorcycle — MotoMatch",
+    description: bike?.whoFor,
+    image: bike?.images.card,
+  });
+
   if (!bike) return <NotFound />;
 
   const tx = TRANSMISSIONS[bike.transmission.type];
   const color = verdictColor(tx.verdict);
-  const reference = getBike(bike.category === "cruiser" ? "cfmoto-450cl-c" : "cfmoto-450sr")!;
-  const sim = bike.id === reference.id ? null : similarityTo(reference, bike);
-  const alternatives = MOTORCYCLES.filter(
-    (b) => b.id !== bike.id && b.transmission.fullyAutomatic,
-  )
+  const alternatives = MOTORCYCLES.filter((b) => b.id !== bike.id)
     .map((b) => similarityTo(bike, b))
     .sort((a, b) => b.score - a.score)
     .slice(0, 3);
@@ -147,7 +150,15 @@ export default function BikeDetail() {
       {/* OVERVIEW */}
       <section className={`grid gap-10 pt-16 lg:grid-cols-[1.15fr_1fr] ${GUTTER}`}>
         <div>
-          <span className="kicker">Overview</span>
+          <span className="kicker">About</span>
+          <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-muted">{bike.about}</p>
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {bike.ridingStyles.map((s) => (
+              <span key={s} className="data border border-line bg-raised px-2.5 py-1 text-[11px] uppercase tracking-wider text-muted">
+                {s}
+              </span>
+            ))}
+          </div>
           <div className="reveal mt-6">
             <BikePhoto bike={bike} kind="studio" ratio="4/3" />
           </div>
@@ -238,30 +249,38 @@ export default function BikeDetail() {
                 {bike.a2Note}
               </p>
             )}
+
+            <div className="mt-5 space-y-3 border-t border-line pt-4">
+              {(
+                [
+                  ["Performance", bike.performanceLevel],
+                  ["Practicality", bike.practicality],
+                  ["Passenger comfort", bike.passengerSuitability],
+                ] as const
+              ).map(([label, v]) => (
+                <div key={label} className="flex items-center gap-3">
+                  <span className="w-32 shrink-0 text-[11px] text-dim">{label}</span>
+                  <div className="h-[3px] flex-1 bg-raised">
+                    <div className="h-full bg-accent" style={{ width: `${v * 10}%` }} />
+                  </div>
+                  <span className="data w-9 shrink-0 text-right text-[11px] text-muted">{v}/10</span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {sim && (
-            <Link
-              to={`/compare?a=${reference.id}&b=${bike.id}`}
-              className="reveal reveal-late panel panel-hover block p-6"
-            >
-              <div className="flex items-baseline justify-between">
-                <span className="eyebrow">Similarity to {bikeName(reference)}</span>
-                <span className="bignum text-3xl text-accent">{sim.score}%</span>
+          {/* WHO IS IT FOR */}
+          <div className="reveal reveal-late panel p-6">
+            <span className="kicker">Who is it for?</span>
+            <p className="mt-3 text-sm leading-relaxed text-fg">{bike.whoFor}</p>
+            <div className="mt-4 border-t border-line pt-4">
+              <div className="eyebrow" style={{ color: "var(--color-semi)" }}>
+                Maybe not for you if…
               </div>
-              <div className="mt-4 space-y-2">
-                {sim.breakdown.map((b) => (
-                  <div key={b.label} className="flex items-center gap-2">
-                    <span className="w-24 shrink-0 text-[11px] text-dim">{b.label}</span>
-                    <div className="h-px flex-1 bg-raised">
-                      <div className="h-[2px] -translate-y-px bg-accent" style={{ width: `${b.score}%` }} />
-                    </div>
-                    <span className="data w-32 shrink-0 text-right text-[10px] text-muted">{b.detail}</span>
-                  </div>
-                ))}
-              </div>
-            </Link>
-          )}
+              <p className="mt-2 text-sm leading-relaxed text-muted">{bike.notFor}</p>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -381,7 +400,7 @@ export default function BikeDetail() {
         <section className={`mt-20 ${GUTTER}`}>
           <span className="kicker">Similar machines</span>
           <h2 className="mt-4 font-display text-3xl uppercase md:text-4xl">
-            Closest automatics <span className="text-dim">to this bike</span>
+            Closest alternatives <span className="text-dim">to this bike</span>
           </h2>
           <div className="mt-8 grid gap-px overflow-hidden border border-line bg-line md:grid-cols-3">
             {alternatives.map((a) => (

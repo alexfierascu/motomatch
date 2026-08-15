@@ -1,5 +1,5 @@
 /**
- * Builds the standalone `clutchless.html`.
+ * Builds the standalone `motomatch.html`.
  *
  * Uses an IIFE bundle rather than an ES module so the file works when opened
  * directly from disk (file://), where module scripts are blocked by CORS.
@@ -30,8 +30,8 @@ let js = fs.readFileSync(path.join(outDir, "app.js"), "utf8");
 // The standalone file must work from file:// with nothing next to it, so the
 // motorcycle photographs are embedded as data URIs. Only paths that exist are
 // inlined — anything missing keeps its URL and falls back to the silhouette.
-js = js.replace(/images\/bikes\/[a-z0-9-]+\.webp/g, (rel) => {
-  const file = path.resolve("public", rel);
+js = js.replace(/\/images\/bikes\/[a-z0-9-]+\.webp/g, (rel) => {
+  const file = path.resolve("public", rel.slice(1));
   if (!fs.existsSync(file)) return rel;
   return `data:image/webp;base64,${fs.readFileSync(file).toString("base64")}`;
 });
@@ -48,6 +48,6 @@ const html = fs
   // sequences, which a replacement string would expand as patterns.
   .replace("</body>", () => `<script>\n${js}\n</script>\n</body>`);
 
-const out = path.resolve("clutchless.html");
+const out = path.resolve("motomatch.html");
 fs.writeFileSync(out, html);
 console.log(`Wrote ${out} (${(html.length / 1024).toFixed(0)} kB)`);

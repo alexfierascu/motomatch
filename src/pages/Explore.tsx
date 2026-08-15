@@ -15,6 +15,7 @@ import {
 import { BikeCard, Price } from "../components/BikeCard";
 import { A2Badge, TransmissionBadge } from "../components/Transmission";
 import { useCompare, MAX_COMPARE } from "../App";
+import { usePageMeta } from "../lib/seo";
 
 const COLUMNS: { key: SortKey; label: string; numeric?: boolean; optional?: boolean }[] = [
   { key: "name", label: "Bike" },
@@ -85,7 +86,13 @@ function FilterPanel({
   );
 }
 
-export default function Browse() {
+export default function Explore() {
+  usePageMeta({
+    title: "Explore motorcycles — MotoMatch",
+    description:
+      "Browse every motorcycle in the MotoMatch database — filter by manufacturer, type, price, power, transmission and more.",
+  });
+
   const [filters, setFilters] = useState<FilterState>(EMPTY_FILTERS);
   const [view, setView] = useState<"cards" | "table">("cards");
   const [sortKey, setSortKey] = useState<SortKey>("price");
@@ -116,7 +123,7 @@ export default function Browse() {
         <div>
           <span className="kicker">Every machine in the database</span>
           <h1 className="mt-3 font-display text-[clamp(2.4rem,6vw,4rem)] uppercase leading-none">
-            Browse
+            Explore
           </h1>
           <p className="data mt-2 text-sm text-muted">
             {results.length} of {MOTORCYCLES.length} bikes

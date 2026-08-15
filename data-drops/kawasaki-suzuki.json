@@ -1,0 +1,268 @@
+[
+  {
+    "id": "kawasaki-ninja-650",
+    "manufacturer": "Kawasaki",
+    "model": "Ninja 650",
+    "variant": null,
+    "year": 2026,
+    "category": "sport",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 649,
+      "cylinders": 2,
+      "horsepower": 68,
+      "torque": 64,
+      "powerNote": "50.2 kW (68 PS) @ 8,000 rpm; 64 Nm @ 6,700 rpm. Official 35 kW A2 restriction available."
+    },
+    "dimensions": { "weight": 193, "seatHeight": 790, "fuelCapacity": 15 },
+    "transmission": { "type": "manual", "fullyAutomatic": false, "manualOverride": true, "clutchLever": true },
+    "performance": { "fuelConsumption": 4.4 },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Dual 300 mm semi-floating front petal discs with dual-piston calipers, 220 mm rear disc, ABS",
+      "suspension": "41 mm telescopic fork (125 mm travel); horizontal back-link rear monoshock with preload adjustment (130 mm travel)"
+    },
+    "price": {
+      "eur": 8195,
+      "country": "DE",
+      "confidence": "approximate",
+      "note": "German list price (UVP, ex-works) for the 2026 model; UK list is £7,499. Romanian importer pricing is typically similar in EUR."
+    },
+    "a2Compatible": true,
+    "a2Note": "68 PS as standard, but Kawasaki offers an official 35 kW restriction and markets the Ninja 650 in its A2 line-up in Europe.",
+    "beginnerRating": 7,
+    "beginnerNote": "A friendly, predictable parallel twin with an upright riding position and an official A2 option, but the full 68 PS and sporty character reward a rider who has outgrown a 300–500cc machine.",
+    "ridingStyles": ["commuting", "weekend", "sport", "touring"],
+    "passengerSuitability": 5,
+    "practicality": 6,
+    "performanceLevel": 5,
+    "whoFor": "Riders who want everyday sportbike looks and weather protection with easygoing midrange grunt — a commuter on weekdays that still entertains on a Sunday mountain run.",
+    "notFor": "Maybe not for you if you want genuine supersport performance or adjustable suspension — a ZX-6R or Ninja ZX-4RR crowd will find it soft.",
+    "about": "The Ninja 650 pairs a 649cc parallel twin with a light trellis frame, giving a sporty-looking bike that is really a friendly all-rounder. The engine majors on low and midrange torque rather than top-end rush, and the riding position is far more upright than the full fairing suggests. Recent model years add traction control (KTRC) and a TFT dash with Bluetooth connectivity.",
+    "pros": [
+      "Torquey, forgiving 649cc twin",
+      "Light handling and low 790 mm seat for a faired bike",
+      "Fairing gives real commuting weather protection",
+      "Official 35 kW A2 restriction available",
+      "TFT dash with smartphone connectivity and traction control"
+    ],
+    "cons": [
+      "Basic, largely non-adjustable suspension goes soft when pushed",
+      "Buzzy at sustained high rpm",
+      "No quickshifter even as an option on the base model"
+    ],
+    "sources": [
+      "Kawasaki UK specifications page for the 2026 Ninja 650 (kawasaki.co.uk)",
+      "Kawasaki Germany 2026 list price (UVP) for the Ninja 650 (kawasaki.de)"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://www.kawasaki.co.uk/en/Motorcycles/Supersport_Sport/Ninja_650_2026.html",
+      "sourceName": "Kawasaki Motors Europe (kawasaki.co.uk product page CDN)",
+      "license": "press/product photo",
+      "alt": "A rider leans a black Kawasaki Ninja 650 through a sunlit canyon-road corner.",
+      "visualDescription": "Hero: black 2026 Ninja 650 (26EX650R asset) mid-corner — Ninja tank badge, red '650' fairing graphic, twin LED headlights and current-generation bodywork confirmed; clearly larger and softer-edged than a Ninja 400, no ZX-6R ram-air nose. Studio: Lime Green base Ninja 650 3/4 front-right with standard silver exhaust and tall clear screen (not the Akrapovic-equipped Performance edition), 'Ninja' and '650' decals visible.",
+      "files": ["images-src/kawasaki-ninja-650-hero.jpg", "images-src/kawasaki-ninja-650-studio.jpg"]
+    }
+  },
+  {
+    "id": "kawasaki-z650",
+    "manufacturer": "Kawasaki",
+    "model": "Z650",
+    "variant": null,
+    "year": 2025,
+    "category": "naked",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 649,
+      "cylinders": 2,
+      "horsepower": 68,
+      "torque": 64,
+      "powerNote": "50.2 kW (68 PS) @ 8,000 rpm; 64 Nm @ 6,700 rpm. Official 35 kW A2 restriction available."
+    },
+    "dimensions": { "weight": 188, "seatHeight": 790, "fuelCapacity": 15 },
+    "transmission": { "type": "manual", "fullyAutomatic": false, "manualOverride": true, "clutchLever": true },
+    "performance": { "fuelConsumption": 4.4 },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Dual 300 mm semi-floating front petal discs with dual-piston calipers, 220 mm rear disc, ABS",
+      "suspension": "41 mm telescopic fork; horizontal back-link rear monoshock with preload adjustment"
+    },
+    "price": {
+      "eur": 7345,
+      "country": "DE",
+      "confidence": "approximate",
+      "note": "German list price (UVP, ex-works) for the 2025 model; UK list is £7,099. Romanian importer pricing is typically similar in EUR."
+    },
+    "a2Compatible": true,
+    "a2Note": "68 PS as standard; an official Kawasaki 35 kW restriction kit makes it A2-legal, and Kawasaki markets an A2 version in Europe.",
+    "beginnerRating": 7,
+    "beginnerNote": "Light, slim and unintimidating with a soft bottom-end and an assist/slipper clutch, though the full-power version still packs enough punch that it suits a second-season rider better than a day-one novice.",
+    "ridingStyles": ["city", "commuting", "weekend", "sport"],
+    "passengerSuitability": 4,
+    "practicality": 5,
+    "performanceLevel": 5,
+    "whoFor": "Urban and B-road riders who want an agile, sharp-looking Sugomi naked with real-world torque, low running costs and an A2 pathway.",
+    "notFor": "Maybe not for you if you regularly ride motorways or two-up — there is no wind protection and the pillion perch is small.",
+    "about": "The Z650 is the naked sibling of the Ninja 650: the same 649cc parallel twin in a light trellis chassis with wide bars and aggressive Sugomi styling. At 188 kg with a 790 mm seat it is one of the most manageable middleweight nakeds, and the assist & slipper clutch keeps the lever action light. It trades outright power for punchy, accessible midrange.",
+    "pros": [
+      "Agile, lightweight chassis with light clutch action",
+      "Punchy midrange from the proven 649cc twin",
+      "Low seat and slim waist suit shorter riders",
+      "Official 35 kW A2 restriction available",
+      "TFT dash with smartphone connectivity"
+    ],
+    "cons": [
+      "Zero wind protection for motorway work",
+      "Budget suspension is soft over hard riding",
+      "Cramped pillion accommodation"
+    ],
+    "sources": [
+      "Kawasaki UK specifications page for the 2025 Z650 (kawasaki.co.uk)",
+      "Kawasaki Germany 2025 list price (UVP) for the Z650"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://www.kawasaki.co.uk/en/Motorcycles/Supernaked/z650_2025.html",
+      "sourceName": "Kawasaki Motors Europe (kawasaki.co.uk product page CDN)",
+      "license": "press/product photo",
+      "alt": "A rider crosses a city bridge in daylight on a black-and-green Kawasaki Z650.",
+      "visualDescription": "Hero: current-generation Z650 riding through a city — Sugomi twin-LED nose, green-painted trellis frame accents and Z badge on the flank confirmed; round-headlight Z650RS and larger four-cylinder Z900 ruled out. Studio: black/green 2025 Z650 (25ER650N asset) 3/4 front-right, '650' tail decal and standard exhaust, no accessories.",
+      "files": ["images-src/kawasaki-z650-hero.jpg", "images-src/kawasaki-z650-studio.jpg"]
+    }
+  },
+  {
+    "id": "kawasaki-eliminator-500",
+    "manufacturer": "Kawasaki",
+    "model": "Eliminator 500",
+    "variant": null,
+    "year": 2025,
+    "category": "cruiser",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 451,
+      "cylinders": 2,
+      "horsepower": 45,
+      "torque": 42.6,
+      "powerNote": "33.4 kW (45 PS) @ 9,000 rpm; 42.6 Nm @ 6,000 rpm — natively under the 35 kW A2 ceiling."
+    },
+    "dimensions": { "weight": 176, "seatHeight": 735, "fuelCapacity": 13 },
+    "transmission": { "type": "manual", "fullyAutomatic": false, "manualOverride": true, "clutchLever": true },
+    "performance": { "fuelConsumption": 3.8 },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Single 310 mm front disc and 240 mm rear disc, dual-piston calipers, ABS",
+      "suspension": "41 mm telescopic fork (120 mm travel); twin rear shocks (90 mm travel)"
+    },
+    "price": {
+      "eur": 6495,
+      "country": "DE",
+      "confidence": "approximate",
+      "note": "German list price (UVP, ex-works) for the 2025 model; UK list is £5,999. Romanian importer pricing is typically similar in EUR."
+    },
+    "a2Compatible": true,
+    "a2Note": "33.4 kW natively — fully A2-compliant with no restriction needed.",
+    "beginnerRating": 9,
+    "beginnerNote": "One of the easiest first big bikes on sale: a 735 mm seat, 176 kg full of fuel, gentle throttle response and natively A2-legal power make it nearly foolproof while still being motorway-capable.",
+    "ridingStyles": ["city", "commuting", "cruising", "weekend"],
+    "passengerSuitability": 4,
+    "practicality": 5,
+    "performanceLevel": 3,
+    "whoFor": "New or returning riders and anyone short of inseam who wants a light, low, modern cruiser that is confidence-inspiring in town yet revs freely enough to hold its own out of it.",
+    "notFor": "Maybe not for you if you want classic V-twin cruiser thump or plan long two-up touring — the parallel twin is smooth rather than characterful and the pillion pad is thin.",
+    "about": "The Eliminator 500 revives Kawasaki's dragster-cruiser name around the 451cc parallel twin derived from the Ninja/Z 400 family, stroked for extra midrange. It blends a low-slung cruiser stance and 735 mm seat with sportbike-derived manners: light steering for an 18-inch front wheel, an eager top-end and modest 176 kg curb mass. LED lighting throughout and an optional SE trim round out a thoroughly modern take on the class.",
+    "pros": [
+      "Very low 735 mm seat and light 176 kg curb weight",
+      "Natively A2-compliant 45 PS twin, no restrictor needed",
+      "Frugal 3.8 l/100km keeps range respectable from the 13 L tank",
+      "Easygoing riding position without extreme cruiser ergonomics",
+      "Modern LED lighting and gear-position-equipped LCD dash"
+    ],
+    "cons": [
+      "Limited rear suspension travel (90 mm) over rough roads",
+      "Small pillion pad and few touring amenities",
+      "Smooth twin lacks traditional cruiser character",
+      "No wind protection as standard"
+    ],
+    "sources": [
+      "Kawasaki UK specifications page for the 2025 Eliminator 500 (kawasaki.co.uk)",
+      "Kawasaki Germany 2025 list price (UVP) for the Eliminator 500"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://www.kawasaki.co.uk/en/Motorcycles/A2_Bikes/eliminator_500_2025.html",
+      "sourceName": "Kawasaki Motors Europe (kawasaki.co.uk product page CDN)",
+      "license": "press/product photo",
+      "alt": "A rider in a leather jacket cruises a black Kawasaki Eliminator 500 along a palm-lined city street.",
+      "visualDescription": "Hero: current-generation (2024+) Eliminator ridden through a sunny street — round LED headlight, teardrop tank with ELIMINATOR badge, liquid-cooled parallel twin, twin shocks and 18/16-inch wheels confirmed; clearly not the old air-cooled Eliminator 125. Studio: black Eliminator 3/4 front-right from the official Eliminator 500 UK product page (Kawasaki's DAM asset filename references the shared EL400 platform code, but this is the image Kawasaki Europe publishes for the 451cc Eliminator 500; European 500 shares all bodywork).",
+      "files": ["images-src/kawasaki-eliminator-500-hero.jpg", "images-src/kawasaki-eliminator-500-studio.jpg"]
+    }
+  },
+  {
+    "id": "suzuki-v-strom-800de",
+    "manufacturer": "Suzuki",
+    "model": "V-Strom 800DE",
+    "variant": null,
+    "year": 2025,
+    "category": "adventure",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 776,
+      "cylinders": 2,
+      "horsepower": 84,
+      "torque": 78,
+      "powerNote": "62 kW (84.3 PS) @ 8,500 rpm; 78 Nm @ 6,800 rpm. 270-degree crank parallel twin."
+    },
+    "dimensions": { "weight": 230, "seatHeight": 855, "fuelCapacity": 20 },
+    "transmission": { "type": "manual", "fullyAutomatic": false, "manualOverride": true, "clutchLever": true },
+    "performance": { "fuelConsumption": 4.4 },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Dual 310 mm front discs, 260 mm rear disc; two-mode switchable ABS with off-road setting",
+      "suspension": "Fully adjustable Showa inverted fork and Showa monoshock with remote gas reservoir; 220 mm wheel travel front and rear"
+    },
+    "price": {
+      "eur": 10290,
+      "country": "RO",
+      "confidence": "approximate",
+      "note": "Romanian Suzuki dealer list price incl. VAT (Motorteam, Bucharest); UK list is £9,999 OTR. Promotions bring it lower."
+    },
+    "a2Compatible": false,
+    "a2Note": "62 kW is far above the 35 kW A2 limit and more than double it, so no A2 restriction is possible.",
+    "beginnerRating": 4,
+    "beginnerNote": "Manageable power delivery and light clutch, but an 855 mm seat, 230 kg wet and a 21-inch front make it a lot of motorcycle for a first bike — better as a step up than a starting point.",
+    "ridingStyles": ["touring", "offroad", "mountain", "commuting"],
+    "passengerSuitability": 7,
+    "practicality": 8,
+    "performanceLevel": 6,
+    "whoFor": "Adventure riders who genuinely intend to leave the tarmac: the 21-inch spoked front wheel, 220 mm of travel at both ends and a Gravel traction mode make it the most dirt-focused middleweight in Suzuki's range, while the 20 L tank and relaxed twin keep it an excellent road tourer.",
+    "notFor": "Maybe not for you if you are short, ride mostly city streets, or want a light bike — the 855 mm seat and 230 kg are real obstacles, and the road-biased V-Strom 800 (cast wheels) is cheaper and lower.",
+    "about": "The V-Strom 800DE is Suzuki's off-road-ready middleweight ADV, built around a 776cc 270-degree parallel twin with ride-by-wire, a bi-directional quickshifter and the S.I.R.S. electronics suite including a dedicated Gravel traction mode. Long-travel fully adjustable Showa suspension, 220 mm of ground clearance and wire-spoke 21/17-inch wheels set it apart from the street-focused V-Strom 800. It carries 20 litres of fuel and returns about 4.4 l/100km, giving genuine 400 km touring range.",
+    "pros": [
+      "Real off-road ability: 21-inch spoked front, 220 mm travel and clearance",
+      "Flexible 776cc twin with standard two-way quickshifter",
+      "Comprehensive electronics incl. Gravel mode and switchable ABS",
+      "20 L tank plus ~4.4 l/100km economy for long range",
+      "Strong value against European rivals"
+    ],
+    "cons": [
+      "Tall 855 mm seat and 230 kg kerb weight intimidate shorter riders",
+      "No cruise control on the standard model",
+      "Block-pattern tyres and long suspension dull outright tarmac sharpness"
+    ],
+    "sources": [
+      "Suzuki GB product page for the V-Strom 800DE (bikes.suzuki.co.uk)",
+      "Suzuki global product specifications for the V-Strom 800DE (globalsuzuki.com)",
+      "Romanian Suzuki dealer (Motorteam) published list price for the V-Strom 800DE"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://bikes.suzuki.co.uk/bikes/adventure/v-strom-800de/",
+      "sourceName": "Suzuki GB (bikes.suzuki.co.uk, media.umbraco.io CDN)",
+      "license": "press/product photo",
+      "alt": "A couple rides two-up on a Champion Yellow Suzuki V-Strom 800DE with aluminium panniers along a mountain road.",
+      "visualDescription": "Hero: Champion Yellow V-Strom 800DE two-up on a mountain road — blue-anodised wire-spoke rims (21-inch front), gold Showa inverted fork, handguards, vertically stacked LED headlight and V-Strom beak confirmed; accessory aluminium luggage fitted. Studio: 6500px side-profile PNG of the yellow 800DE showing 'V-STROM', 'DE' and '800' graphics, spoked wheels and sump guard — distinguishes it from the cast-wheel V-Strom 800/800RE and the larger 1050.",
+      "files": ["images-src/suzuki-v-strom-800de-hero.jpg", "images-src/suzuki-v-strom-800de-studio.png"]
+    }
+  }
+]

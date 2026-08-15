@@ -1,0 +1,318 @@
+[
+  {
+    "id": "honda-cb750-hornet",
+    "manufacturer": "Honda",
+    "model": "CB750 Hornet",
+    "variant": null,
+    "year": 2025,
+    "category": "naked",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 755,
+      "cylinders": 2,
+      "horsepower": 92,
+      "torque": 75,
+      "powerNote": "67.5 kW (92 PS) at 9,500 rpm; official 34.5 kW A2 version available"
+    },
+    "dimensions": {
+      "weight": 192,
+      "seatHeight": 795,
+      "fuelCapacity": 15.2
+    },
+    "transmission": {
+      "type": "manual",
+      "fullyAutomatic": false,
+      "manualOverride": true,
+      "clutchLever": true
+    },
+    "performance": {
+      "topSpeed": 205,
+      "fuelConsumption": 4.3
+    },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Dual 296 mm front discs with radial-mount four-piston Nissin calipers, 240 mm rear disc, dual-channel ABS",
+      "suspension": "Showa 41 mm SFF-BP USD fork (130 mm travel), Pro-Link monoshock (150 mm travel), settings revised for 2025"
+    },
+    "price": {
+      "eur": 8100,
+      "country": "RO",
+      "confidence": "approximate",
+      "note": "Romanian official Honda dealer (Motorteam) 2025 list price incl. VAT; Western EU prices typically EUR 7,800-8,500"
+    },
+    "a2Compatible": true,
+    "a2Note": "Full-power version is 67.5 kW, but Honda offers an official A2 version restricted to 34.5 kW (66 Nm)",
+    "beginnerRating": 6,
+    "beginnerNote": "Light, friendly and predictable for a 755cc twin, and the A2 version makes it legally accessible - but 92 PS and a sharp throttle are a lot for a true first bike.",
+    "ridingStyles": ["city", "commuting", "weekend", "mountain", "sport"],
+    "passengerSuitability": 5,
+    "practicality": 6,
+    "performanceLevel": 7,
+    "whoFor": "Riders stepping up to their first big bike who want serious pace, agile handling and modern electronics without a big price tag.",
+    "notFor": "Maybe not for you if you regularly ride long motorway distances two-up - there is little wind protection and the pillion perch is compact.",
+    "about": "The CB750 Hornet is Honda's mid-size streetfighter, built around a punchy 755cc 270-degree parallel twin with a class-leading power-to-weight ratio (192 kg wet, 67.5 kW). The 2025 facelift brought a low-set dual LED projector headlight, a five-inch TFT with Honda RoadSync connectivity and retuned Showa suspension. It rides light, flickable and eager, with riding modes, traction and wheelie control managed by throttle-by-wire.",
+    "pros": [
+      "Class-leading power-to-weight ratio (0.36 kW/kg)",
+      "Torquey, characterful 270-degree twin",
+      "Low 795 mm seat and light 192 kg wet weight",
+      "Strong value for money",
+      "2025 update adds TFT display and distinctive LED face"
+    ],
+    "cons": [
+      "Almost no wind protection for motorway work",
+      "Suspension is budget-oriented with limited adjustability",
+      "Compact pillion accommodation",
+      "Quickshifter costs extra"
+    ],
+    "sources": [
+      "Honda Motor Europe 25YM CB750 Hornet press kit technical specifications (hondanews.eu)",
+      "Motorteam, official Honda Moto dealer Romania - 2025 list price"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://hondanews.eu/eu/en/motorcycles/media/pressreleases/503772/25ym-honda-cb750-hornet-press-kit",
+      "sourceName": "Honda Motor Europe (hondanews.eu)",
+      "license": "press/product photo",
+      "alt": "Rider cornering hard on a white 2025 Honda CB750 Hornet on a tree-lined country road",
+      "visualDescription": "Hero: white 25YM CB750 Hornet mid-corner, showing the 2025-only low-set dual LED projector headlight, Hornet tank-shroud logo and red-painted frame. Studio: right-side profile of the Pearl Glare White 2025 bike on grey background with 750 tail badge, Hornet script and red steel diamond frame - confirmed current facelift, not the 2023-24 model.",
+      "files": ["images-src/honda-cb750-hornet-hero.jpg", "images-src/honda-cb750-hornet-studio.jpg"]
+    }
+  },
+  {
+    "id": "honda-xl750-transalp",
+    "manufacturer": "Honda",
+    "model": "XL750 Transalp",
+    "variant": null,
+    "year": 2025,
+    "category": "adventure",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 755,
+      "cylinders": 2,
+      "horsepower": 92,
+      "torque": 75,
+      "powerNote": "67.5 kW (92 PS) at 9,500 rpm; official 34.5 kW A2 version available"
+    },
+    "dimensions": {
+      "weight": 210,
+      "seatHeight": 850,
+      "fuelCapacity": 16.9
+    },
+    "transmission": {
+      "type": "manual",
+      "fullyAutomatic": false,
+      "manualOverride": true,
+      "clutchLever": true
+    },
+    "performance": {
+      "topSpeed": 195,
+      "fuelConsumption": 4.3
+    },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Dual 310 mm front discs with axial two-piston calipers, 256 mm rear disc, dual-channel ABS (rear deactivatable)",
+      "suspension": "Showa 43 mm SFF-CA USD fork (200 mm travel), Pro-Link monoshock (190 mm travel), damping revised for 2025"
+    },
+    "price": {
+      "eur": 11450,
+      "country": "RO",
+      "confidence": "approximate",
+      "note": "Romanian official Honda dealer (Motorteam) 2025 list price incl. VAT; Western EU prices typically EUR 10,500-11,500"
+    },
+    "a2Compatible": true,
+    "a2Note": "Full-power version is 67.5 kW, but Honda offers an official A2 version restricted to 34.5 kW (66 Nm)",
+    "beginnerRating": 6,
+    "beginnerNote": "Smooth power delivery, neutral handling and an A2 option make it approachable, but the 850 mm seat and 210 kg are a handful for shorter or completely new riders.",
+    "ridingStyles": ["touring", "commuting", "weekend", "offroad", "mountain"],
+    "passengerSuitability": 7,
+    "practicality": 8,
+    "performanceLevel": 6,
+    "whoFor": "Riders who want one do-it-all adventure bike for commuting, two-up touring and genuine gravel-road capability without flagship-adventure weight or cost.",
+    "notFor": "Maybe not for you if you want serious hard-enduro ability or premium touring kit like cruise control out of the box.",
+    "about": "The XL750 Transalp pairs the CB750 Hornet's 755cc twin with a 21/18-inch spoked-wheel adventure chassis and long-travel Showa suspension. The 2025 facelift added an Africa Twin-style face with dual projector LED headlight, a new five-inch TFT with RoadSync, and retuned damping developed on European roads. It is a composed, easy-going all-rounder that handles light off-road confidently while staying comfortable on the road.",
+    "pros": [
+      "Flexible, economical 755cc twin (4.3 L/100km, ~390 km range)",
+      "Long-travel suspension and 21-inch front handle real gravel",
+      "Five riding modes incl. Gravel, plus deactivatable rear ABS",
+      "Comfortable ergonomics with strong two-up ability",
+      "2025 update improved lighting, screen and suspension"
+    ],
+    "cons": [
+      "Tube-type tyres complicate roadside puncture repair",
+      "No cruise control even as an option",
+      "Basic axial two-piston front brake calipers",
+      "850 mm seat is tall for shorter riders"
+    ],
+    "sources": [
+      "Honda Motor Europe 25YM XL750 Transalp press kit technical specifications (hondanews.eu)",
+      "Motorteam, official Honda Moto dealer Romania - 2025 list price"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://hondanews.eu/eu/en/motorcycles/media/pressreleases/503771/25ym-honda-xl750-transalp-press-kit",
+      "sourceName": "Honda Motor Europe (hondanews.eu)",
+      "license": "press/product photo",
+      "alt": "Rider splashing a white 2025 Honda XL750 Transalp through a shallow alpine river crossing",
+      "visualDescription": "Hero: 25YM Transalp in Ross White tricolour fording a river, showing the 2025 dual-projector LED front end, gold spoked rims and accessory light/crash bars - clearly the slimmer Transalp, not an Africa Twin. Studio: right-side profile of the same tricolour bike with TRANSALP tank graphics, 750 badge, blue seat and gold 21/18 spoked wheels on grey background.",
+      "files": ["images-src/honda-xl750-transalp-hero.jpg", "images-src/honda-xl750-transalp-studio.jpg"]
+    }
+  },
+  {
+    "id": "honda-crf300l",
+    "manufacturer": "Honda",
+    "model": "CRF300L",
+    "variant": null,
+    "year": 2025,
+    "category": "dual-sport",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 286,
+      "cylinders": 1,
+      "horsepower": 27,
+      "torque": 26.6,
+      "powerNote": "20.1 kW (27 PS) at 8,500 rpm"
+    },
+    "dimensions": {
+      "weight": 142,
+      "seatHeight": 880,
+      "fuelCapacity": 7.8
+    },
+    "transmission": {
+      "type": "manual",
+      "fullyAutomatic": false,
+      "manualOverride": true,
+      "clutchLever": true
+    },
+    "performance": {
+      "topSpeed": 132,
+      "fuelConsumption": 3.1
+    },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "256 mm front disc with dual-piston caliper, 220 mm rear disc, dual-channel ABS",
+      "suspension": "43 mm USD fork (260 mm stroke), Pro-Link rear shock (260 mm travel), revised damping for 2025"
+    },
+    "price": {
+      "eur": 6700,
+      "country": "RO",
+      "confidence": "approximate",
+      "note": "Romanian official Honda dealer (Motorteam) list price incl. VAT; Western EU prices typically EUR 5,800-6,500"
+    },
+    "a2Compatible": true,
+    "a2Note": "20.1 kW is natively well within the 35 kW A2 limit",
+    "beginnerRating": 8,
+    "beginnerNote": "Featherweight, forgiving and cheap to run - one of the friendliest ways into motorcycling, provided you can manage the tall 880 mm dirt-bike seat.",
+    "ridingStyles": ["offroad", "city", "commuting", "weekend"],
+    "passengerSuitability": 3,
+    "practicality": 5,
+    "performanceLevel": 3,
+    "whoFor": "New riders and trail-curious commuters who want a light, unbreakable dual-sport that is as happy on forest tracks as in city traffic.",
+    "notFor": "Maybe not for you if your riding involves sustained motorway speeds or regular two-up trips.",
+    "about": "The CRF300L is Honda's lightweight dual-sport: a 286cc single with a six-speed gearbox and slipper clutch in a slim 142 kg package with 285 mm of ground clearance and long-travel suspension. The 2025 update brought LED lighting, improved heat management and Euro5+ compliance. It is slow by road-bike standards but nearly indestructible, sips fuel at 3.1 L/100km, and its 21/18-inch wheels shrug off terrain that would stop most road bikes.",
+    "pros": [
+      "Just 142 kg kerb weight - easy to handle and pick up",
+      "Genuine off-road ability with 285 mm ground clearance",
+      "Very cheap to buy, run and insure",
+      "Frugal 3.1 L/100km gives ~250 km from the small tank",
+      "Natively A2 compliant"
+    ],
+    "cons": [
+      "27 PS means motorway cruising is strained",
+      "880 mm seat height challenges shorter riders",
+      "Small 7.8 L tank limits touring range",
+      "Basic LCD dash and minimal wind protection"
+    ],
+    "sources": [
+      "Honda Motor Europe 25YM CRF300L press kit technical specifications (hondanews.eu)",
+      "Motorteam, official Honda Moto dealer Romania - list price"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://hondanews.eu/eu/en/motorcycles/media/pressreleases/503768/25ym-honda-crf300l-press-kit",
+      "sourceName": "Honda Motor Europe (hondanews.eu)",
+      "license": "press/product photo",
+      "alt": "Rider picking a red Honda CRF300L down a rocky wooded hillside trail",
+      "visualDescription": "Hero: Extreme Red CRF300L descending a rocky trail with CRF 300L shroud graphics, small headlight mask and no rally fairing - confirmed the L, not the CRF300 Rally. Studio: left-side profile on white background showing red bodywork, CRF 300L decals, gold USD fork, 21/18 spoked wheels and dirt-bike ergonomics.",
+      "files": ["images-src/honda-crf300l-hero.jpg", "images-src/honda-crf300l-studio.jpg"]
+    }
+  },
+  {
+    "id": "honda-nt1100-dct",
+    "manufacturer": "Honda",
+    "model": "NT1100",
+    "variant": "DCT",
+    "year": 2025,
+    "category": "touring",
+    "vehicleType": "motorcycle",
+    "engine": {
+      "displacement": 1084,
+      "cylinders": 2,
+      "horsepower": 102,
+      "torque": 112,
+      "powerNote": "75 kW (102 PS) at 7,500 rpm; 2025 retune added ~7% more low/mid-range torque"
+    },
+    "dimensions": {
+      "weight": 248,
+      "seatHeight": 820,
+      "fuelCapacity": 20.4
+    },
+    "transmission": {
+      "type": "dct",
+      "fullyAutomatic": true,
+      "manualOverride": true,
+      "clutchLever": false
+    },
+    "performance": {
+      "topSpeed": 200,
+      "fuelConsumption": 5.0
+    },
+    "chassis": {
+      "drive": "chain",
+      "brakes": "Dual 310 mm front discs with radial-mount four-piston calipers, 256 mm rear disc, IMU-based cornering ABS",
+      "suspension": "Showa 43 mm SFF-BP USD fork and Pro-Link rear shock, 150 mm travel both ends (Showa EERA electronic suspension on ES version)"
+    },
+    "price": {
+      "eur": 16500,
+      "country": "RO",
+      "confidence": "approximate",
+      "note": "Romanian official Honda dealer (Motorteam) 2025 list price for NT1100 DCT incl. VAT; manual is ~EUR 15,400, DCT ES ~EUR 17,650"
+    },
+    "a2Compatible": false,
+    "a2Note": "75 kW is above the 35 kW A2 limit and exceeds the 2:1 restriction rule; no official A2 version",
+    "beginnerRating": 4,
+    "beginnerNote": "The DCT removes stalling and clutch anxiety, but 248 kg and litre-class torque make it an intimidating and expensive first bike.",
+    "ridingStyles": ["touring", "commuting", "weekend"],
+    "passengerSuitability": 9,
+    "practicality": 9,
+    "performanceLevel": 6,
+    "whoFor": "Distance riders and commuters who want a genuine two-up tourer with the effortless convenience of Honda's automatic DCT gearbox.",
+    "notFor": "Maybe not for you if you want a light, sporty machine or any off-road ability - this is a committed road tourer.",
+    "about": "The NT1100 is Europe's best-selling sport-tourer, built around the Africa Twin's 1,084cc parallel twin and Honda's six-speed dual-clutch transmission, which shifts automatically or via bar-mounted paddles with no clutch lever. The 2025 facelift brought a sharper fairing with DRLs, a six-axis IMU with cornering ABS, more mid-range torque and an optional Showa EERA electronically adjusted suspension version. With a 20.4 L tank, adjustable screen, cruise control and Apple CarPlay/Android Auto on a 6.5-inch touchscreen, it is a consummate all-weather mile-eater.",
+    "pros": [
+      "Smooth, proven DCT automatic ideal for touring and traffic",
+      "Excellent two-up comfort with big grabrails and pannier options",
+      "20.4 L tank plus 5.0 L/100km gives ~400 km range",
+      "Strong equipment: cruise, CarPlay/Android Auto, adjustable screen, cornering ABS",
+      "Torque-rich 1,084cc twin retuned for 2025"
+    ],
+    "cons": [
+      "248 kg kerb weight (DCT) is a lot at parking speeds",
+      "Not A2 compliant",
+      "Chain final drive needs maintenance on a dedicated tourer",
+      "DCT adds ~EUR 1,100 over the manual version"
+    ],
+    "sources": [
+      "Honda Motor Europe 25YM NT1100 & NT1100 Electronic Suspension press kit technical specifications (hondanews.eu)",
+      "Motorteam, official Honda Moto dealer Romania - 2025 list prices"
+    ],
+    "lastVerified": "August 2026",
+    "imageMeta": {
+      "sourceUrl": "https://hondanews.eu/eu/en/motorcycles/media/pressreleases/489798/25ym-honda-nt1100-and-nt1100-electronic-suspension-press-kit",
+      "sourceName": "Honda Motor Europe (hondanews.eu)",
+      "license": "press/product photo",
+      "alt": "Rider and pillion touring on a sand-coloured 2025 Honda NT1100 with panniers along an alpine lakeside road",
+      "visualDescription": "Hero: two-up 25YM NT1100 with colour-matched panniers and top box on a mountain lake road, showing the 2025 fairing with integrated DRLs; no clutch lever visible at the left grip. Studio: left-side profile of the tan/bronze 25YM bike with panniers on grey background; zoomed crop of the left handlebar confirms no clutch lever - DCT version verified.",
+      "files": ["images-src/honda-nt1100-dct-hero.jpg", "images-src/honda-nt1100-dct-studio.jpg"]
+    }
+  }
+]
