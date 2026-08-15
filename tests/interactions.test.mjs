@@ -68,6 +68,16 @@ const check=(name,cond,detail="")=>{results.push([cond,name,detail]);console.log
   check("Empty-state reset works", new RegExp(`${total} of ${total} bikes`).test(countText()));
 }
 
+/* ---------- EXPLORE: CATEGORY DEEP LINK ---------- */
+{
+  const {doc}=await boot("/explore?category=cruiser");
+  const countText=doc.querySelector("p.data")?.textContent??"";
+  const m=countText.match(/^(\d+) of (\d+) bikes/);
+  check("Category deep link pre-filters Explore", Boolean(m) && Number(m[1])>0 && Number(m[1])<Number(m[2]), `→ "${countText.trim()}"`);
+  const cards=[...doc.querySelectorAll("article h3")].map(h=>h.textContent);
+  check("Deep link shows cruisers", cards.some(c=>/450CL-C|Rebel|Eliminator|Meteor/.test(c)), `→ ${cards.length} cards`);
+}
+
 /* ---------- EXPLORE: SORTING + TABLE ---------- */
 {
   const {doc,tick,click}=await boot("/explore");
@@ -180,9 +190,9 @@ const check=(name,cond,detail="")=>{results.push([cond,name,detail]);console.log
 /* ---------- HOME + NAVIGATION ---------- */
 {
   const {doc,tick,click}=await boot("/");
-  check("Hero pitch present", /Find your bike/i.test(doc.body.textContent) && /By you/i.test(doc.body.textContent));
-  check("How-it-works steps present", /We score every motorcycle/i.test(doc.body.textContent));
-  const cta=[...doc.querySelectorAll("a")].find(a=>a.textContent.trim()==="Find my motorcycle");
+  check("Hero pitch present", /Find your\s*bike/i.test(doc.body.textContent) && /motorcycles that fit/i.test(doc.body.textContent));
+  check("How-it-works steps present", /Not sure what to ride/i.test(doc.body.textContent) && /We find your match/i.test(doc.body.textContent));
+  const cta=[...doc.querySelectorAll("a")].find(a=>a.textContent.trim()==="Find my bike");
   check("Primary CTA exists", Boolean(cta));
   click(cta); await tick(); await tick();
   check("CTA routes to the quiz", /Question 1 of 12/.test(doc.body.textContent));

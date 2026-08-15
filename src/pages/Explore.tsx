@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { MOTORCYCLES, bikeName } from "../data/motorcycles";
 import { TRANSMISSIONS } from "../data/transmissions";
 import {
@@ -93,7 +93,13 @@ export default function Explore() {
       "Browse every motorcycle in the MotoMatch database — filter by manufacturer, type, price, power, transmission and more.",
   });
 
-  const [filters, setFilters] = useState<FilterState>(EMPTY_FILTERS);
+  // Deep link support: /explore?category=cruiser preselects a type filter.
+  const [params] = useSearchParams();
+  const [filters, setFilters] = useState<FilterState>(() => {
+    const category = params.get("category");
+    const valid = FILTER_GROUPS.find((g) => g.key === "type")?.options.some((o) => o.id === category);
+    return valid && category ? { ...EMPTY_FILTERS, type: [category] } : EMPTY_FILTERS;
+  });
   const [view, setView] = useState<"cards" | "table">("cards");
   const [sortKey, setSortKey] = useState<SortKey>("price");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");

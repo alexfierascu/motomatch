@@ -127,7 +127,7 @@ function Header() {
             </NavLink>
           ))}
           <Link to="/find-my-bike" className="btn btn-primary px-4 py-2 text-[11px]">
-            Find my motorcycle
+            Find my bike
           </Link>
         </nav>
 
@@ -209,20 +209,40 @@ function Footer() {
   return (
     <footer className="mt-24 border-t border-line">
       <div className="mx-auto max-w-[1400px] px-4 py-12 md:px-8">
-        <div className="flex flex-wrap items-end justify-between gap-8">
-          <div>
+        <div className="flex flex-wrap items-start justify-between gap-10">
+          <div className="max-w-xl">
             <Wordmark />
-            <p className="mt-3 max-w-xl text-xs leading-relaxed text-dim">
+            <p className="mt-3 text-xs leading-relaxed text-dim">
               Specifications are manufacturer figures. Prices are indicative European on-the-road
               figures shown with a “~” unless confirmed against an official importer pricelist —
               always check the current local price with a dealer before deciding. Photography:
               official manufacturer press and product images; each bike's page credits its source.
             </p>
+            <p className="data mt-4 text-[11px] text-dim">
+              © 2026 MotoMatch · Last verified: August 2026
+            </p>
           </div>
-          <div className="text-right">
-            <div className="eyebrow">Find the motorcycle that fits you</div>
-            <p className="data mt-2 text-[11px] text-dim">Last verified: August 2026</p>
-          </div>
+          <nav className="flex gap-14" aria-label="Footer">
+            <div className="flex flex-col gap-2.5">
+              {[
+                ["/find-my-bike", "Find My Bike"],
+                ["/explore", "Explore"],
+                ["/compare", "Compare"],
+              ].map(([to, label]) => (
+                <Link key={to} to={to} className="data text-[11px] uppercase tracking-[0.16em] text-muted hover:text-accent">
+                  {label}
+                </Link>
+              ))}
+            </div>
+            <div className="flex flex-col gap-2.5">
+              <Link to="/about" className="data text-[11px] uppercase tracking-[0.16em] text-muted hover:text-accent">
+                About
+              </Link>
+              <Link to="/about" className="data text-[11px] uppercase tracking-[0.16em] text-muted hover:text-accent">
+                How it works
+              </Link>
+            </div>
+          </nav>
         </div>
       </div>
     </footer>
