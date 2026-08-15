@@ -190,9 +190,9 @@ const check=(name,cond,detail="")=>{results.push([cond,name,detail]);console.log
 /* ---------- HOME + NAVIGATION ---------- */
 {
   const {doc,tick,click}=await boot("/");
-  check("Hero pitch present", /Find your\s*bike/i.test(doc.body.textContent) && /motorcycles that fit/i.test(doc.body.textContent));
-  check("How-it-works steps present", /Not sure what to ride/i.test(doc.body.textContent) && /We find your match/i.test(doc.body.textContent));
-  const cta=[...doc.querySelectorAll("a")].find(a=>a.textContent.trim()==="Find my bike");
+  check("Hero pitch present", /Find your\s*perfect ride/i.test(doc.body.textContent) && /made for you/i.test(doc.body.textContent));
+  check("How-it-works steps present", /How it works/i.test(doc.body.textContent) && /We find your match/i.test(doc.body.textContent));
+  const cta=doc.querySelector('a[href="/find-my-bike"]');
   check("Primary CTA exists", Boolean(cta));
   click(cta); await tick(); await tick();
   check("CTA routes to the quiz", /Question 1 of 12/.test(doc.body.textContent));

@@ -85,13 +85,40 @@ function Wordmark() {
 
 function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { selected } = useCompare();
   const progress = useScrollProgress();
+  const location = useLocation();
+
+  // Per the approved reference the navigation floats transparently over the
+  // homepage hero and gains a surface once the user scrolls.
+  const overlay = location.pathname === "/" && !scrolled && !open;
+
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      setScrolled(window.scrollY > 24);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-ink/90 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-4 md:px-8">
-        <Link to="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
+    <header
+      className={`sticky top-0 z-40 transition-colors duration-300 ${
+        overlay ? "border-b border-transparent" : "border-b border-line bg-ink/90 backdrop-blur-md"
+      }`}
+    >
+      <div className="mx-auto grid h-14 max-w-[1400px] grid-cols-[1fr_auto] items-center px-4 md:grid-cols-[1fr_auto_1fr] md:px-8">
+        <Link to="/" className="flex items-center gap-2.5 justify-self-start" onClick={() => setOpen(false)}>
           <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden>
             <circle cx="6" cy="16" r="4.4" fill="none" stroke="var(--color-accent)" strokeWidth="1.8" />
             <circle cx="18" cy="16" r="4.4" fill="none" stroke="var(--color-fg)" strokeWidth="1.8" />
@@ -100,14 +127,15 @@ function Header() {
           <Wordmark />
         </Link>
 
-        <nav className="hidden items-center gap-6 md:flex">
-          {NAV.map((n) => (
+        {/* Centered links, Find My Bike emphasized — per the reference. */}
+        <nav className="hidden items-center gap-7 md:flex">
+          {NAV.map((n, i) => (
             <NavLink
               key={n.to}
               to={n.to}
               className={({ isActive }) =>
                 `data relative py-4 text-[11px] uppercase tracking-[0.18em] transition-colors ${
-                  isActive ? "text-fg" : "text-dim hover:text-muted"
+                  isActive || i === 0 ? "text-fg" : "text-dim hover:text-muted"
                 }`
               }
             >
@@ -115,42 +143,51 @@ function Header() {
                 <>
                   {n.label}
                   {n.to === "/compare" && selected.length > 0 && (
-                    <span className="data ml-1.5 bg-accent px-1.5 py-0.5 text-[10px] text-white">
+                    <span className="data ml-1.5 rounded bg-accent px-1.5 py-0.5 text-[10px] text-[var(--color-on-accent)]">
                       {selected.length}
                     </span>
                   )}
-                  {isActive && (
+                  {(isActive || (i === 0 && location.pathname === "/")) && (
                     <span className="absolute inset-x-0 bottom-0 h-[2px] bg-accent" aria-hidden />
                   )}
                 </>
               )}
             </NavLink>
           ))}
-          <Link to="/find-my-bike" className="btn btn-primary px-4 py-2 text-[11px]">
-            Find my bike
-          </Link>
         </nav>
 
-        <button
-          className="btn btn-ghost px-2.5 py-1.5 md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-label="Toggle navigation menu"
-        >
-          <span aria-hidden>{open ? "✕" : "☰"}</span>
-        </button>
+        <div className="flex items-center gap-2.5 justify-self-end">
+          {/* Placeholder control from the approved design — accounts don't exist
+              yet, and MotoMatch runs without them. Wire up when auth ships. */}
+          <button
+            type="button"
+            aria-disabled="true"
+            title="No account needed — MotoMatch runs entirely in your browser"
+            className="data hidden cursor-default rounded-full border border-line-bright px-4 py-2 text-[11px] uppercase tracking-[0.16em] text-muted md:block"
+          >
+            Sign in
+          </button>
+          <button
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-line-bright text-fg transition-colors hover:border-accent"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-label="Toggle navigation menu"
+          >
+            <span aria-hidden>{open ? "✕" : "☰"}</span>
+          </button>
+        </div>
       </div>
 
       {/* Scroll progress — a single hairline under the header. */}
       <div className="absolute inset-x-0 bottom-[-1px] h-[2px]" aria-hidden>
         <div
           className="h-full bg-accent"
-          style={{ width: `${(progress * 100).toFixed(2)}%`, opacity: progress > 0.005 ? 0.9 : 0 }}
+          style={{ width: `${(progress * 100).toFixed(2)}%`, opacity: progress > 0.005 && !overlay ? 0.9 : 0 }}
         />
       </div>
 
       {open && (
-        <nav className="border-t border-line bg-panel px-4 py-2 md:hidden">
+        <nav className="border-t border-line bg-panel px-4 py-2">
           {NAV.map((n) => (
             <NavLink
               key={n.to}

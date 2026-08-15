@@ -212,6 +212,16 @@
     line-height: 1.04;
   }
 
+  /* Horizontal line that draws itself in when revealed (how-it-works timeline). */
+  .line-reveal {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.7s ease 0.25s;
+  }
+  .line-reveal.is-visible {
+    transform: scaleX(1);
+  }
+
   /* Photographic frame: fixed ratio, cover-fit, gentle hover zoom. */
   .photo-frame {
     position: relative;
@@ -282,7 +292,8 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .reveal {
+  .reveal,
+  .line-reveal {
     opacity: 1;
     transform: none;
   }
