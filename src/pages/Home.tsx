@@ -20,11 +20,12 @@ const RIDER_COUNT_LABEL = "20,000+";
  * right-side navigator. Section components reference these ids.            */
 
 const SECTIONS = [
-  { id: "hero", label: "Hero" },
-  { id: "how-it-works", label: "How it works" },
-  { id: "perfect-match", label: "Your perfect match" },
-  { id: "browse-style", label: "Browse by style" },
-  { id: "final-cta", label: "Get started" },
+  { id: "hero", label: "Find Your Perfect Ride" },
+  { id: "how-it-works", label: "How It Works" },
+  { id: "perfect-match", label: "Your Perfect Match Awaits" },
+  { id: "browse-style", label: "Browse By Style" },
+  { id: "four-different-answers", label: "Four Very Different Answers" },
+  { id: "final-cta", label: "Ready to Find Your Bike?" },
 ] as const;
 
 /** Applies mandatory section snapping to the document only while Home is mounted. */
@@ -782,88 +783,76 @@ function BrowseByStyleSection() {
   );
 }
 
-/* ──────────────── interlude: featured + why (not snapped) ─────────────────*/
+/* ────────────────── 05 · four very different answers ─────────────────────
+ * The product philosophy as a primary section: the right motorcycle depends
+ * on the rider. Four personas, four real machines from the dataset.        */
 
-const FEATURED_IDS = ["yamaha-mt-07", "honda-nc750x-dct", "cfmoto-450cl-c", "triumph-street-triple-765-rs"];
-
-function Featured() {
-  const ref = useReveal<HTMLDivElement>(".reveal");
-  const bikes = FEATURED_IDS.map(getBike).filter(Boolean);
-
-  return (
-    <div ref={ref} className={GUTTER}>
-      <span className="data text-[11px] uppercase tracking-[0.24em] text-dim">Featured motorcycles</span>
-      <h2 className="display-light mt-4 font-medium text-[clamp(1.7rem,3.2vw,2.4rem)] uppercase">
-        Four very different answers
-      </h2>
-
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {bikes.map((b, i) => (
-          <Link
-            key={b!.id}
-            to={`/bikes/${b!.id}`}
-            className="reveal group overflow-hidden rounded-2xl border border-line bg-panel transition-colors hover:border-line-bright"
-            style={{ transitionDelay: `${i * 0.08}s` }}
-          >
-            <BikePhoto bike={b!} kind="card" ratio="4/3" />
-            <div className="p-5">
-              <div className="data text-[10px] uppercase tracking-[0.2em] text-dim">
-                {b!.manufacturer} · {b!.category}
-              </div>
-              <h3 className="display-light mt-1.5 text-2xl uppercase group-hover:text-accent">
-                {b!.model}
-                {b!.variant ? ` ${b!.variant}` : ""}
-              </h3>
-              <div className="data mt-3 flex items-baseline justify-between border-t border-line pt-3 text-[12px] text-muted">
-                <span>
-                  {b!.engine.horsepower} hp · {b!.engine.torque} Nm
-                </span>
-                <span className="text-accent">
-                  <Price p={b!.price} />
-                </span>
-              </div>
-              <div className="data mt-3 text-[10px] uppercase tracking-[0.18em] text-dim transition-colors group-hover:text-accent">
-                Explore →
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-const WHY: [string, string][] = [
-  ["Personalized", "Recommendations based on you, not popularity."],
-  ["Practical", "Budget, experience, weight, seat height and real-world use matter."],
-  ["Explained", "We tell you why a motorcycle matches you."],
-  ["Independent", "MotoMatch isn't trying to sell you a particular motorcycle."],
+const PERSONAS: { num: string; persona: string; traits: string; bikeId: string }[] = [
+  { num: "01", persona: "The commuter", traits: "Practical, comfortable, efficient.", bikeId: "honda-nc750x-dct" },
+  { num: "02", persona: "The weekend rider", traits: "Light, fun, engaging.", bikeId: "yamaha-mt-07" },
+  { num: "03", persona: "The adventurer", traits: "Long-distance, versatile, capable.", bikeId: "yamaha-tenere-700" },
+  { num: "04", persona: "The cruiser", traits: "Relaxed, comfortable, characterful.", bikeId: "honda-rebel-1100-dct" },
 ];
 
-function WhyMotoMatch() {
-  const ref = useReveal<HTMLDivElement>(".reveal");
-  return (
-    <div ref={ref} className={`mt-16 ${GUTTER}`}>
-      <div className="grid gap-x-8 gap-y-8 border-t border-line pt-10 sm:grid-cols-2 xl:grid-cols-4">
-        {WHY.map(([title, body], i) => (
-          <div key={title} className="reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
-            <h3 className="data text-[11px] uppercase tracking-[0.2em] text-accent">{title}</h3>
-            <p className="mt-3 text-[14px] leading-relaxed text-muted">{body}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+function FourDifferentAnswersSection() {
+  const ref = useReveal<HTMLElement>(".reveal");
+  const personas = PERSONAS.map((p) => ({ ...p, bike: getBike(p.bikeId) })).filter((p) => p.bike);
 
-/** Featured + Why: editorial content between primary sections 04 and 05.
- *  It participates in snapping (so mandatory snap can rest here) but is
- *  deliberately absent from the section navigator. */
-function EditorialInterlude() {
   return (
-    <section className="snap-section section-viewport flex flex-col justify-center scroll-mt-14 py-10">
-      <Featured />
-      <WhyMotoMatch />
+    <section
+      id="four-different-answers"
+      ref={ref}
+      className="snap-section section-viewport flex flex-col justify-center scroll-mt-14 py-8"
+    >
+      <div className={GUTTER}>
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h2 className="display-light reveal font-medium text-[clamp(1.7rem,3.2vw,2.4rem)] uppercase">
+            Four very different answers.
+          </h2>
+          <p className="reveal reveal-late max-w-md text-[14px] leading-relaxed text-muted">
+            There isn't one motorcycle that's perfect for everyone. Your experience, riding style,
+            budget and priorities change the answer.
+          </p>
+        </div>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {personas.map(({ num, persona, traits, bike }, i) => (
+            <Link
+              key={num}
+              to={`/bikes/${bike!.id}`}
+              className="reveal group overflow-hidden rounded-2xl border border-line bg-panel transition-colors hover:border-line-bright"
+              style={{ transitionDelay: `${i * 0.08}s` }}
+            >
+              <BikePhoto bike={bike!} kind="card" ratio="4/3" scrim="b" />
+              <div className="p-5">
+                <div className="data text-[10px] uppercase tracking-[0.2em] text-accent">
+                  {num} · {persona}
+                </div>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{traits}</p>
+                <div className="mt-3 flex items-baseline justify-between gap-3 border-t border-line pt-3">
+                  <span className="min-w-0">
+                    <span className="data block text-[9px] uppercase tracking-[0.18em] text-dim">
+                      {bike!.manufacturer}
+                    </span>
+                    <span className="display-light block truncate text-xl uppercase text-fg group-hover:text-accent">
+                      {bike!.model}
+                      {bike!.variant ? ` ${bike!.variant}` : ""}
+                    </span>
+                  </span>
+                  <span className="data shrink-0 text-[12px] text-accent">
+                    <Price p={bike!.price} />
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <p className="reveal reveal-later mx-auto mt-8 max-w-2xl text-center text-[14px] leading-relaxed text-muted">
+          Your perfect bike isn't necessarily someone else's. That's why MotoMatch matches the
+          motorcycle to the rider — <span className="text-fg">not the other way around.</span>
+        </p>
+      </div>
     </section>
   );
 }
@@ -896,7 +885,7 @@ function FinalCtaSection() {
               Ready to find your bike?
             </h2>
             <p className="reveal reveal-late mx-auto mt-5 max-w-md text-[15px] leading-relaxed text-muted">
-              Your bike is out there. Let's figure out what belongs in your garage.
+              Tell us how you ride, what you want and what you want to spend.
             </p>
             <Link to="/find-my-bike" className="btn btn-primary reveal reveal-late mt-9 px-8 py-4">
               Find my bike <span aria-hidden>→</span>
@@ -925,7 +914,7 @@ export default function Home() {
       <HowItWorksSection />
       <PerfectMatchSection />
       <BrowseByStyleSection />
-      <EditorialInterlude />
+      <FourDifferentAnswersSection />
       <FinalCtaSection />
     </>
   );
