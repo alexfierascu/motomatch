@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   BrowserRouter,
   HashRouter,
@@ -89,6 +89,26 @@ function Header() {
   const { selected } = useCompare();
   const progress = useScrollProgress();
   const location = useLocation();
+  const rootRef = useRef<HTMLElement>(null);
+
+  // Mobile menu: close on Escape and on clicks outside the header.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    const onPointer = (e: MouseEvent | TouchEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onPointer);
+    document.addEventListener("touchstart", onPointer);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onPointer);
+      document.removeEventListener("touchstart", onPointer);
+    };
+  }, [open]);
 
   // Per the approved reference the navigation floats transparently over the
   // homepage hero and gains a surface once the user scrolls.
@@ -113,6 +133,7 @@ function Header() {
 
   return (
     <header
+      ref={rootRef}
       className={`sticky top-0 z-40 transition-colors duration-300 ${
         overlay ? "border-b border-transparent" : "border-b border-line bg-ink/90 backdrop-blur-md"
       }`}
@@ -167,8 +188,9 @@ function Header() {
           >
             Sign in
           </button>
+          {/* Burger only where the desktop navigation is hidden. */}
           <button
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-line-bright text-fg transition-colors hover:border-accent"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-line-bright text-fg transition-colors hover:border-accent md:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-label="Toggle navigation menu"
@@ -187,7 +209,7 @@ function Header() {
       </div>
 
       {open && (
-        <nav className="border-t border-line bg-panel px-4 py-2">
+        <nav className="menu-panel border-t border-line bg-panel px-4 py-2 md:hidden" aria-label="Mobile">
           {NAV.map((n) => (
             <NavLink
               key={n.to}

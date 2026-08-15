@@ -5,23 +5,39 @@ import type { Category } from "../data/types";
 import { matchAll, type MatchResult, type QuizAnswers } from "../lib/match";
 import { BikePhoto } from "../components/Photo";
 import { Price } from "../components/BikeCard";
-import { useParallax, useReveal } from "../lib/motion";
+import { prefersReducedMotion, useParallax, useReveal } from "../lib/motion";
 import { usePageMeta } from "../lib/seo";
 
-const GUTTER = "mx-auto max-w-[1400px] px-4 md:px-8";
+const GUTTER = "mx-auto w-full max-w-[1400px] px-4 md:px-8";
 
 /** Placeholder marketing figure from the approved design — NOT a real metric.
  *  MotoMatch has no accounts and does not count riders. Replace with a real
  *  number (or remove the claim) once the product can actually measure it. */
 const RIDER_COUNT_LABEL = "20,000+";
 
-/* ─────────────────────────── section indicator ────────────────────────────
- * Editorial 01–05 scroll rail on the right edge of the viewport, per the
- * reference: small dots joined by hairlines, active dot emphasized.        */
+/* ─────────────────────── primary section configuration ────────────────────
+ * Single source of truth for the homepage's full-screen sections and the
+ * right-side navigator. Section components reference these ids.            */
 
-const SECTION_IDS = ["mm-hero", "mm-how", "mm-match", "mm-styles", "mm-cta"];
+const SECTIONS = [
+  { id: "hero", label: "Hero" },
+  { id: "how-it-works", label: "How it works" },
+  { id: "perfect-match", label: "Your perfect match" },
+  { id: "browse-style", label: "Browse by style" },
+  { id: "final-cta", label: "Get started" },
+] as const;
 
-function SectionDots() {
+/** Applies proximity scroll-snap to the document only while Home is mounted. */
+function useHomeSnap() {
+  useEffect(() => {
+    document.documentElement.classList.add("snap-home");
+    return () => document.documentElement.classList.remove("snap-home");
+  }, []);
+}
+
+/* ─────────────────────────── section navigator ────────────────────────────*/
+
+function SectionNav() {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
@@ -29,47 +45,67 @@ function SectionDots() {
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
-          if (e.isIntersecting) setActive(SECTION_IDS.indexOf(e.target.id));
+          if (e.isIntersecting) setActive(SECTIONS.findIndex((s) => s.id === e.target.id));
         }
       },
       { rootMargin: "-45% 0px -45% 0px" },
     );
-    SECTION_IDS.forEach((id) => {
-      const el = document.getElementById(id);
+    SECTIONS.forEach((s) => {
+      const el = document.getElementById(s.id);
       if (el) io.observe(el);
     });
     return () => io.disconnect();
   }, []);
 
+  const goTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({
+      behavior: prefersReducedMotion() ? "auto" : "smooth",
+      block: "start",
+    });
+  };
+
   return (
-    <div
-      aria-hidden
+    <nav
+      aria-label="Page sections"
       className="fixed right-6 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-center xl:flex"
     >
-      <span className="data mb-3 text-[10px] tracking-[0.2em] text-dim">01</span>
-      {SECTION_IDS.map((id, i) => (
-        <span key={id} className="flex flex-col items-center">
-          {i > 0 && <span className="h-4 w-px bg-line-bright" />}
-          <span
-            className="block rounded-full transition-all duration-300"
-            style={
-              i === active
-                ? { width: 8, height: 8, background: "var(--color-accent)" }
-                : { width: 5, height: 5, background: "var(--color-line-bright)" }
-            }
-          />
+      {SECTIONS.map((s, i) => (
+        <span key={s.id} className="flex flex-col items-center">
+          {i > 0 && <span className="h-4 w-px bg-line-bright" aria-hidden />}
+          <button
+            onClick={() => goTo(s.id)}
+            aria-label={`Go to ${s.label}`}
+            aria-current={i === active ? "true" : undefined}
+            className="group flex flex-col items-center gap-1.5 py-1"
+          >
+            <span
+              className={`data text-[9px] tracking-[0.2em] transition-colors ${
+                i === active ? "text-accent" : "text-dim group-hover:text-muted"
+              }`}
+              aria-hidden
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span
+              className="block rounded-full transition-all duration-300"
+              style={
+                i === active
+                  ? { width: 8, height: 8, background: "var(--color-accent)" }
+                  : { width: 5, height: 5, background: "var(--color-line-bright)" }
+              }
+              aria-hidden
+            />
+          </button>
         </span>
       ))}
-      <span className="data mt-3 text-[10px] tracking-[0.2em] text-dim">05</span>
-    </div>
+    </nav>
   );
 }
 
 /* ─────────────────────────────── 01 · hero ────────────────────────────────*/
 
 /* Heroes whose photography suits the reference composition: rider on the
- * road, warm bright environment, room on the left for type. Dark night
- * shots are excluded — the reference hero image must stay dominant. */
+ * road, warm bright environment, room on the left for type. */
 const HERO_IDS = [
   "yamaha-tenere-700",
   "honda-cmx500-rebel-e-clutch",
@@ -95,7 +131,6 @@ function RiderAvatars() {
           className="rounded-full border-2 border-ink"
           style={{ background: bg }}
         >
-          {/* helmeted rider bust */}
           <circle cx="15" cy="12" r="6" fill="#c9c4ba" opacity="0.85" />
           <path d="M9.5 12a5.5 5.5 0 0 1 11 0v1.6h-11z" fill="#1c1c20" />
           <path d="M6 26c1.6-4.4 5-6.4 9-6.4s7.4 2 9 6.4z" fill="#c9c4ba" opacity="0.7" />
@@ -105,7 +140,7 @@ function RiderAvatars() {
   );
 }
 
-function Hero() {
+function HeroSection() {
   const [bike] = useState(pickHero);
   const imgRef = useParallax<HTMLDivElement>(0.12, 80);
   const headRef = useParallax<HTMLDivElement>(-0.045, 44);
@@ -113,8 +148,8 @@ function Hero() {
 
   return (
     <section
-      id="mm-hero"
-      className="relative -mt-14 flex min-h-[100svh] items-center overflow-hidden"
+      id="hero"
+      className="snap-section relative -mt-14 flex min-h-[100svh] items-center overflow-hidden"
     >
       <div ref={imgRef} className="absolute inset-[-6%] will-change-transform">
         <img
@@ -133,7 +168,7 @@ function Hero() {
         }}
       />
 
-      <div className={`relative w-full pb-24 pt-36 ${GUTTER}`}>
+      <div className={`relative pb-24 pt-36 ${GUTTER}`}>
         <div ref={headRef} className="max-w-2xl will-change-transform">
           <p className="data text-[11px] uppercase tracking-[0.24em] text-dim">
             01 / Discover · motorcycle matching · 2026
@@ -168,7 +203,6 @@ function Hero() {
           </div>
         </div>
 
-        {/* Featured-bike chip, bottom right per the reference. */}
         <Link
           to={`/bikes/${bike.id}`}
           className="group mt-12 inline-flex items-center gap-3 rounded-full border border-line-bright bg-ink/60 py-2 pl-4 pr-2 backdrop-blur-sm transition-colors hover:border-accent md:absolute md:bottom-10 md:right-8 md:mt-0"
@@ -189,7 +223,7 @@ function Hero() {
   );
 }
 
-/* ─────────────────────────── feature strip ────────────────────────────────*/
+/* ─────────────────────── 02 · feature strip + how it works ────────────────*/
 
 const STRIP_ICON_PROPS = {
   width: 22,
@@ -202,7 +236,6 @@ const STRIP_ICON_PROPS = {
   strokeLinejoin: "round",
 } as const;
 
-/* The reference's five benefits, verbatim. */
 const STRIP: { title: string; sub: string; icon: React.ReactNode }[] = [
   {
     title: "Personalized",
@@ -261,29 +294,6 @@ const STRIP: { title: string; sub: string; icon: React.ReactNode }[] = [
   },
 ];
 
-function FeatureStrip() {
-  const ref = useReveal<HTMLElement>();
-  return (
-    <section ref={ref} className={`reveal relative z-10 -mt-8 ${GUTTER}`}>
-      <div className="grid grid-cols-2 gap-y-6 rounded-2xl border border-line bg-panel/90 px-6 py-6 backdrop-blur-sm sm:grid-cols-3 lg:grid-cols-5">
-        {STRIP.map((f) => (
-          <div key={f.title} className="flex items-start gap-3 pr-4">
-            <span className="mt-0.5 text-accent" aria-hidden>
-              {f.icon}
-            </span>
-            <span>
-              <span className="data block text-[10px] uppercase tracking-[0.18em] text-fg">{f.title}</span>
-              <span className="mt-1 block text-[12px] text-muted">{f.sub}</span>
-            </span>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ─────────────────────────── 02 · how it works ────────────────────────────*/
-
 const STEPS: [string, string][] = [
   ["Tell us about you", "Answer a few simple questions."],
   ["We find your match", "Our engine scores every motorcycle in the database."],
@@ -291,95 +301,114 @@ const STEPS: [string, string][] = [
   ["Explore & choose", "Compare, save and find your perfect ride."],
 ];
 
-function HowItWorks() {
+function HowItWorksSection() {
   const ref = useReveal<HTMLElement>(".reveal, .line-reveal");
   const mediaBike = getBike("suzuki-v-strom-800de");
 
   return (
-    <section id="mm-how" ref={ref} className={`pt-28 ${GUTTER}`}>
-      <div className="grid items-center gap-12 lg:grid-cols-[1.45fr_1fr]">
-        <div>
-          <h2 className="display-light reveal font-medium text-[clamp(1.7rem,3.2vw,2.4rem)] uppercase">
-            How it works
-          </h2>
-
-          {/* Connected timeline: circles joined by a line that draws itself in. */}
-          <ol className="mt-12 grid gap-x-0 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-            {STEPS.map(([title, body], i) => (
-              <li key={title} className="relative pr-6">
-                <div className="flex items-center">
-                  <span
-                    className="data reveal z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line-bright bg-panel text-[12px] text-fg"
-                    style={{ transitionDelay: `${i * 0.12}s` }}
-                  >
-                    {i + 1}
-                  </span>
-                  {i < STEPS.length - 1 && (
-                    <span
-                      className="line-reveal hidden h-px flex-1 bg-line-bright lg:block"
-                      style={{ transitionDelay: `${0.25 + i * 0.15}s` }}
-                      aria-hidden
-                    />
-                  )}
-                </div>
-                <h3
-                  className="data reveal mt-5 text-[11px] uppercase tracking-[0.18em] text-fg"
-                  style={{ transitionDelay: `${i * 0.12}s` }}
-                >
-                  {title}
-                </h3>
-                <p
-                  className="reveal mt-2 max-w-[180px] text-[13px] leading-relaxed text-muted"
-                  style={{ transitionDelay: `${0.08 + i * 0.12}s` }}
-                >
-                  {body}
-                </p>
-              </li>
-            ))}
-          </ol>
+    <section
+      id="how-it-works"
+      ref={ref}
+      className="snap-section flex min-h-[100svh] flex-col justify-center scroll-mt-14 py-16"
+    >
+      <div className={GUTTER}>
+        {/* Feature / value strip */}
+        <div className="reveal grid grid-cols-2 gap-y-6 rounded-2xl border border-line bg-panel/90 px-6 py-6 backdrop-blur-sm sm:grid-cols-3 lg:grid-cols-5">
+          {STRIP.map((f) => (
+            <div key={f.title} className="flex items-start gap-3 pr-4">
+              <span className="mt-0.5 text-accent" aria-hidden>
+                {f.icon}
+              </span>
+              <span>
+                <span className="data block text-[10px] uppercase tracking-[0.18em] text-fg">{f.title}</span>
+                <span className="mt-1 block text-[12px] text-muted">{f.sub}</span>
+              </span>
+            </div>
+          ))}
         </div>
 
-        {/* Media card: placeholder for a future "how we match" film — links to
-            the written method until real video exists. */}
-        {mediaBike && (
-          <Link
-            to="/about"
-            className="reveal reveal-late group relative block overflow-hidden rounded-2xl border border-line"
-          >
-            <BikePhoto bike={mediaBike} kind="hero" ratio="16/11" scrim="b" />
-            <span
-              className="absolute left-1/2 top-1/2 z-10 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line-bright bg-ink/55 backdrop-blur-sm transition-transform duration-300 group-hover:scale-105"
-              aria-hidden
+        <div className="mt-16 grid items-center gap-12 lg:grid-cols-[1.45fr_1fr]">
+          <div>
+            <h2 className="display-light reveal font-medium text-[clamp(1.7rem,3.2vw,2.4rem)] uppercase">
+              How it works
+            </h2>
+
+            <ol className="mt-12 grid gap-x-0 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+              {STEPS.map(([title, body], i) => (
+                <li key={title} className="relative pr-6">
+                  <div className="flex items-center">
+                    <span
+                      className="data reveal z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line-bright bg-panel text-[12px] text-fg"
+                      style={{ transitionDelay: `${i * 0.12}s` }}
+                    >
+                      {i + 1}
+                    </span>
+                    {i < STEPS.length - 1 && (
+                      <span
+                        className="line-reveal hidden h-px flex-1 bg-line-bright lg:block"
+                        style={{ transitionDelay: `${0.25 + i * 0.15}s` }}
+                        aria-hidden
+                      />
+                    )}
+                  </div>
+                  <h3
+                    className="data reveal mt-5 text-[11px] uppercase tracking-[0.18em] text-fg"
+                    style={{ transitionDelay: `${i * 0.12}s` }}
+                  >
+                    {title}
+                  </h3>
+                  <p
+                    className="reveal mt-2 max-w-[180px] text-[13px] leading-relaxed text-muted"
+                    style={{ transitionDelay: `${0.08 + i * 0.12}s` }}
+                  >
+                    {body}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/* Media card: placeholder for a future "how we match" film. */}
+          {mediaBike && (
+            <Link
+              to="/about"
+              className="reveal reveal-late group relative block overflow-hidden rounded-2xl border border-line"
             >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--color-fg)">
-                <path d="M5 3.5v9l8-4.5z" />
-              </svg>
-            </span>
-            <span className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between p-5">
-              <span>
-                <span className="data block text-[11px] uppercase tracking-[0.2em] text-fg">How we match</span>
-                <span className="data mt-1 block text-[10px] uppercase tracking-[0.16em] text-muted">
-                  2 min video
-                </span>
-              </span>
+              <BikePhoto bike={mediaBike} kind="hero" ratio="16/11" scrim="b" />
               <span
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-line-bright bg-ink/60 text-muted transition-colors group-hover:border-accent group-hover:text-accent"
+                className="absolute left-1/2 top-1/2 z-10 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line-bright bg-ink/55 backdrop-blur-sm transition-transform duration-300 group-hover:scale-105"
                 aria-hidden
               >
-                →
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--color-fg)">
+                  <path d="M5 3.5v9l8-4.5z" />
+                </svg>
               </span>
-            </span>
-          </Link>
-        )}
+              <span className="absolute inset-x-0 bottom-0 z-10 flex items-end justify-between p-5">
+                <span>
+                  <span className="data block text-[11px] uppercase tracking-[0.2em] text-fg">How we match</span>
+                  <span className="data mt-1 block text-[10px] uppercase tracking-[0.16em] text-muted">
+                    2 min video
+                  </span>
+                </span>
+                <span
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-line-bright bg-ink/60 text-muted transition-colors group-hover:border-accent group-hover:text-accent"
+                  aria-hidden
+                >
+                  →
+                </span>
+              </span>
+            </Link>
+          )}
+        </div>
       </div>
     </section>
   );
 }
 
-/* ─────────────────────────── 03 · match showcase ──────────────────────────
- * "Your perfect match awaits" — the reference's recommendation showcase.
- * All scores and reasons are REAL: the engine runs on a labeled sample
- * profile, and the carousel pages through the actual ranked list.          */
+/* ─────────────────────── 03 · your perfect match awaits ───────────────────
+ * Scores and reasons are REAL: the engine runs on a labeled sample profile.
+ * The best match stays fixed; "other matches" is a looping carousel over the
+ * rest of the ranked list — it can never be empty, whatever the count.      */
 
 const SAMPLE_PROFILE: QuizAnswers = {
   experience: "little",
@@ -397,7 +426,6 @@ const SAMPLE_PROFILE: QuizAnswers = {
   look: null,
 };
 
-/** Compact reference-style checklist lines derived from the strongest scoring dimensions. */
 const DIM_REASON: Record<string, string> = {
   experience: "Perfect for your experience level",
   style: "Matches your riding style",
@@ -418,174 +446,181 @@ function shortReasons(r: MatchResult): string[] {
     .filter(Boolean);
 }
 
-const SHOWCASE_SIZE = 8;
+const SHOWCASE_SIZE = 6;
+const VISIBLE_OTHERS = 2;
 
-function MatchPreview() {
+function PerfectMatchSection() {
   const ref = useReveal<HTMLElement>(".reveal");
-  const ranked = useMemo(() => matchAll(SAMPLE_PROFILE).slice(0, SHOWCASE_SIZE), []);
-  const [offset, setOffset] = useState(0);
+  /* Derived from the same engine the quiz uses — the homepage preview and the
+   * real results share one data model (MatchResult[]). */
+  const matches = useMemo(() => matchAll(SAMPLE_PROFILE).slice(0, SHOWCASE_SIZE), []);
+  const best = matches[0];
+  const others = matches.slice(1);
 
-  const main = ranked[offset];
-  const runners = [ranked[(offset + 1) % ranked.length], ranked[(offset + 2) % ranked.length]];
-  const step = (d: number) => setOffset((o) => (o + d + ranked.length) % ranked.length);
+  // Looping window over `others`: [i, i+1] with wraparound — never empty.
+  const [start, setStart] = useState(0);
+  const visible = Array.from(
+    { length: Math.min(VISIBLE_OTHERS, others.length) },
+    (_, k) => others[(start + k) % others.length],
+  );
+  const page = (d: number) => setStart((s) => (s + d + others.length) % others.length);
 
-  if (!main) return null;
+  if (!best) return null;
 
   return (
-    <section id="mm-match" ref={ref} className={`pt-28 ${GUTTER}`}>
-      <div
-        className="relative rounded-3xl border border-line p-6 md:p-10"
-        style={{
-          background:
-            "radial-gradient(900px 420px at 85% -10%, rgba(217,194,154,0.05), transparent 60%), var(--color-panel)",
-        }}
-      >
-        {/* Carousel controls — circular, flanking the showcase per the reference. */}
-        <button
-          onClick={() => step(-1)}
-          aria-label="Previous match"
-          className="absolute -left-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-line-bright bg-raised text-fg transition-colors hover:border-accent hover:text-accent lg:flex"
+    <section
+      id="perfect-match"
+      ref={ref}
+      className="snap-section flex min-h-[100svh] flex-col justify-center scroll-mt-14 py-16"
+    >
+      <div className={GUTTER}>
+        <div
+          className="rounded-3xl border border-line p-6 md:p-10"
+          style={{
+            background:
+              "radial-gradient(900px 420px at 85% -10%, rgba(217,194,154,0.05), transparent 60%), var(--color-panel)",
+          }}
         >
-          <span aria-hidden>‹</span>
-        </button>
-        <button
-          onClick={() => step(1)}
-          aria-label="Next match"
-          className="absolute -right-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-line-bright bg-raised text-fg transition-colors hover:border-accent hover:text-accent lg:flex"
-        >
-          <span aria-hidden>›</span>
-        </button>
-
-        <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.55fr_0.9fr]">
-          {/* Pitch */}
-          <div>
-            <h2 className="display-light reveal font-medium text-[clamp(1.8rem,3.4vw,2.6rem)] uppercase">
-              Your perfect
-              <br />
-              match awaits
-            </h2>
-            <p className="reveal reveal-late mt-4 max-w-xs text-[14px] leading-relaxed text-muted">
-              Take our short quiz and discover the motorcycles that fit your style, your needs and
-              your life.
-            </p>
-            <dl className="reveal reveal-late mt-7 space-y-4">
-              {(
-                [
-                  ["12", "questions"],
-                  ["≈ 2 min", "to complete"],
-                  ["100%", "personalized"],
-                ] as const
-              ).map(([v, l]) => (
-                <div key={l} className="flex items-baseline gap-3">
-                  <dt className="data w-20 shrink-0 whitespace-nowrap text-lg text-accent">{v}</dt>
-                  <dd className="data text-[10px] uppercase tracking-[0.18em] text-muted">{l}</dd>
-                </div>
-              ))}
-            </dl>
-            <Link to="/find-my-bike" className="btn btn-primary reveal reveal-late mt-8">
-              Start the quiz <span aria-hidden>→</span>
-            </Link>
-          </div>
-
-          {/* Main match card */}
-          <div className="reveal overflow-hidden rounded-2xl border border-line bg-raised">
-            <div className="relative">
-              <BikePhoto bike={main.bike} kind="studio" ratio="16/9" />
-              <span className="data absolute left-4 top-4 rounded-full bg-accent px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-[var(--color-on-accent)]">
-                {offset === 0 ? "Best match" : `#${offset + 1} match`}
-              </span>
-            </div>
-            <div className="p-6">
-              <div className="flex flex-wrap items-end justify-between gap-4">
-                <div>
-                  <div className="data text-[10px] uppercase tracking-[0.2em] text-dim">
-                    {main.bike.manufacturer}
+          <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.55fr_0.9fr]">
+            {/* Pitch */}
+            <div>
+              <h2 className="display-light reveal font-medium text-[clamp(1.8rem,3.4vw,2.6rem)] uppercase">
+                Your perfect
+                <br />
+                match awaits
+              </h2>
+              <p className="reveal reveal-late mt-4 max-w-xs text-[14px] leading-relaxed text-muted">
+                Take our short quiz and discover the motorcycles that fit your style, your needs and
+                your life.
+              </p>
+              <dl className="reveal reveal-late mt-7 space-y-4">
+                {(
+                  [
+                    ["12", "questions"],
+                    ["≈ 2 min", "to complete"],
+                    ["100%", "personalized"],
+                  ] as const
+                ).map(([v, l]) => (
+                  <div key={l} className="flex items-baseline gap-3">
+                    <dt className="data w-20 shrink-0 whitespace-nowrap text-lg text-accent">{v}</dt>
+                    <dd className="data text-[10px] uppercase tracking-[0.18em] text-muted">{l}</dd>
                   </div>
-                  <h3 className="display-light mt-1 text-3xl uppercase">
-                    {main.bike.model}
-                    {main.bike.variant ? ` ${main.bike.variant}` : ""}
-                  </h3>
-                </div>
-                <div className="text-right">
-                  <div className="data text-4xl font-light text-accent">{main.score}%</div>
-                  <div className="data text-[9px] uppercase tracking-[0.2em] text-dim">Match score</div>
-                </div>
-              </div>
-              <ul className="mt-5 space-y-1.5 border-t border-line pt-4">
-                {shortReasons(main).map((r) => (
-                  <li key={r} className="flex gap-2 text-[13px] leading-relaxed text-muted">
-                    <span className="text-auto" aria-hidden>✓</span>
-                    {r}
-                  </li>
                 ))}
-              </ul>
-              <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
-                <Link
-                  to={`/bikes/${main.bike.id}`}
-                  className="data text-[11px] uppercase tracking-[0.18em] text-fg underline-offset-4 hover:text-accent hover:underline"
-                >
-                  View details
-                </Link>
-                <Link
-                  to={`/bikes/${main.bike.id}`}
-                  aria-label={`Open ${bikeName(main.bike)}`}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-line-bright text-muted transition-colors hover:border-accent hover:text-accent"
-                >
-                  <span aria-hidden>→</span>
-                </Link>
+              </dl>
+              <Link to="/find-my-bike" className="btn btn-primary reveal reveal-late mt-8">
+                Start the quiz <span aria-hidden>→</span>
+              </Link>
+            </div>
+
+            {/* Best match — fixed, always rank #1 */}
+            <div className="reveal overflow-hidden rounded-2xl border border-line bg-raised">
+              <div className="relative">
+                <BikePhoto bike={best.bike} kind="studio" ratio="16/9" />
+                <span className="data absolute left-4 top-4 rounded-full bg-accent px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-[var(--color-on-accent)]">
+                  Best match
+                </span>
+              </div>
+              <div className="p-6">
+                <div className="flex flex-wrap items-end justify-between gap-4">
+                  <div>
+                    <div className="data text-[10px] uppercase tracking-[0.2em] text-dim">
+                      {best.bike.manufacturer}
+                    </div>
+                    <h3 className="display-light mt-1 text-3xl uppercase">
+                      {best.bike.model}
+                      {best.bike.variant ? ` ${best.bike.variant}` : ""}
+                    </h3>
+                  </div>
+                  <div className="text-right">
+                    <div className="data text-4xl font-light text-accent">{best.score}%</div>
+                    <div className="data text-[9px] uppercase tracking-[0.2em] text-dim">Match score</div>
+                  </div>
+                </div>
+                <ul className="mt-5 space-y-1.5 border-t border-line pt-4">
+                  {shortReasons(best).map((r) => (
+                    <li key={r} className="flex gap-2 text-[13px] leading-relaxed text-muted">
+                      <span className="text-auto" aria-hidden>✓</span>
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
+                  <Link
+                    to={`/bikes/${best.bike.id}`}
+                    className="data text-[11px] uppercase tracking-[0.18em] text-fg underline-offset-4 hover:text-accent hover:underline"
+                  >
+                    View details
+                  </Link>
+                  <Link
+                    to={`/bikes/${best.bike.id}`}
+                    aria-label={`Open ${bikeName(best.bike)}`}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-line-bright text-muted transition-colors hover:border-accent hover:text-accent"
+                  >
+                    <span aria-hidden>→</span>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Runners-up */}
-          <div className="space-y-4">
-            <p className="data reveal text-[10px] uppercase tracking-[0.18em] text-dim">
-              Sample profile · newer rider · city & weekends · prefers automatic · ~€9,000
-            </p>
-            {runners.map((r, i) => (
-              <Link
-                key={r.bike.id}
-                to={`/bikes/${r.bike.id}`}
-                className="reveal reveal-late group flex items-center gap-4 rounded-2xl border border-line bg-raised p-3 transition-colors hover:border-line-bright"
-              >
-                <span className="data flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-line text-[11px] text-muted">
-                  {((offset + i + 1) % ranked.length) + 1}
-                </span>
-                <span className="w-24 shrink-0 overflow-hidden rounded-lg">
-                  <BikePhoto bike={r.bike} kind="card" ratio="16/10" />
-                </span>
-                <span className="min-w-0">
-                  <span className="data block text-[9px] uppercase tracking-[0.18em] text-dim">
-                    {r.bike.manufacturer}
+            {/* Other matches — looping carousel */}
+            <div>
+              <div className="mb-4 flex items-center justify-between">
+                <span className="data text-[10px] uppercase tracking-[0.2em] text-muted">Other matches</span>
+                {others.length > VISIBLE_OTHERS && (
+                  <span className="flex gap-1.5">
+                    <button
+                      onClick={() => page(-1)}
+                      aria-label="Previous recommendation"
+                      className="flex h-8 w-8 items-center justify-center rounded-full border border-line-bright text-muted transition-colors hover:border-accent hover:text-accent"
+                    >
+                      <span aria-hidden>‹</span>
+                    </button>
+                    <button
+                      onClick={() => page(1)}
+                      aria-label="Next recommendation"
+                      className="flex h-8 w-8 items-center justify-center rounded-full border border-line-bright text-muted transition-colors hover:border-accent hover:text-accent"
+                    >
+                      <span aria-hidden>›</span>
+                    </button>
                   </span>
-                  <span className="block truncate text-sm font-medium text-fg group-hover:text-accent">
-                    {r.bike.model}
-                    {r.bike.variant ? ` ${r.bike.variant}` : ""}
-                  </span>
-                  <span className="data mt-0.5 block text-[11px] text-accent">{r.score}% match</span>
-                </span>
-              </Link>
-            ))}
-            {/* Mobile carousel controls */}
-            <div className="flex gap-2 lg:hidden">
-              <button
-                onClick={() => step(-1)}
-                aria-label="Previous match"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-line-bright text-fg"
-              >
-                <span aria-hidden>‹</span>
-              </button>
-              <button
-                onClick={() => step(1)}
-                aria-label="Next match"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-line-bright text-fg"
-              >
-                <span aria-hidden>›</span>
-              </button>
+                )}
+              </div>
+
+              <div key={start} className="carousel-in space-y-4">
+                {visible.map((r) => {
+                  const rank = matches.indexOf(r) + 1;
+                  return (
+                    <Link
+                      key={r.bike.id}
+                      to={`/bikes/${r.bike.id}`}
+                      className="group flex items-center gap-4 rounded-2xl border border-line bg-raised p-3 transition-colors hover:border-line-bright"
+                    >
+                      <span className="data flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-line text-[11px] text-muted">
+                        {rank}
+                      </span>
+                      <span className="w-24 shrink-0 overflow-hidden rounded-lg">
+                        <BikePhoto bike={r.bike} kind="card" ratio="16/10" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="data block text-[9px] uppercase tracking-[0.18em] text-dim">
+                          {r.bike.manufacturer}
+                        </span>
+                        <span className="block truncate text-sm font-medium text-fg group-hover:text-accent">
+                          {r.bike.model}
+                          {r.bike.variant ? ` ${r.bike.variant}` : ""}
+                        </span>
+                        <span className="data mt-0.5 block text-[11px] text-accent">{r.score}% match</span>
+                      </span>
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <p className="mt-4 text-[11px] leading-relaxed text-dim">
+                Sample profile: newer rider · city &amp; weekends · prefers automatic · ~€9,000.
+                Your answers will produce a different list.
+              </p>
             </div>
-            <p className="reveal reveal-later text-[12px] leading-relaxed text-dim">
-              Your answers will produce a different list. That's the point.
-            </p>
           </div>
         </div>
       </div>
@@ -606,7 +641,6 @@ const CAT_ICON_PROPS = {
   strokeLinejoin: "round",
 } as const;
 
-/* The reference's seven categories, in its order, with thin technical icons. */
 const STYLE_CATS: { cat: Category; label: string; icon: React.ReactNode }[] = [
   {
     cat: "sport",
@@ -679,7 +713,7 @@ const STYLE_CATS: { cat: Category; label: string; icon: React.ReactNode }[] = [
   },
 ];
 
-function BrowseByStyle() {
+function BrowseByStyleSection() {
   const ref = useReveal<HTMLElement>(".reveal");
   const cats = useMemo(
     () =>
@@ -694,55 +728,61 @@ function BrowseByStyle() {
   );
 
   return (
-    <section id="mm-styles" ref={ref} className={`pt-28 ${GUTTER}`}>
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <h2 className="display-light font-medium text-[clamp(1.7rem,3.2vw,2.4rem)] uppercase">
-          Browse by style
-        </h2>
-        <Link
-          to="/explore"
-          className="data text-[11px] uppercase tracking-[0.18em] text-muted underline-offset-4 hover:text-accent hover:underline"
-        >
-          View all styles →
-        </Link>
-      </div>
-
-      <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-7">
-        {cats.map(({ cat, label, icon, bike, count }, i) => (
+    <section
+      id="browse-style"
+      ref={ref}
+      className="snap-section flex min-h-[100svh] flex-col justify-center scroll-mt-14 py-16"
+    >
+      <div className={GUTTER}>
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h2 className="display-light font-medium text-[clamp(1.7rem,3.2vw,2.4rem)] uppercase">
+            Browse by style
+          </h2>
           <Link
-            key={cat}
-            to={`/explore?category=${cat}`}
-            className="reveal group overflow-hidden rounded-xl border border-line bg-panel transition-colors hover:border-line-bright"
-            style={{ transitionDelay: `${(i % 7) * 0.05}s` }}
+            to="/explore"
+            className="data text-[11px] uppercase tracking-[0.18em] text-muted underline-offset-4 hover:text-accent hover:underline"
           >
-            <BikePhoto bike={bike!} kind="card" ratio="4/5" scrim="b" />
-            <div className="p-3.5">
-              <span className="text-dim transition-colors group-hover:text-accent" aria-hidden>
-                {icon}
-              </span>
-              <div className="mt-2 flex items-center justify-between">
-                <span>
-                  <span className="data block text-[10px] uppercase tracking-[0.16em] text-fg">{label}</span>
-                  <span className="data mt-0.5 block text-[10px] text-dim">
-                    {count} {count === 1 ? "model" : "models"}
-                  </span>
-                </span>
-                <span
-                  className="text-dim opacity-0 transition-opacity group-hover:text-accent group-hover:opacity-100"
-                  aria-hidden
-                >
-                  →
-                </span>
-              </div>
-            </div>
+            View all styles →
           </Link>
-        ))}
+        </div>
+
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-7">
+          {cats.map(({ cat, label, icon, bike, count }, i) => (
+            <Link
+              key={cat}
+              to={`/explore?category=${cat}`}
+              className="reveal group overflow-hidden rounded-xl border border-line bg-panel transition-colors hover:border-line-bright"
+              style={{ transitionDelay: `${(i % 7) * 0.05}s` }}
+            >
+              <BikePhoto bike={bike!} kind="card" ratio="4/5" scrim="b" />
+              <div className="p-3.5">
+                <span className="text-dim transition-colors group-hover:text-accent" aria-hidden>
+                  {icon}
+                </span>
+                <div className="mt-2 flex items-center justify-between">
+                  <span>
+                    <span className="data block text-[10px] uppercase tracking-[0.16em] text-fg">{label}</span>
+                    <span className="data mt-0.5 block text-[10px] text-dim">
+                      {count} {count === 1 ? "model" : "models"}
+                    </span>
+                  </span>
+                  <span
+                    className="text-dim opacity-0 transition-opacity group-hover:text-accent group-hover:opacity-100"
+                    aria-hidden
+                  >
+                    →
+                  </span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
-/* ─────────────────────────── 05 · featured + why + CTA ────────────────────*/
+/* ──────────────── interlude: featured + why (not snapped) ─────────────────*/
 
 const FEATURED_IDS = ["yamaha-mt-07", "honda-nc750x-dct", "cfmoto-450cl-c", "triumph-street-triple-765-rs"];
 
@@ -816,32 +856,40 @@ function WhyMotoMatch() {
   );
 }
 
-function FinalCta() {
+/* ─────────────────────────── 05 · final CTA ───────────────────────────────*/
+
+function FinalCtaSection() {
   const imgRef = useParallax<HTMLDivElement>(0.08, 50);
   const ref = useReveal<HTMLElement>(".reveal");
   const bike = getBike("kawasaki-eliminator-500") ?? MOTORCYCLES[0];
 
   return (
-    <section id="mm-cta" ref={ref} className={`pt-28 ${GUTTER}`}>
-      <div className="relative overflow-hidden rounded-3xl border border-line">
-        <div ref={imgRef} className="absolute inset-[-8%] will-change-transform">
-          <img src={bike.images.hero} alt={bike.images.alt} className="h-full w-full object-cover" loading="lazy" decoding="async" />
-        </div>
-        <div
-          className="absolute inset-0"
-          aria-hidden
-          style={{ background: "linear-gradient(180deg, rgba(11,11,13,0.72) 0%, rgba(11,11,13,0.55) 50%, rgba(11,11,13,0.85) 100%)" }}
-        />
-        <div className="relative px-6 py-24 text-center md:py-32">
-          <h2 className="display-light reveal text-[clamp(2.4rem,6.5vw,5rem)] uppercase">
-            Ready to find your bike?
-          </h2>
-          <p className="reveal reveal-late mx-auto mt-5 max-w-md text-[15px] leading-relaxed text-muted">
-            Your bike is out there. Let's figure out what belongs in your garage.
-          </p>
-          <Link to="/find-my-bike" className="btn btn-primary reveal reveal-late mt-9 px-8 py-4">
-            Find my bike <span aria-hidden>→</span>
-          </Link>
+    <section
+      id="final-cta"
+      ref={ref}
+      className="snap-section flex min-h-[100svh] flex-col justify-center scroll-mt-14 py-16"
+    >
+      <div className={GUTTER}>
+        <div className="relative overflow-hidden rounded-3xl border border-line">
+          <div ref={imgRef} className="absolute inset-[-8%] will-change-transform">
+            <img src={bike.images.hero} alt={bike.images.alt} className="h-full w-full object-cover" loading="lazy" decoding="async" />
+          </div>
+          <div
+            className="absolute inset-0"
+            aria-hidden
+            style={{ background: "linear-gradient(180deg, rgba(11,11,13,0.72) 0%, rgba(11,11,13,0.55) 50%, rgba(11,11,13,0.85) 100%)" }}
+          />
+          <div className="relative px-6 py-24 text-center md:py-32">
+            <h2 className="display-light reveal text-[clamp(2.4rem,6.5vw,5rem)] uppercase">
+              Ready to find your bike?
+            </h2>
+            <p className="reveal reveal-late mx-auto mt-5 max-w-md text-[15px] leading-relaxed text-muted">
+              Your bike is out there. Let's figure out what belongs in your garage.
+            </p>
+            <Link to="/find-my-bike" className="btn btn-primary reveal reveal-late mt-9 px-8 py-4">
+              Find my bike <span aria-hidden>→</span>
+            </Link>
+          </div>
         </div>
       </div>
     </section>
@@ -856,18 +904,18 @@ export default function Home() {
     description:
       "Tell MotoMatch how you ride, what you want and what you want to spend. Discover motorcycles that actually fit you.",
   });
+  useHomeSnap();
 
   return (
     <>
-      <SectionDots />
-      <Hero />
-      <FeatureStrip />
-      <HowItWorks />
-      <MatchPreview />
-      <BrowseByStyle />
+      <SectionNav />
+      <HeroSection />
+      <HowItWorksSection />
+      <PerfectMatchSection />
+      <BrowseByStyleSection />
       <Featured />
       <WhyMotoMatch />
-      <FinalCta />
+      <FinalCtaSection />
     </>
   );
 }

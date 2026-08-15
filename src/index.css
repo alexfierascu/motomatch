@@ -222,6 +222,52 @@
     transform: scaleX(1);
   }
 
+  /* Mobile navigation panel entrance. */
+  .menu-panel {
+    animation: menu-in 0.25s ease;
+  }
+
+  /* Recommendation carousel page change — subtle fade + slide. */
+  .carousel-in {
+    animation: carousel-in 0.3s ease;
+  }
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes carousel-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Homepage section snapping: native scrolling plus proximity snap, so primary
+ * sections settle at the viewport top without hijacking the wheel. Large
+ * screens only — small screens scroll freely. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  html.snap-home {
+    scroll-snap-type: y proximity;
+  }
+  .snap-section {
+    scroll-snap-align: start;
+  }
+}
+
+@layer components {
   /* Photographic frame: fixed ratio, cover-fit, gentle hover zoom. */
   .photo-frame {
     position: relative;
