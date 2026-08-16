@@ -85,11 +85,13 @@ export default function FindMyBike() {
   };
 
   return (
-    <div className={`pb-4 pt-6 ${GUTTER}`}>
-      <div className="relative overflow-hidden rounded-3xl border border-line bg-panel">
+    <div
+      className={`flex flex-col pb-6 pt-4 lg:h-[calc(100dvh-var(--header-h)-1px)] lg:pb-4 ${GUTTER}`}
+    >
+      <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-3xl border border-line bg-panel">
         {/* Cinematic image — right of the heading on desktop, banner on mobile. */}
         <div
-          className="pointer-events-none absolute right-0 top-0 hidden h-[440px] w-[54%] overflow-hidden lg:block"
+          className="pointer-events-none absolute right-0 top-0 hidden h-[56%] w-[54%] overflow-hidden lg:block"
           aria-hidden
         >
           <div ref={imgRef} className="absolute inset-[-4%] will-change-transform">
@@ -108,7 +110,7 @@ export default function FindMyBike() {
             }}
           />
         </div>
-        <div className="relative h-40 w-full lg:hidden" aria-hidden>
+        <div className="relative h-36 w-full lg:hidden" aria-hidden>
           <img
             src={panelBike.images.hero}
             alt=""
@@ -124,22 +126,22 @@ export default function FindMyBike() {
           />
         </div>
 
-        <div className="relative p-5 md:p-8 lg:p-10">
+        <div className="relative flex min-h-0 flex-1 flex-col px-5 py-4 md:px-8 lg:px-10 lg:py-5">
           {/* Back */}
           <button
             onClick={onBack}
-            className="data text-[11px] uppercase tracking-[0.2em] text-muted transition-colors hover:text-accent"
+            className="data self-start text-[11px] uppercase tracking-[0.2em] text-muted transition-colors hover:text-accent"
           >
             ← Back
           </button>
 
           {/* Progress */}
-          <div className="mt-6">
+          <div className="mt-4">
             <span className="data text-[11px] uppercase tracking-[0.22em] text-accent">
               Question {step + 1} of {TOTAL}
             </span>
             <div
-              className="mt-3 h-[3px] w-full max-w-xs bg-raised"
+              className="mt-2.5 h-[3px] w-full max-w-xs bg-raised"
               role="progressbar"
               aria-valuemin={0}
               aria-valuemax={TOTAL}
@@ -154,23 +156,23 @@ export default function FindMyBike() {
           </div>
 
           {/* Question — keyed so transitions replay per step */}
-          <div key={step} className="carousel-in">
-            <div className="mt-8 lg:max-w-[46%]">
+          <div key={step} className="carousel-in flex min-h-0 flex-1 flex-col">
+            <div className="mt-5 lg:max-w-[46%]">
               <h1
                 ref={headingRef}
                 tabIndex={-1}
-                className="font-display whitespace-pre-line text-[clamp(2rem,4.6vw,3.6rem)] uppercase leading-[1.02] outline-none"
+                className="font-display whitespace-pre-line text-[clamp(1.6rem,2.6vh+1vw,3.4rem)] uppercase leading-[1.02] outline-none"
               >
                 {q.title}
               </h1>
-              <p className="mt-5 max-w-md text-[15px] leading-relaxed text-muted">{q.description}</p>
+              <p className="mt-3 max-w-md text-[13px] leading-relaxed text-muted lg:text-sm">{q.description}</p>
             </div>
 
             {/* Answer cards */}
             <div
               role="radiogroup"
               aria-label={q.title.replace(/\n/g, " ")}
-              className={`mt-10 grid gap-3 sm:grid-cols-2 ${
+              className={`mt-6 grid gap-2.5 sm:grid-cols-2 lg:mt-auto ${
                 q.options.length >= 5 ? "lg:grid-cols-5" : "lg:grid-cols-4"
               }`}
             >
@@ -183,7 +185,7 @@ export default function FindMyBike() {
                     role="radio"
                     aria-checked={on}
                     onClick={() => choose(o.id)}
-                    className="group relative rounded-2xl border p-5 text-center transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+                    className="group relative rounded-2xl border p-4 text-center transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
                     style={
                       on
                         ? {
@@ -213,13 +215,13 @@ export default function FindMyBike() {
                       {o.icon}
                     </span>
                     <span
-                      className={`data mt-4 block text-[11px] uppercase tracking-[0.14em] ${
+                      className={`data mt-3 block text-[11px] uppercase tracking-[0.14em] ${
                         on ? "text-fg" : "text-fg/90"
                       }`}
                     >
                       {o.title}
                     </span>
-                    <span className="mt-2 block text-[12px] leading-relaxed text-muted">
+                    <span className="mt-1.5 block text-[11.5px] leading-relaxed text-muted">
                       {o.description}
                     </span>
                   </button>
@@ -228,10 +230,10 @@ export default function FindMyBike() {
             </div>
 
             {/* Contextual note */}
-            <div className="relative mt-6 overflow-hidden rounded-2xl border border-line bg-ink/50 px-5 py-4 md:px-6">
-              <div className="flex items-start gap-4 pr-20">
+            <div className="relative mt-3 overflow-hidden rounded-2xl border border-line bg-ink/50 px-4 py-3 md:px-5">
+              <div className="flex items-start gap-3.5 pr-16">
                 <span
-                  className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-accent/40 text-accent"
+                  className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-accent/40 text-accent"
                   aria-hidden
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -240,14 +242,14 @@ export default function FindMyBike() {
                   </svg>
                 </span>
                 <span>
-                  <span className="block text-[15px] font-semibold text-fg">{q.note.title}</span>
-                  <span className="mt-1 block max-w-xl text-[13px] leading-relaxed text-muted">
+                  <span className="block text-[14px] font-semibold text-fg">{q.note.title}</span>
+                  <span className="mt-0.5 block max-w-2xl text-[12.5px] leading-relaxed text-muted">
                     {q.note.body}
                   </span>
                 </span>
               </div>
               <span
-                className="ghost-index pointer-events-none absolute -right-1 top-1/2 -translate-y-1/2 text-[5rem] leading-none md:text-[5.5rem]"
+                className="ghost-index pointer-events-none absolute -right-1 top-1/2 -translate-y-1/2 text-[3.6rem] leading-none md:text-[4.2rem]"
                 aria-hidden
               >
                 {String(step + 1).padStart(2, "0")}
@@ -256,7 +258,7 @@ export default function FindMyBike() {
           </div>
 
           {/* Controls */}
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="mt-3 flex flex-wrap items-center gap-3">
             <button onClick={onSaveExit} className="btn btn-ghost gap-2 text-xs">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M5 4h11l4 4v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z" />
@@ -277,24 +279,24 @@ export default function FindMyBike() {
           </div>
 
           {/* Step navigation */}
-          <nav aria-label="Questionnaire steps" className="mt-8 border-t border-line pt-6">
+          <nav aria-label="Questionnaire steps" className="mt-3 border-t border-line pt-3">
             <ol className="flex items-start gap-0 overflow-x-auto pb-1">
               {QUESTIONS.map((question, i) => {
                 const isActive = i === step;
                 const isDone = Boolean(answers[question.key]) && !isActive;
                 const reachable = i <= maxJump;
                 return (
-                  <li key={question.key} className="flex min-w-[92px] flex-1 items-start">
-                    {i > 0 && <span className="mt-[15px] h-px w-full min-w-2 flex-1 bg-line" aria-hidden />}
+                  <li key={question.key} className="flex min-w-[88px] flex-1 items-start">
+                    {i > 0 && <span className="mt-[13px] h-px w-full min-w-2 flex-1 bg-line" aria-hidden />}
                     <button
                       onClick={() => reachable && goTo(i)}
                       disabled={!reachable}
                       aria-label={`Question ${i + 1}: ${question.category}`}
                       aria-current={isActive ? "step" : undefined}
-                      className="group flex shrink-0 flex-col items-center gap-2 px-2 disabled:cursor-default"
+                      className="group flex shrink-0 flex-col items-center gap-1.5 px-2 disabled:cursor-default"
                     >
                       <span
-                        className="data flex h-[30px] w-[30px] items-center justify-center rounded-full border text-[11px] transition-colors"
+                        className="data flex h-[26px] w-[26px] items-center justify-center rounded-full border text-[10px] transition-colors"
                         style={
                           isActive
                             ? { background: "var(--color-accent)", borderColor: "var(--color-accent)", color: "var(--color-on-accent)" }
@@ -306,7 +308,7 @@ export default function FindMyBike() {
                         {isDone ? "✓" : i + 1}
                       </span>
                       <span
-                        className={`data whitespace-nowrap text-[9px] uppercase tracking-[0.12em] ${
+                        className={`data whitespace-nowrap text-[8.5px] uppercase tracking-[0.1em] ${
                           isActive ? "text-accent" : isDone ? "text-muted" : "text-dim"
                         }`}
                       >

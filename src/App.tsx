@@ -334,27 +334,39 @@ function LegacyHashRedirect() {
 /** BrowserRouter for the web; HashRouter keeps the single-file build working from file://. */
 const Router = typeof window !== "undefined" && window.location.protocol === "file:" ? HashRouter : BrowserRouter;
 
+function Shell() {
+  // The questionnaire is an immersive app screen: no footer, no bottom
+  // padding, no compare bar — the page itself manages the viewport.
+  const immersive = useLocation().pathname === "/find-my-bike";
+
+  return (
+    <>
+      <ScrollToTop />
+      <LegacyHashRedirect />
+      <Header />
+      <main className={immersive ? "" : "pb-24"}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/find-my-bike" element={<FindMyBike />} />
+          <Route path="/results" element={<Results />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/bikes/:id" element={<BikeDetail />} />
+          <Route path="/compare" element={<Compare />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      {!immersive && <CompareBar />}
+      {!immersive && <Footer />}
+    </>
+  );
+}
+
 export default function App() {
   return (
     <Router>
       <CompareProvider>
-        <ScrollToTop />
-        <LegacyHashRedirect />
-        <Header />
-        <main className="pb-24">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/find-my-bike" element={<FindMyBike />} />
-            <Route path="/results" element={<Results />} />
-            <Route path="/explore" element={<Explore />} />
-            <Route path="/bikes/:id" element={<BikeDetail />} />
-            <Route path="/compare" element={<Compare />} />
-            <Route path="/about" element={<About />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <CompareBar />
-        <Footer />
+        <Shell />
       </CompareProvider>
     </Router>
   );
