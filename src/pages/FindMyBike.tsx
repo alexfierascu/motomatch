@@ -2,8 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { QUESTIONS } from "../data/questionnaire";
 import {
+  isAnswerComplete,
   loadQuestionnaire,
   saveQuestionnaire,
+  selectionsOf,
+  withSelection,
   type QuestionnaireAnswers,
 } from "../lib/questionnaire";
 import { getBike, MOTORCYCLES } from "../data/motorcycles";
@@ -34,11 +37,12 @@ export default function FindMyBike() {
   const imgRef = useParallax<HTMLDivElement>(0.05, 26);
 
   const q = QUESTIONS[step];
-  const selected = answers[q.key];
+  const picked = selectionsOf(answers, q);
+  const capReached = q.type === "multi-select" && picked.length >= q.maxSelections;
   const panelBike = getBike(PANEL_BIKE_ID) ?? MOTORCYCLES[0];
 
   /** Index of the first unanswered question — the furthest the user may jump. */
-  const furthest = QUESTIONS.findIndex((question) => !answers[question.key]);
+  const furthest = QUESTIONS.findIndex((question) => !isAnswerComplete(answers, question));
   const maxJump = furthest === -1 ? TOTAL - 1 : furthest;
 
   const persist = (next: QuestionnaireAnswers, nextStep: number, completed = false) =>
@@ -49,7 +53,8 @@ export default function FindMyBike() {
   }, [step]);
 
   const choose = (optionId: string) => {
-    const next = { ...answers, [q.key]: optionId };
+    const next = withSelection(answers, q, optionId);
+    if (next === answers) return; // multi-select at its cap — deselect first
     setAnswers(next);
     setError(false);
     persist(next, step);
@@ -62,7 +67,7 @@ export default function FindMyBike() {
   };
 
   const onContinue = () => {
-    if (!selected) {
+    if (!isAnswerComplete(answers, q)) {
       setError(true);
       return;
     }
@@ -140,6 +145,19 @@ export default function FindMyBike() {
             <span className="data text-[11px] uppercase tracking-[0.22em] text-accent">
               Question {step + 1} of {TOTAL}
             </span>
+            {q.type === "multi-select" && (
+              <span className="data text-[11px] uppercase tracking-[0.22em] text-muted">
+                {" "}
+                ·{" "}
+                {picked.length > 0
+                  ? `${picked.length}/${q.maxSelections} selected`
+                  : q.minSelections === q.maxSelections
+                    ? `Select ${q.minSelections}`
+                    : q.minSelections > 1
+                      ? `Select ${q.minSelections}–${q.maxSelections}`
+                      : `Select up to ${q.maxSelections}`}
+              </span>
+            )}
             <div
               className="mt-2.5 h-[3px] w-full max-w-xs bg-raised"
               role="progressbar"
@@ -170,22 +188,26 @@ export default function FindMyBike() {
 
             {/* Answer cards */}
             <div
-              role="radiogroup"
+              role={q.type === "multi-select" ? "group" : "radiogroup"}
               aria-label={q.title.replace(/\n/g, " ")}
               className={`mt-6 grid gap-2.5 sm:grid-cols-2 lg:mt-auto ${
                 q.options.length >= 5 ? "lg:grid-cols-5" : "lg:grid-cols-4"
               }`}
             >
               {q.options.map((o) => {
-                const on = selected === o.id;
+                const on = picked.includes(o.id);
+                const blocked = capReached && !on;
                 return (
                   <button
                     key={o.id}
                     type="button"
-                    role="radio"
+                    role={q.type === "multi-select" ? "checkbox" : "radio"}
                     aria-checked={on}
+                    aria-disabled={blocked || undefined}
                     onClick={() => choose(o.id)}
-                    className="group relative rounded-2xl border p-4 text-center transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+                    className={`group relative rounded-2xl border p-4 text-center transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent ${
+                      blocked ? "opacity-50" : ""
+                    }`}
                     style={
                       on
                         ? {
@@ -271,7 +293,11 @@ export default function FindMyBike() {
               role="status"
               aria-live="polite"
             >
-              {error ? "Choose an option to continue." : ""}
+              {error
+                ? q.type === "multi-select" && q.minSelections > 1
+                  ? `Choose at least ${q.minSelections} options to continue.`
+                  : "Choose an option to continue."
+                : ""}
             </span>
             <button onClick={onContinue} className="btn btn-primary px-8 text-xs">
               {step === TOTAL - 1 ? "See my results" : "Continue"} <span aria-hidden>→</span>
@@ -283,7 +309,7 @@ export default function FindMyBike() {
             <ol className="flex items-start gap-0 overflow-x-auto pb-1">
               {QUESTIONS.map((question, i) => {
                 const isActive = i === step;
-                const isDone = Boolean(answers[question.key]) && !isActive;
+                const isDone = isAnswerComplete(answers, question) && !isActive;
                 const reachable = i <= maxJump;
                 return (
                   <li key={question.key} className="flex min-w-[88px] flex-1 items-start">

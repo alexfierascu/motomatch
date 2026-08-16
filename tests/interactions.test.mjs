@@ -154,7 +154,28 @@ const check=(name,cond,detail="")=>{results.push([cond,name,detail]);console.log
     [...doc.querySelectorAll('[role="radio"][aria-checked="true"]')].length===1);
   click(byStart(doc,"Continue")); await tick();
 
-  const remaining=["City & commuting","Easy & approachable","I prefer automatic","Balanced",
+  // Multi-select: riding style allows 1–3 picks on the same premium cards
+  const checked=()=>[...doc.querySelectorAll('[role="checkbox"][aria-checked="true"]')];
+  check("Riding style renders as multi-select with its rule",
+    doc.querySelectorAll('[role="checkbox"]').length===5 && /Select up to 3/i.test(doc.body.textContent));
+  click(byLabel(doc,"City & commuting")); await tick();
+  click(byLabel(doc,"Weekend rides")); await tick();
+  click(byLabel(doc,"Long-distance touring")); await tick();
+  check("Three selections stay selected together", checked().length===3);
+  check("Selection counter shows 3/3", /3\/3 selected/i.test(doc.body.textContent));
+  click(byLabel(doc,"Adventure & mixed terrain")); await tick();
+  check("Cap blocks a 4th selection", checked().length===3 && !checked().some(b=>/Adventure/.test(b.textContent)));
+  click(byLabel(doc,"Weekend rides")); await tick();
+  check("Deselection still works at the cap", checked().length===2 && !checked().some(b=>/Weekend rides/.test(b.textContent)));
+  click(byLabel(doc,"Adventure & mixed terrain")); await tick();
+  check("Freed slot accepts a new selection", checked().length===3 && checked().some(b=>/Adventure/.test(b.textContent)));
+  click(byStart(doc,"← Back")); await tick();
+  click(byStart(doc,"Continue")); await tick();
+  check("Multi selections persist across navigation", checked().length===3);
+  click(byStart(doc,"Continue")); await tick();
+  check("Multi-select advances to question 3", /Question 3 of 10/.test(doc.body.textContent));
+
+  const remaining=["Easy & approachable","I prefer automatic","Balanced",
     "Lightweight & easy to handle","€8,000 – €12,000","Somewhat important","Almost never"];
   for (const label of remaining){ click(byLabel(doc,label)); await tick(); click(byStart(doc,"Continue")); await tick(); }
   check("Reaches question 10", /Question 10 of 10/.test(doc.body.textContent));

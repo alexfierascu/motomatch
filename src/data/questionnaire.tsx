@@ -1,20 +1,25 @@
-import type { QuestionnaireAnswers } from "../lib/questionnaire";
+import type { MultiSelectKey, SingleSelectKey } from "../lib/questionnaire";
 
 /* ────────────────────────────────────────────────────────────────────────────
  * The Find My Bike questionnaire: ten questions, centrally configured.
- * The UI renders exclusively from this file; answers are keyed by
- * `Question.key` into `QuestionnaireAnswers`.
+ * The UI renders exclusively from this file — each question declares its
+ * interaction type and the renderer branches on `question.type`, so adding
+ * a question (or a new type: slider, range, boolean …) is a config change
+ * plus one renderer branch, never a new page.
+ *
+ * Option ids are stable identifiers consumed by the matching adapter;
+ * titles/descriptions are presentation only.
  * ──────────────────────────────────────────────────────────────────────────*/
 
 export interface QuestionOption {
+  /** Stable id used in answers and by the matching adapter — never shown. */
   id: string;
   title: string;
   description: string;
   icon: React.ReactNode;
 }
 
-export interface Question {
-  key: keyof QuestionnaireAnswers;
+interface QuestionBase {
   category: string;
   /** Display heading; "\n" marks intentional line breaks. */
   title: string;
@@ -22,6 +27,26 @@ export interface Question {
   note: { title: string; body: string };
   options: QuestionOption[];
 }
+
+/** Exactly one option; the answer is a single option id. */
+export interface SingleSelectQuestion extends QuestionBase {
+  type: "single-select";
+  key: SingleSelectKey;
+}
+
+/** Between min and max options; the answer is an array of option ids in
+ *  pick order (first pick = primary where a single value is needed). */
+export interface MultiSelectQuestion extends QuestionBase {
+  type: "multi-select";
+  key: MultiSelectKey;
+  minSelections: number;
+  maxSelections: number;
+}
+
+/** Future types (slider, range, boolean …) join this union. */
+export type Question = SingleSelectQuestion | MultiSelectQuestion;
+
+export type QuestionType = Question["type"];
 
 /* ─────────────────────────── the emblem system ─────────────────────────────
  * Every answer renders as a technical emblem on a shared 48-unit grid:
@@ -363,6 +388,7 @@ function ConditionEmblem({ frac }: { frac: number }) {
 export const QUESTIONS: Question[] = [
   {
     key: "experience",
+    type: "single-select",
     category: "Experience",
     title: "How much\nriding experience\ndo you have?",
     description:
@@ -380,6 +406,9 @@ export const QUESTIONS: Question[] = [
   },
   {
     key: "ridingStyle",
+    type: "multi-select",
+    minSelections: 1,
+    maxSelections: 3,
     category: "Riding style",
     title: "What kind of riding\nwill you do most?",
     description: "Where and how you actually ride shapes the recommendation more than any single specification.",
@@ -397,6 +426,9 @@ export const QUESTIONS: Question[] = [
   },
   {
     key: "personality",
+    type: "multi-select",
+    minSelections: 1,
+    maxSelections: 2,
     category: "Personality",
     title: "What do you want\nyour bike to feel like?",
     description: "Two bikes with identical numbers can feel completely different. Character counts.",
@@ -414,6 +446,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     key: "transmission",
+    type: "single-select",
     category: "Transmission",
     title: "How do you feel\nabout shifting gears?",
     description: "Manual, automatic or undecided — there's no wrong answer, and it changes the matches meaningfully.",
@@ -430,6 +463,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     key: "performance",
+    type: "single-select",
     category: "Performance",
     title: "How much performance\nare you looking for?",
     description: "We score power as closeness to what you ask for — more is not automatically better.",
@@ -446,6 +480,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     key: "sizeFit",
+    type: "single-select",
     category: "Size & fit",
     title: "What kind of physical fit\nare you looking for?",
     description: "Seat height and weight decide how a bike feels at walking pace — where confidence is really made.",
@@ -463,6 +498,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     key: "budget",
+    type: "single-select",
     category: "Budget",
     title: "What is your\napproximate budget?",
     description: "Indicative European on-the-road prices, before gear and insurance.",
@@ -480,6 +516,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     key: "practicality",
+    type: "single-select",
     category: "Practicality",
     title: "How important\nis practicality?",
     description: "Storage, range, weather protection and everyday usability.",
@@ -496,6 +533,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     key: "passenger",
+    type: "single-select",
     category: "Passenger",
     title: "Will you regularly ride\nwith a passenger?",
     description: "Two-up riding needs a real pillion seat, sensible ergonomics and power in reserve.",
@@ -512,6 +550,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     key: "condition",
+    type: "single-select",
     category: "New or used",
     title: "What are you\nlooking for?",
     description: "MotoMatch currently lists new-bike prices; used listings are on the roadmap.",
