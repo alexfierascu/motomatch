@@ -3,6 +3,7 @@ import {
   BrowserRouter,
   HashRouter,
   Link,
+  Navigate,
   NavLink,
   Route,
   Routes,
@@ -65,6 +66,57 @@ function CompareProvider({ children }: { children: React.ReactNode }) {
   );
 
   return <CompareContext.Provider value={value}>{children}</CompareContext.Provider>;
+}
+
+/* ────────────────────────────── favorites ─────────────────────────────────
+ * App-wide saved bikes, persisted to localStorage. Any page can render a
+ * heart; a backend can later replace the storage layer without touching UI. */
+
+const FAVORITES_KEY = "motomatch.favorites.v1";
+
+interface FavoritesCtx {
+  favorites: string[];
+  toggleFavorite: (id: string) => void;
+  isFavorite: (id: string) => boolean;
+}
+
+const FavoritesContext = createContext<FavoritesCtx | null>(null);
+
+export function useFavorites(): FavoritesCtx {
+  const ctx = useContext(FavoritesContext);
+  if (!ctx) throw new Error("useFavorites must be used inside FavoritesProvider");
+  return ctx;
+}
+
+function FavoritesProvider({ children }: { children: React.ReactNode }) {
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    try {
+      const raw = localStorage.getItem(FAVORITES_KEY);
+      const parsed: unknown = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed.filter((x): x is string => typeof x === "string") : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    } catch {
+      /* storage unavailable — favorites still work for the session */
+    }
+  }, [favorites]);
+
+  const toggleFavorite = useCallback((id: string) => {
+    setFavorites((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  }, []);
+
+  const value = useMemo<FavoritesCtx>(
+    () => ({ favorites, toggleFavorite, isFavorite: (id) => favorites.includes(id) }),
+    [favorites, toggleFavorite],
+  );
+
+  return <FavoritesContext.Provider value={value}>{children}</FavoritesContext.Provider>;
 }
 
 /* ──────────────────────────────── chrome ──────────────────────────────────*/
@@ -348,7 +400,9 @@ function Shell() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/find-my-bike" element={<FindMyBike />} />
-          <Route path="/results" element={<Results />} />
+          <Route path="/find-my-bike/results" element={<Results />} />
+          {/* The results page used to live at /results — keep old links alive. */}
+          <Route path="/results" element={<Navigate to="/find-my-bike/results" replace />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/bikes/:id" element={<BikeDetail />} />
           <Route path="/compare" element={<Compare />} />
@@ -366,7 +420,9 @@ export default function App() {
   return (
     <Router>
       <CompareProvider>
-        <Shell />
+        <FavoritesProvider>
+          <Shell />
+        </FavoritesProvider>
       </CompareProvider>
     </Router>
   );

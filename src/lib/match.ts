@@ -40,12 +40,31 @@ export interface Dimension {
   weight: number;
 }
 
+/** One structured compatibility reason, tied to the dimension it came from. */
+export interface MatchReason {
+  /** Stable id, unique within one bike's reason list. */
+  id: string;
+  /** The scoring dimension that produced the reason. */
+  kind:
+    | "transmission"
+    | "style"
+    | "experience"
+    | "budget"
+    | "size"
+    | "performance"
+    | "practicality"
+    | "passenger"
+    | "editorial";
+  /** Human-readable presentation text. */
+  label: string;
+}
+
 export interface MatchResult {
   bike: Motorcycle;
   /** 0–100 overall compatibility. */
   score: number;
   breakdown: Dimension[];
-  reasons: string[];
+  reasons: MatchReason[];
   warnings: string[];
 }
 
@@ -284,25 +303,29 @@ function reasonsFor(
   a: QuizAnswers,
   b: Motorcycle,
   dims: Dimension[],
-): { reasons: string[]; warnings: string[] } {
-  const candidates: { key: string; text: string }[] = [];
+): { reasons: MatchReason[]; warnings: string[] } {
+  const candidates: MatchReason[] = [];
   const warnings: string[] = [];
   const tx = TRANSMISSIONS[b.transmission.type];
   const name = b.model + (b.variant ? ` ${b.variant}` : "");
+  const add = (id: string, kind: MatchReason["kind"], label: string) =>
+    candidates.push({ id, kind, label });
 
   // Transmission
   if ((a.shifting === "auto-only" || a.shifting === "prefer-auto") && b.transmission.fullyAutomatic) {
-    candidates.push({
-      key: "transmission",
-      text: `You said you'd rather not shift — the ${name}'s ${tx.short} is fully automatic: no clutch lever, no gear lever.`,
-    });
+    add(
+      "transmission-automatic",
+      "transmission",
+      `You said you'd rather not shift — the ${name}'s ${tx.short} is fully automatic: no clutch lever, no gear lever.`,
+    );
   } else if (a.shifting === "manual" && b.transmission.type === "manual") {
-    candidates.push({ key: "transmission", text: `Keeps the traditional manual gearbox you asked for.` });
+    add("transmission-manual", "transmission", `Keeps the traditional manual gearbox you asked for.`);
   } else if (a.shifting !== "auto-only" && b.transmission.type === "e-clutch") {
-    candidates.push({
-      key: "transmission",
-      text: `E-Clutch removes stalling and clutch work, while keeping a real gearbox — you still shift with your foot.`,
-    });
+    add(
+      "transmission-e-clutch",
+      "transmission",
+      `E-Clutch removes stalling and clutch work, while keeping a real gearbox — you still shift with your foot.`,
+    );
   }
   if (a.shifting === "auto-only" && !b.transmission.fullyAutomatic) {
     warnings.push(
@@ -316,24 +339,27 @@ function reasonsFor(
   if (!a.everything && a.ridingStyles.length > 0) {
     const hits = a.ridingStyles.filter((s) => b.ridingStyles.includes(s));
     if (hits.length > 0) {
-      candidates.push({
-        key: "style",
-        text: `You ride mostly ${hits.map((s) => STYLE_LABEL[s]).join(" and ")} — exactly what this bike is set up for.`,
-      });
+      add(
+        "style-overlap",
+        "style",
+        `You ride mostly ${hits.map((s) => STYLE_LABEL[s]).join(" and ")} — exactly what this bike is set up for.`,
+      );
     }
   } else if (a.everything && b.ridingStyles.length >= 4) {
-    candidates.push({
-      key: "style",
-      text: `You wanted a bit of everything — this is one of the most versatile machines in the database.`,
-    });
+    add(
+      "style-versatile",
+      "style",
+      `You wanted a bit of everything — this is one of the most versatile machines in the database.`,
+    );
   }
 
   // Experience
   if ((a.experience === "new" || a.experience === "little") && b.beginnerRating >= 8) {
-    candidates.push({
-      key: "experience",
-      text: `Rated ${b.beginnerRating}/10 for newer riders — forgiving power and easy manners.`,
-    });
+    add(
+      "experience-friendly",
+      "experience",
+      `Rated ${b.beginnerRating}/10 for newer riders — forgiving power and easy manners.`,
+    );
   }
   if (a.experience === "new" && b.beginnerRating <= 5) {
     warnings.push("Demanding as a first bike.");
@@ -343,13 +369,13 @@ function reasonsFor(
   if (a.budget != null) {
     if (b.price.eur <= a.budget) {
       const headroom = a.budget - b.price.eur;
-      candidates.push({
-        key: "budget",
-        text:
-          headroom >= 1500
-            ? `At ~€${b.price.eur.toLocaleString()} it leaves real room in your €${a.budget.toLocaleString()} budget for gear and insurance.`
-            : `Fits your €${a.budget.toLocaleString()} budget.`,
-      });
+      add(
+        "budget-fit",
+        "budget",
+        headroom >= 1500
+          ? `At ~€${b.price.eur.toLocaleString()} it leaves real room in your €${a.budget.toLocaleString()} budget for gear and insurance.`
+          : `Fits your €${a.budget.toLocaleString()} budget.`,
+      );
     } else {
       warnings.push(`About €${(b.price.eur - a.budget).toLocaleString()} over your budget.`);
     }
@@ -357,16 +383,10 @@ function reasonsFor(
 
   // Size
   if (a.manageability === "very" && b.dimensions.weight <= 195) {
-    candidates.push({
-      key: "size",
-      text: `${b.dimensions.weight} kg — among the lighter, more manageable bikes here.`,
-    });
+    add("size-weight", "size", `${b.dimensions.weight} kg — among the lighter, more manageable bikes here.`);
   }
   if (a.seat === "low" && b.dimensions.seatHeight <= 760) {
-    candidates.push({
-      key: "size",
-      text: `${b.dimensions.seatHeight} mm seat — low enough for most riders to flat-foot.`,
-    });
+    add("size-seat", "size", `${b.dimensions.seatHeight} mm seat — low enough for most riders to flat-foot.`);
   }
   if (a.seat === "low" && b.dimensions.seatHeight > 820) {
     warnings.push(`${b.dimensions.seatHeight} mm seat is tall, and you asked for low.`);
@@ -374,33 +394,37 @@ function reasonsFor(
 
   // Performance
   if (a.performance === "serious" && b.performanceLevel >= 8) {
-    candidates.push({
-      key: "performance",
-      text: `${b.engine.horsepower} hp and ${b.engine.torque} Nm — performance is what this bike is for.`,
-    });
+    add(
+      "performance-flagship",
+      "performance",
+      `${b.engine.horsepower} hp and ${b.engine.torque} Nm — performance is what this bike is for.`,
+    );
   } else if (a.performance === "easy" && b.performanceLevel <= 3) {
-    candidates.push({ key: "performance", text: `Soft, predictable power delivery — nothing here will catch you out.` });
+    add("performance-gentle", "performance", `Soft, predictable power delivery — nothing here will catch you out.`);
   }
 
   // Practicality & passenger
   if ((a.practicality === "very" || a.practicality === "everything") && b.practicality >= 8) {
-    candidates.push({ key: "practicality", text: `One of the most practical machines in the database — storage, range and everyday usability.` });
+    add(
+      "practicality-workhorse",
+      "practicality",
+      `One of the most practical machines in the database — storage, range and everyday usability.`,
+    );
   }
   if (a.passenger === "frequently" && b.passengerSuitability >= 7) {
-    candidates.push({ key: "passenger", text: `Genuinely comfortable two-up, which you said matters.` });
+    add("passenger-two-up", "passenger", `Genuinely comfortable two-up, which you said matters.`);
   } else if (a.passenger === "frequently" && b.passengerSuitability <= 4) {
     warnings.push("Not a great passenger bike, and you ride two-up often.");
   }
 
-  // Order by dimension contribution, dedupe by key order stability, cap at 5.
+  // Order by dimension contribution, cap at 5.
   const rank = new Map(dims.map((d) => [d.key, d.score * d.weight]));
   const reasons = candidates
-    .sort((x, y) => (rank.get(y.key) ?? 0) - (rank.get(x.key) ?? 0))
-    .map((c) => c.text)
+    .sort((x, y) => (rank.get(y.kind) ?? 0) - (rank.get(x.kind) ?? 0))
     .slice(0, 5);
 
   // Guarantee at least two reasons using the bike's own editorial line.
-  if (reasons.length < 2) reasons.push(b.whoFor);
+  if (reasons.length < 2) reasons.push({ id: "editorial", kind: "editorial", label: b.whoFor });
 
   return { reasons, warnings: warnings.slice(0, 3) };
 }

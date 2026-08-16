@@ -73,7 +73,7 @@ export default function FindMyBike() {
     }
     if (step === TOTAL - 1) {
       persist(answers, step, true);
-      navigate("/results");
+      navigate("/find-my-bike/results");
       return;
     }
     goTo(step + 1);

@@ -8,6 +8,7 @@ const jsFile = fs.readdirSync(path.join(dist, "assets")).find((f) => f.endsWith(
 const js = fs.readFileSync(path.join(dist, "assets", jsFile), "utf8");
 
 const routes = ["/", "/explore", "/find-my-bike", "/compare", "/about",
+                "/find-my-bike/results", "/results",
                 "/bikes/yamaha-mt-07-y-amt", "/bikes/cfmoto-450sr",
                 "/bikes/honda-nc750x-dct", "/bikes/nope-does-not-exist"];
 

@@ -190,9 +190,34 @@ const check=(name,cond,detail="")=>{results.push([cond,name,detail]);console.log
   click(byStart(doc,"See my results")); await tick();
   check("Analyzing transition shows", /Analyzing your riding style/i.test(doc.body.textContent));
   await tick(2200);
-  check("Results render at /results", /Your matches/.test(doc.body.textContent) && /#1 best match/i.test(doc.body.textContent));
+  check("Results render at /find-my-bike/results",
+    /Your matches/.test(doc.body.textContent) && /Best match/i.test(doc.body.textContent) &&
+    /Other strong matches/i.test(doc.body.textContent));
   const winner=[...doc.querySelectorAll("h2")].find(h=>(h.className||"").includes("font-display"))?.textContent??"";
   check("Winner is not an E-Clutch bike (user prefers automatic)", winner.length>0 && !/E-Clutch/.test(winner), `→ ${winner.trim()}`);
+  check("Why-it-matches reasons render", doc.querySelectorAll("section[aria-label='Best match'] li").length>=2);
+
+  // Favorites: heart toggles centralized state
+  const heart=doc.querySelector('article button[aria-pressed]');
+  click(heart); await tick();
+  check("Favorite heart toggles on", doc.querySelector('article button[aria-pressed="true"]')!==null);
+  click(doc.querySelector('article button[aria-pressed="true"]')); await tick();
+  check("Favorite heart toggles off", doc.querySelector('article button[aria-pressed="true"]')===null);
+
+  // View all results expands beyond the initial four cards
+  const cardsBefore=doc.querySelectorAll("article").length;
+  click(byStart(doc,"View all results")); await tick();
+  check("View all results expands the grid", doc.querySelectorAll("article").length>cardsBefore,
+    `→ ${cardsBefore} → ${doc.querySelectorAll("article").length}`);
+
+  // Progress rail returns to a specific question with answers intact
+  click(doc.querySelector("button[aria-label='Edit question 4: Transmission']")); await tick(); await tick();
+  check("Progress step jumps back into the questionnaire", /Question 4 of 10/.test(doc.body.textContent));
+
+  // Answers are preserved, so Continue walks straight back to the end
+  for (let i=0;i<6;i++){ click(byStart(doc,"Continue")); await tick(); }
+  click(byStart(doc,"See my results")); await tick(); await tick(2200);
+  check("Re-finishing returns to results", /Best match/i.test(doc.body.textContent));
 
   click(byText(doc,"button","Start over")); await tick(); await tick();
   check("Start over clears and returns to question 1", /Question 1 of 10/.test(doc.body.textContent));
