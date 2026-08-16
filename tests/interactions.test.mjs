@@ -234,10 +234,10 @@ const check=(name,cond,detail="")=>{results.push([cond,name,detail]);console.log
   check("Mobile filter drawer closes", ![...doc.querySelectorAll("button")].some(b=>/^Show \d+$/.test(b.textContent.trim())));
 }
 {
-  const {doc,tick,click}=await boot("/bikes/honda-cmx500-rebel-e-clutch");
+  const {doc,tick,click}=await boot("/bike/honda-cmx500-rebel-e-clutch");
   check("E-Clutch page labels it semi-automatic", /Clutchless, but you still shift/.test(doc.body.textContent));
   check("E-Clutch page states foot shifting", /still tap the gear lever/.test(doc.body.textContent));
-  check("Who is it for section present", /Who is it for/.test(doc.body.textContent) && /Maybe not for you if/.test(doc.body.textContent));
+  check("Who is it for section present", /Who is this bike for/.test(doc.body.textContent) && /Maybe not for you if/.test(doc.body.textContent));
   const src=byText(doc,"span","Sources")?.closest("button");
   click(src); await tick();
   check("Sources section expands", /Last verified: August 2026/.test(doc.body.textContent));

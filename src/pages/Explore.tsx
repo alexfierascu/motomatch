@@ -274,7 +274,7 @@ export default function Explore() {
                             className={`px-3 py-2.5 ${c.numeric ? "data text-right whitespace-nowrap" : ""}`}
                           >
                             {c.key === "name" && (
-                              <Link to={`/bikes/${b.id}`} className="font-medium hover:text-accent">
+                              <Link to={`/bike/${b.id}`} className="font-medium hover:text-accent">
                                 {bikeName(b)}
                               </Link>
                             )}

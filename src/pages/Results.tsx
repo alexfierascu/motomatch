@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import type { Category, Motorcycle } from "../data/types";
-import { MOTORCYCLES, bikeName } from "../data/motorcycles";
+import type { Category } from "../data/types";
+import { MOTORCYCLES } from "../data/motorcycles";
 import { QUESTIONS } from "../data/questionnaire";
 import { matchAll, type MatchResult } from "../lib/match";
 import {
@@ -15,7 +15,8 @@ import { Price } from "../components/BikeCard";
 import { TRANSMISSIONS } from "../data/transmissions";
 import { usePageMeta } from "../lib/seo";
 import { prefersReducedMotion } from "../lib/motion";
-import { useCompare, useFavorites } from "../App";
+import { useCompare } from "../App";
+import { FavoriteButton } from "../components/Favorite";
 
 const GUTTER = "mx-auto max-w-[1400px] px-4 md:px-8";
 
@@ -85,22 +86,6 @@ function applyFilters(list: MatchResult[], f: ResultFilters): MatchResult[] {
 
 /* ──────────────────────────────── icons ───────────────────────────────────*/
 
-const HeartIcon = ({ filled }: { filled: boolean }) => (
-  <svg
-    width="17"
-    height="17"
-    viewBox="0 0 24 24"
-    fill={filled ? "currentColor" : "none"}
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden
-  >
-    <path d="M12 20.3C7.2 16.5 3.8 13.3 3.8 9.7 3.8 7.1 5.8 5 8.3 5c1.5 0 2.9.7 3.7 1.9C12.8 5.7 14.2 5 15.7 5c2.5 0 4.5 2.1 4.5 4.7 0 3.6-3.4 6.8-8.2 10.6z" />
-  </svg>
-);
-
 const SlidersIcon = (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
     <path d="M4 8h9M17.5 8H20M4 16h2.5M11 16h9" />
@@ -165,24 +150,6 @@ function SpecCell({ value, label }: { value: React.ReactNode; label: string }) {
       <div className="data text-[14px] text-fg">{value}</div>
       <div className="eyebrow mt-1">{label}</div>
     </div>
-  );
-}
-
-function FavoriteButton({ bike }: { bike: Motorcycle }) {
-  const { isFavorite, toggleFavorite } = useFavorites();
-  const on = isFavorite(bike.id);
-  return (
-    <button
-      type="button"
-      onClick={() => toggleFavorite(bike.id)}
-      aria-pressed={on}
-      aria-label={on ? `Remove ${bikeName(bike)} from favorites` : `Save ${bikeName(bike)} to favorites`}
-      className={`flex h-8 w-8 items-center justify-center rounded-full border transition-colors ${
-        on ? "border-accent text-accent" : "border-line text-dim hover:border-line-bright hover:text-muted"
-      }`}
-    >
-      <HeartIcon filled={on} />
-    </button>
   );
 }
 
@@ -257,7 +224,7 @@ function BestMatch({ result }: { result: MatchResult }) {
               </ul>
             )}
             <div className="mt-auto flex flex-col gap-2.5 pt-6">
-              <Link to={`/bikes/${b.id}`} className="btn btn-primary justify-center text-xs">
+              <Link to={`/bike/${b.id}`} className="btn btn-primary justify-center text-xs">
                 View details <span aria-hidden>→</span>
               </Link>
               <button
@@ -313,7 +280,7 @@ function MatchCard({ result, rank }: { result: MatchResult; rank: number }) {
           <SpecCell value={<Price p={b.price} />} label="Est. price" />
         </div>
         <Link
-          to={`/bikes/${b.id}`}
+          to={`/bike/${b.id}`}
           className="btn btn-ghost mt-auto w-full justify-center text-xs"
         >
           View details <span aria-hidden>→</span>

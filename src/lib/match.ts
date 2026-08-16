@@ -429,6 +429,15 @@ function reasonsFor(
   return { reasons, warnings: warnings.slice(0, 3) };
 }
 
+/** Plain-language quality band for a 0–100 compatibility score. */
+export function matchQuality(score: number): string {
+  if (score >= 90) return "Excellent match";
+  if (score >= 80) return "Great match";
+  if (score >= 65) return "Good match";
+  if (score >= 50) return "Fair match";
+  return "Weak match";
+}
+
 /** Convenience for the results page: best + strong alternatives + the rest. */
 export function matchGroups(answers: QuizAnswers) {
   const all = matchAll(answers);

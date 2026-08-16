@@ -9,6 +9,7 @@ import {
   Routes,
   useLocation,
   useNavigate,
+  useParams,
 } from "react-router-dom";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
@@ -369,6 +370,12 @@ function ScrollToTop() {
   return null;
 }
 
+/** Detail pages moved from /bikes/:id to /bike/:id — keep old links alive. */
+function LegacyBikeRedirect() {
+  const { id } = useParams();
+  return <Navigate to={`/bike/${id}`} replace />;
+}
+
 /** Old deployments and bookmarks used hash routes — map them to clean URLs. */
 function LegacyHashRedirect() {
   const navigate = useNavigate();
@@ -404,7 +411,8 @@ function Shell() {
           {/* The results page used to live at /results — keep old links alive. */}
           <Route path="/results" element={<Navigate to="/find-my-bike/results" replace />} />
           <Route path="/explore" element={<Explore />} />
-          <Route path="/bikes/:id" element={<BikeDetail />} />
+          <Route path="/bike/:id" element={<BikeDetail />} />
+          <Route path="/bikes/:id" element={<LegacyBikeRedirect />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<NotFound />} />

@@ -190,7 +190,7 @@ export default function Compare() {
                   </div>
                   <div className="mt-3 text-left">
                     <div className="eyebrow">{b.manufacturer}</div>
-                    <Link to={`/bikes/${b.id}`} className="block font-display text-xl uppercase leading-tight hover:text-accent">
+                    <Link to={`/bike/${b.id}`} className="block font-display text-xl uppercase leading-tight hover:text-accent">
                       {b.model}
                       {b.variant && <span className="text-accent"> {b.variant}</span>}
                     </Link>

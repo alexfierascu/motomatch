@@ -205,7 +205,7 @@ function HeroSection() {
         </div>
 
         <Link
-          to={`/bikes/${bike.id}`}
+          to={`/bike/${bike.id}`}
           className="group mt-12 inline-flex items-center gap-3 rounded-full border border-line-bright bg-ink/60 py-2 pl-4 pr-2 backdrop-blur-sm transition-colors hover:border-accent md:absolute md:bottom-8 md:right-8 md:mt-0"
         >
           <span className="text-left">
@@ -547,13 +547,13 @@ function PerfectMatchSection() {
                 </ul>
                 <div className="mt-4 flex items-center justify-between border-t border-line pt-3.5">
                   <Link
-                    to={`/bikes/${best.bike.id}`}
+                    to={`/bike/${best.bike.id}`}
                     className="data text-[11px] uppercase tracking-[0.18em] text-fg underline-offset-4 hover:text-accent hover:underline"
                   >
                     View details
                   </Link>
                   <Link
-                    to={`/bikes/${best.bike.id}`}
+                    to={`/bike/${best.bike.id}`}
                     aria-label={`Open ${bikeName(best.bike)}`}
                     className="flex h-9 w-9 items-center justify-center rounded-full border border-line-bright text-muted transition-colors hover:border-accent hover:text-accent"
                   >
@@ -593,7 +593,7 @@ function PerfectMatchSection() {
                   return (
                     <Link
                       key={r.bike.id}
-                      to={`/bikes/${r.bike.id}`}
+                      to={`/bike/${r.bike.id}`}
                       className="group flex items-center gap-4 rounded-2xl border border-line bg-raised p-3 transition-colors hover:border-line-bright"
                     >
                       <span className="data flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-line text-[11px] text-muted">
@@ -819,7 +819,7 @@ function FourDifferentAnswersSection() {
           {personas.map(({ num, persona, traits, bike }, i) => (
             <Link
               key={num}
-              to={`/bikes/${bike!.id}`}
+              to={`/bike/${bike!.id}`}
               className="reveal group overflow-hidden rounded-2xl border border-line bg-panel transition-colors hover:border-line-bright"
               style={{ transitionDelay: `${i * 0.08}s` }}
             >
