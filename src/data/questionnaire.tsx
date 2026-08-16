@@ -23,279 +23,340 @@ export interface Question {
   options: QuestionOption[];
 }
 
-/* ─────────────────────────────── icons ────────────────────────────────────
- * One consistent thin-stroke set. Parametric helpers keep 40+ options from
- * needing 40+ bespoke drawings. */
+/* ─────────────────────────── the emblem system ─────────────────────────────
+ * Every answer renders as a technical emblem on a shared 48-unit grid:
+ *
+ *   · a fine track ring with four index marks — the container;
+ *   · on ordinal questions, a stage arc that fills the ring with the
+ *     option's position on its scale (25/50/75/100 …);
+ *   · a minimal pictogram built from a small shared vocabulary — the
+ *     position dot, the line, the arc.
+ *
+ * Everything draws in currentColor, so the card state (muted at rest,
+ * accent when selected) recolors the whole mark. */
 
-const P = {
-  viewBox: "0 0 24 24",
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.5,
-  strokeLinecap: "round",
-  strokeLinejoin: "round",
-  /* One optical size for the whole family; responsive via CSS. */
-  className: "h-10 w-10 lg:h-11 lg:w-11",
-} as const;
+const R = 20;
+const TAU = Math.PI * 2;
 
-const HelmetIcon = (
-  <svg {...P} aria-hidden>
-    {/* full-face shell, 3/4 stance */}
-    <path d="M4.6 12.1C4.6 7.3 7.9 4 12 4s7.4 3.3 7.4 8.1v3.4a3.3 3.3 0 0 1-3.3 3.3H7.9a3.3 3.3 0 0 1-3.3-3.3z" />
-    {/* visor aperture */}
-    <path d="M7 11.2h9.2a1.5 1.5 0 0 1 1.5 1.5v.1a1.5 1.5 0 0 1-1.5 1.5H9.8a2.8 2.8 0 0 1-2.8-2.8z" />
-    {/* chin vent */}
-    <path d="M13.6 17h3" />
-  </svg>
-);
+/** Point on a circle around (24,24); `frac` is clockwise from 12 o'clock. */
+function pt(frac: number, r: number): [number, number] {
+  const a = frac * TAU;
+  return [+(24 + r * Math.sin(a)).toFixed(2), +(24 - r * Math.cos(a)).toFixed(2)];
+}
 
-const GlovesIcon = (
-  <svg {...P} aria-hidden>
-    {/* fingers */}
-    <path d="M8.3 11.5V6.6a1.15 1.15 0 0 1 2.3 0V11" />
-    <path d="M10.6 11V5.4a1.15 1.15 0 0 1 2.3 0V11" />
-    <path d="M12.9 11V6a1.15 1.15 0 0 1 2.3 0v5.6" />
-    {/* thumb + palm to gauntlet cuff */}
-    <path d="M15.2 11.9l1.1-1.5a1.3 1.3 0 0 1 2.1 1.5l-2.1 4.4a4.9 4.9 0 0 1-4.4 2.8h-1.5A4.4 4.4 0 0 1 6 14.7V9.2a1.15 1.15 0 0 1 2.3 0" />
-    {/* knuckle armour */}
-    <path d="M8.7 13.5c1.8-.7 3.7-.7 5.4 0" />
-  </svg>
-);
+/** Clockwise arc from 12 o'clock spanning `frac` of a circle of radius `r`. */
+function arcPath(frac: number, r: number): string {
+  const [x0, y0] = pt(0, r);
+  const [x, y] = pt(frac, r);
+  return `M${x0} ${y0}A${r} ${r} 0 ${frac > 0.5 ? 1 : 0} 1 ${x} ${y}`;
+}
 
-const JacketIcon = (
-  <svg {...P} aria-hidden>
-    {/* torso + sleeves */}
-    <path d="M9.3 4.4L5.9 6.6 4.6 11l2.2.8V19h10.4v-7.2l2.2-.8-1.3-4.4-3.4-2.2" />
-    {/* collar */}
-    <path d="M9.3 4.4L12 6.4l2.7-2" />
-    {/* main zip */}
-    <path d="M12 6.4V19" />
-    {/* chest panel seams */}
-    <path d="M7.6 13.4h2.6M13.8 13.4h2.6" />
-  </svg>
-);
+/** Bezel index marks at the four diagonals, just outside the track ring. */
+const TICKS =
+  "M39.06 8.94l1.42-1.42M39.06 39.06l1.42 1.42M8.94 39.06l-1.42 1.42M8.94 8.94L7.52 7.52";
 
-const RoadIcon = (
-  <svg {...P} aria-hidden>
-    {/* road edges converging to the horizon */}
-    <path d="M5.2 20c3.4-4.8 4-10.5 4.6-15.5" />
-    <path d="M18.8 20c-3.4-4.8-4-10.5-4.6-15.5" />
-    {/* centreline, foreshortened */}
-    <path d="M12 19.6v-2.4M12 14.2v-1.9M12 9.4V7.9M12 5.4v-1" />
-  </svg>
-);
+function Dot({ x, y, r = 2 }: { x: number; y: number; r?: number }) {
+  return <circle cx={x} cy={y} r={r} fill="currentColor" stroke="none" />;
+}
 
-const CityIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M4 20V8h6v12M10 20V4h6v16M16 20v-9h4v9M3 20h18" />
-    <path d="M6.5 11h1M6.5 14h1M12.5 8h1M12.5 12h1" />
-  </svg>
-);
-
-const SunRoadIcon = (
-  <svg {...P} aria-hidden>
-    <circle cx="17" cy="7" r="2.6" />
-    <path d="M4 20c5-3.5 6-8 5-14M12 20c2.5-2.5 3.5-5.5 3.5-8.5" />
-  </svg>
-);
-
-const HorizonIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M3 16h18M6 16c2-5.5 10-5.5 12 0" />
-    <path d="M12 5v2M12 11v1.5" />
-  </svg>
-);
-
-const MountainsIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M3 18L9 7l4 7 3-4 5 8z" />
-  </svg>
-);
-
-const SpeedLinesIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M13 5l6 7-6 7M4 9h6M2.5 12.5H10M4 16h6" />
-  </svg>
-);
-
-const LeafIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M6 18C6 10 11 5 19 5c0 8-5 13-13 13z" />
-    <path d="M6 18c3-4 6-7 9-9" />
-  </svg>
-);
-
-const SparkIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z" />
-  </svg>
-);
-
-const BoltIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M13 3L6 13h5l-1 8 7-10h-5z" />
-  </svg>
-);
-
-const ArmchairIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M6 12V7a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v5" />
-    <path d="M5 12a2 2 0 0 1 2 2v2h10v-2a2 2 0 0 1 4 0v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z" />
-  </svg>
-);
-
-const CompassIcon = (
-  <svg {...P} aria-hidden>
-    <circle cx="12" cy="12" r="8.5" />
-    <path d="M15.5 8.5l-2 5-5 2 2-5z" />
-  </svg>
-);
-
-const LeverIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M4 15h9M13 15a4 4 0 0 0 4-4V6" />
-    <circle cx="17" cy="4.5" r="1.5" />
-    <path d="M4 13v4" />
-  </svg>
-);
-
-const AutoIcon = (
-  <svg {...P} aria-hidden>
-    <circle cx="12" cy="12" r="8.5" />
-    <path d="M9.2 15.5L12 8l2.8 7.5M10.2 13h3.6" />
-  </svg>
-);
-
-const EitherIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M7 8h10M14 5l3 3-3 3M17 16H7M10 13l-3 3 3 3" />
-  </svg>
-);
-
-const QuestionIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M9 9a3 3 0 1 1 4.6 2.5c-1 .7-1.6 1.2-1.6 2.5" />
-    <path d="M12 17.5v.2" />
-  </svg>
-);
-
-/** Speedometer with a needle position: 0 (low) … 3 (max). */
-function GaugeIcon({ level }: { level: 0 | 1 | 2 | 3 }) {
-  const angles = [150, 105, 70, 30];
-  const a = (angles[level] * Math.PI) / 180;
-  const x = 12 + 6.4 * Math.cos(a);
-  const y = 15 - 6.4 * Math.sin(a);
+function Emblem({
+  stage,
+  of,
+  children,
+}: {
+  stage?: number;
+  of?: number;
+  children?: React.ReactNode;
+}) {
+  const frac = stage && of ? stage / of : null;
+  const [ex, ey] = frac ? pt(frac >= 1 ? 0 : frac, R) : [0, 0];
   return (
-    <svg {...P} aria-hidden>
-      <path d="M4 15a8 8 0 1 1 16 0" />
-      <path d={`M12 15L${x.toFixed(1)} ${y.toFixed(1)}`} />
-      <path d="M4.5 18h15" />
+    <svg
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-[52px] w-[52px] lg:h-14 lg:w-14"
+      aria-hidden
+    >
+      <circle cx="24" cy="24" r={R} strokeWidth="1" opacity="0.22" />
+      <path d={TICKS} strokeWidth="1" opacity="0.45" />
+      {frac != null &&
+        (frac >= 1 ? <circle cx="24" cy="24" r={R} /> : <path d={arcPath(frac, R)} />)}
+      {frac != null && <Dot x={ex} y={ey} r={1.7} />}
+      {children}
     </svg>
   );
 }
 
-const SeatLowIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M4 12c4 2 10 2 16-1M7 12.8V16M12 5.5v3M10.5 7l1.5 1.5L13.5 7" />
-  </svg>
+/* ── experience: one mark in four stages — begin, develop, control, master ──*/
+
+/** Stage 01 — the position reticle: on the grid, ready to start. */
+const BeginEmblem = (
+  <Emblem stage={1} of={4}>
+    <circle cx="24" cy="24" r="7" strokeWidth="1.25" />
+    <path d="M24 10.5v3.5M24 34v3.5M10.5 24h3.5M34 24h3.5" strokeWidth="1.25" />
+    <Dot x={24} y={24} />
+  </Emblem>
 );
 
-const SeatStdIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M4 11c4 2 10 2 16-1M7 11.8V15M12 15v3M12 15h5" />
-  </svg>
+/** Stage 02 — first trajectory: the dot in motion, history dotted behind. */
+const DevelopEmblem = (
+  <Emblem stage={2} of={4}>
+    <path d="M20 31.5C25 30 29 25.5 32.5 17.5" />
+    <circle cx="32.5" cy="17.5" r="4.6" strokeWidth="1" opacity="0.5" />
+    <circle cx="15.8" cy="32.7" r="0.9" fill="currentColor" stroke="none" />
+    <circle cx="11.9" cy="33.8" r="0.9" fill="currentColor" stroke="none" />
+    <Dot x={32.5} y={17.5} />
+  </Emblem>
 );
 
-const SeatTallIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M4 14c4 2 10 2 16-1M7 14.8V18M12 10.5v-3M10.5 9L12 7.5 13.5 9" />
-  </svg>
+/** Stage 03 — the calibrated axis: centred, level, in control. */
+const ControlEmblem = (
+  <Emblem stage={3} of={4}>
+    <path d="M10.5 24h27" />
+    <path d="M10.5 20.8v6.4M37.5 20.8v6.4" strokeWidth="1.25" />
+    <path d="M17.25 22.2v3.6M30.75 22.2v3.6" strokeWidth="1" opacity="0.55" />
+    <Dot x={24} y={24} r={2.2} />
+  </Emblem>
 );
 
-const FeatherIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M19 5c-7 0-11 4-12 11v3" />
-    <path d="M19 5c0 7-4 11-11 11" />
-    <path d="M13 8.5V11M15.5 7v2.5" />
-  </svg>
+/** Stage 04 — the full sweep: carving your own line, echo trailing. */
+const MasterEmblem = (
+  <Emblem stage={4} of={4}>
+    <path d="M10.5 33.5C17.5 34 21 28.5 24 24C27 19.5 30.5 14.5 37.5 14" />
+    <path d="M14 37C18.5 36 21.5 32.5 24.5 28" strokeWidth="1.25" opacity="0.45" />
+    <Dot x={37.5} y={14} />
+  </Emblem>
 );
 
-const NeutralIcon = (
-  <svg {...P} aria-hidden>
-    <circle cx="12" cy="12" r="8.5" />
-    <path d="M8.5 12h7" />
-  </svg>
+/* ── riding style: five routes, drawn with the same pen ─────────────────────*/
+
+const CityEmblem = (
+  <Emblem>
+    <path d="M13 35V23h10.5V12.5H35" />
+    <circle cx="13" cy="12.5" r="1" fill="currentColor" stroke="none" opacity="0.45" />
+    <circle cx="31" cy="31" r="1" fill="currentColor" stroke="none" opacity="0.45" />
+    <Dot x={35} y={12.5} />
+  </Emblem>
 );
 
-/** Euro wallet with 1–5 level bars. */
-function BudgetIcon({ level }: { level: 1 | 2 | 3 | 4 | 5 }) {
+const WeekendEmblem = (
+  <Emblem>
+    <path d="M21.5 34.4C13 31.8 9.8 23 15.3 17.2C20.4 11.8 30.6 12.4 34 18.4C37.1 24 33.6 31.4 27.6 33.9" />
+    <Dot x={24.6} y={34.6} />
+  </Emblem>
+);
+
+const TouringEmblem = (
+  <Emblem>
+    <path d="M9.8 28.5A20.5 20.5 0 0 1 38.2 28.5" />
+    <path d="M9.8 31.2v-5.4" strokeWidth="1.25" />
+    <path d="M14 33.5h20" strokeWidth="1" opacity="0.3" />
+    <Dot x={38.2} y={28.5} />
+  </Emblem>
+);
+
+const AdventureEmblem = (
+  <Emblem>
+    <path d="M10.5 31.5L18 20.5l4.8 5.8L29.5 15l8 11.5" />
+    <path d="M13 35h22" strokeWidth="1" opacity="0.35" />
+    <Dot x={29.5} y={15} />
+  </Emblem>
+);
+
+const SportEmblem = (
+  <Emblem>
+    <path d="M11.5 34.5C19.5 33 26.5 28.5 31 21.5C32.5 19 33.6 16.3 34.2 13.8" />
+    <path d="M12 27.5l4.6-1.7M11.5 21.5l3.6-1.3" strokeWidth="1.25" opacity="0.55" />
+    <Dot x={34.2} y={13.8} />
+  </Emblem>
+);
+
+/* ── personality: five temperament lines ────────────────────────────────────*/
+
+const EasyEmblem = (
+  <Emblem>
+    <path d="M10.5 24.5c4.5-3 9-3 13.5 0s9 3 13.5 0" />
+    <Dot x={37.5} y={24.5} />
+  </Emblem>
+);
+
+const FunEmblem = (
+  <Emblem>
+    <path d="M10.5 26.5c2.6-6.5 5.8-6.5 8.4 0s5.8 6.5 8.4 0 5.8-6.5 8.4 0" />
+    <Dot x={35.7} y={26.5} />
+  </Emblem>
+);
+
+const FastEmblem = (
+  <Emblem>
+    <path d="M13 32.5L34.5 14" />
+    <path d="M11.5 26l5.5-4.7M10.8 19.8l4.2-3.6" strokeWidth="1.25" opacity="0.5" />
+    <Dot x={34.5} y={14} />
+  </Emblem>
+);
+
+const ComfortEmblem = (
+  <Emblem>
+    <path d="M10.5 20.5C12.5 28.5 17.5 32.5 24 32.5s11.5-4 13.5-12" />
+    <Dot x={24} y={32.5} />
+  </Emblem>
+);
+
+const CapableEmblem = (
+  <Emblem>
+    <path d="M11.5 31.5L24 13.5l12.5 18" />
+    <path d="M14 35h20" strokeWidth="1" opacity="0.35" />
+    <Dot x={24} y={13.5} />
+  </Emblem>
+);
+
+/* ── transmission ───────────────────────────────────────────────────────────*/
+
+/** Sequential gear ladder, first position engaged. */
+const ManualEmblem = (
+  <Emblem>
+    <path d="M24 12.5v23M19 17.5h10M19 24h10M19 30.5h10" />
+    <Dot x={24} y={17.5} />
+  </Emblem>
+);
+
+/** Seamless loop — drive without interruption. */
+const AutoEmblem = (
+  <Emblem>
+    <path d="M24 14A10 10 0 1 1 15.34 19" />
+    <path d="M12.1 21.3L15.34 19L15 23" />
+    <Dot x={24} y={24} />
+  </Emblem>
+);
+
+/** The junction: both paths open. */
+const EitherEmblem = (
+  <Emblem>
+    <path d="M10.5 24h8M18.5 24c6 0 6-6.5 12-7.5M18.5 24c6 0 6 6.5 12 7.5" />
+    <Dot x={30.5} y={16.5} />
+    <Dot x={30.5} y={31.5} />
+  </Emblem>
+);
+
+/** An orbit not yet settled. */
+const UndecidedEmblem = (
+  <Emblem>
+    <circle cx="24" cy="24" r="9.5" strokeDasharray="0.1 4.87" />
+    <Dot x={24} y={24} />
+  </Emblem>
+);
+
+/* ── performance: dial and needle, four positions ───────────────────────────*/
+
+function GaugeEmblem({ level }: { level: 0 | 1 | 2 | 3 }) {
+  const a = ([-105, -35, 35, 105][level] * Math.PI) / 180;
+  const x = (24 + 10 * Math.sin(a)).toFixed(2);
+  const y = (24 - 10 * Math.cos(a)).toFixed(2);
   return (
-    <svg {...P} aria-hidden>
-      <path d="M15 8.5a4.5 4.5 0 1 0 0 7M7.5 10.7h6M7.5 13.3h5" />
-      {Array.from({ length: 5 }, (_, i) => (
-        <path key={i} d={`M${5.2 + i * 3.4} 21h2.2`} opacity={i < level ? 1 : 0.25} />
+    <Emblem stage={level + 1} of={4}>
+      <path d="M16.22 31.78A11 11 0 1 1 31.78 31.78" strokeWidth="1" opacity="0.4" />
+      <path d={`M24 24L${x} ${y}`} />
+      <Dot x={24} y={24} r={2.2} />
+    </Emblem>
+  );
+}
+
+/* ── size & fit ─────────────────────────────────────────────────────────────*/
+
+/** Seat-height gauge: ground line, stem, seat line at `h`. */
+function SeatEmblem({ h }: { h: number }) {
+  return (
+    <Emblem>
+      <path d="M11.5 33.5h25" strokeWidth="1.25" opacity="0.55" />
+      <path d={`M17.5 33.5V${h}H31.5`} />
+      <Dot x={31.5} y={h} />
+    </Emblem>
+  );
+}
+
+/** Mass, lifted: light and easy to handle. */
+const LightweightEmblem = (
+  <Emblem>
+    <circle cx="24" cy="17.5" r="4.6" />
+    <path d="M20 27l4-3.8 4 3.8M20 33l4-3.8 4 3.8" strokeWidth="1.25" />
+  </Emblem>
+);
+
+/** Open in every direction. */
+const AnyFitEmblem = (
+  <Emblem>
+    <path d="M28.4 19.6l4.2-4.2M28.4 28.4l4.2 4.2M19.6 28.4l-4.2 4.2M19.6 19.6l-4.2-4.2" strokeWidth="1.25" />
+    <Dot x={24} y={24} />
+  </Emblem>
+);
+
+/* ── budget: a range meter in five steps ────────────────────────────────────*/
+
+function BudgetEmblem({ level }: { level: 1 | 2 | 3 | 4 | 5 }) {
+  const w = (26 * level) / 5;
+  return (
+    <Emblem stage={level} of={5}>
+      <path d="M11 25.5h26" strokeWidth="1" opacity="0.3" />
+      <path d={`M11 25.5h${w.toFixed(1)}`} />
+      <path d="M11 30.5v1.8M17.5 30.5v1.8M24 30.5v1.8M30.5 30.5v1.8M37 30.5v1.8" strokeWidth="1" opacity="0.4" />
+      <Dot x={11 + w} y={25.5} />
+    </Emblem>
+  );
+}
+
+/* ── practicality: modular capacity, cell by cell ───────────────────────────*/
+
+function CargoEmblem({ level }: { level: 0 | 1 | 2 | 3 }) {
+  const cells: Array<[number, number]> = [
+    [14.5, 14.5],
+    [26, 14.5],
+    [14.5, 26],
+    [26, 26],
+  ];
+  return (
+    <Emblem stage={level + 1} of={4}>
+      {cells.map(([x, y], i) => (
+        <rect key={i} x={x} y={y} width="7.5" height="7.5" rx="1.5" strokeWidth="1.25" opacity={i <= level ? 1 : 0.28} />
       ))}
-    </svg>
+    </Emblem>
   );
 }
 
-/** Luggage/practicality with fill level 0–3. */
-function CargoIcon({ level }: { level: 0 | 1 | 2 | 3 }) {
+/* ── passenger: two seats on the bench ──────────────────────────────────────*/
+
+function PillionEmblem({ mode, stage }: { mode: "solid" | "open" | "dashed" | "none"; stage: number }) {
   return (
-    <svg {...P} aria-hidden>
-      <rect x="5" y="8" width="14" height="11" rx="2" />
-      <path d="M9 8V6a3 3 0 0 1 6 0v2" />
-      {level >= 1 && <path d="M8 16.5h8" />}
-      {level >= 2 && <path d="M8 14h8" />}
-      {level >= 3 && <path d="M8 11.5h8" />}
-    </svg>
+    <Emblem stage={stage} of={4}>
+      <path d="M12.5 31h23" strokeWidth="1.25" opacity="0.55" />
+      <path d="M18.5 28.2V31" strokeWidth="1" opacity="0.5" />
+      {mode !== "none" && <path d="M29.5 28.2V31" strokeWidth="1" opacity="0.5" />}
+      <Dot x={18.5} y={25.8} r={2.4} />
+      {mode === "solid" && <Dot x={29.5} y={25.8} r={2.4} />}
+      {mode === "open" && <circle cx="29.5" cy="25.8" r="2.4" strokeWidth="1.25" />}
+      {mode === "dashed" && <circle cx="29.5" cy="25.8" r="2.4" strokeWidth="1.25" strokeDasharray="1.6 2.1" />}
+      {mode === "none" && <path d="M27.4 25.8h4.2" strokeWidth="1.25" opacity="0.5" />}
+    </Emblem>
   );
 }
 
-/** One or two rider silhouettes; `second` = outline/faded pillion. */
-function RidersIcon({ pillion }: { pillion: "solid" | "faded" | "none" }) {
+/* ── condition: how much "new" you're asking for ────────────────────────────*/
+
+function ConditionEmblem({ frac }: { frac: number }) {
+  const r = 9.5;
+  const [ex, ey] = pt(frac >= 1 ? 0 : frac, r);
   return (
-    <svg {...P} aria-hidden>
-      <circle cx="9" cy="7.5" r="2.6" />
-      <path d="M4 19c.8-3.6 2.7-5.4 5-5.4s4.2 1.8 5 5.4" />
-      {pillion !== "none" && (
-        <g opacity={pillion === "faded" ? 0.4 : 1}>
-          <circle cx="16.5" cy="8.5" r="2.1" />
-          <path d="M13.5 19c.6-2.9 1.7-4.3 3-4.3s2.4 1.4 3 4.3" />
-        </g>
-      )}
-    </svg>
+    <Emblem>
+      <circle cx="24" cy="24" r={r} strokeWidth="1" opacity="0.28" />
+      {frac >= 1 ? <circle cx="24" cy="24" r={r} /> : <path d={arcPath(frac, r)} />}
+      <Dot x={ex} y={ey} r={1.7} />
+      <Dot x={24} y={24} />
+    </Emblem>
   );
 }
-
-const TagNewIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M4 11V5h6l9 9-6 6-9-9z" />
-    <circle cx="8" cy="9" r="1.2" />
-    <path d="M17 3l.8 2.2L20 6l-2.2.8L17 9l-.8-2.2L14 6l2.2-.8z" strokeWidth="1.2" />
-  </svg>
-);
-
-const TagIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M4 11V5h6l9 9-6 6-9-9z" />
-    <circle cx="8" cy="9" r="1.2" />
-  </svg>
-);
-
-const CycleIcon = (
-  <svg {...P} aria-hidden>
-    <path d="M6 8a7 7 0 0 1 12 2M18 16a7 7 0 0 1-12-2" />
-    <path d="M18 5v5h-5M6 19v-5h5" />
-  </svg>
-);
-
-const CycleBoldIcon = (
-  <svg {...P} aria-hidden strokeWidth={1.9}>
-    <path d="M6 8a7 7 0 0 1 12 2M18 16a7 7 0 0 1-12-2" />
-    <path d="M18 5v5h-5M6 19v-5h5" />
-  </svg>
-);
 
 /* ─────────────────────────────── questions ────────────────────────────────*/
 
@@ -311,10 +372,10 @@ export const QUESTIONS: Question[] = [
       body: "We'll recommend bikes that match your experience so you can enjoy every ride with confidence.",
     },
     options: [
-      { id: "new", title: "I'm completely new", description: "I've never ridden or I'm just starting.", icon: HelmetIcon },
-      { id: "little", title: "I've ridden a little", description: "Some experience, but I'm still learning.", icon: GlovesIcon },
-      { id: "comfortable", title: "I'm comfortable on a bike", description: "I've ridden regularly and feel confident.", icon: JacketIcon },
-      { id: "veteran", title: "I've been riding for years", description: "I have a lot of experience and know what I'm doing.", icon: RoadIcon },
+      { id: "new", title: "I'm completely new", description: "I've never ridden or I'm just starting.", icon: BeginEmblem },
+      { id: "little", title: "I've ridden a little", description: "Some experience, but I'm still learning.", icon: DevelopEmblem },
+      { id: "comfortable", title: "I'm comfortable on a bike", description: "I've ridden regularly and feel confident.", icon: ControlEmblem },
+      { id: "veteran", title: "I've been riding for years", description: "I have a lot of experience and know what I'm doing.", icon: MasterEmblem },
     ],
   },
   {
@@ -327,11 +388,11 @@ export const QUESTIONS: Question[] = [
       body: "A bike that fits your routes will always beat one that only looks good on paper.",
     },
     options: [
-      { id: "city", title: "City & commuting", description: "Traffic, short trips, everyday rides.", icon: CityIcon },
-      { id: "weekend", title: "Weekend rides", description: "Fun rides when time allows.", icon: SunRoadIcon },
-      { id: "touring", title: "Long-distance touring", description: "Big days, long routes, real distance.", icon: HorizonIcon },
-      { id: "adventure", title: "Adventure & mixed terrain", description: "Asphalt, gravel and beyond.", icon: MountainsIcon },
-      { id: "sport", title: "Sport & spirited riding", description: "Twisty roads, pace and precision.", icon: SpeedLinesIcon },
+      { id: "city", title: "City & commuting", description: "Traffic, short trips, everyday rides.", icon: CityEmblem },
+      { id: "weekend", title: "Weekend rides", description: "Fun rides when time allows.", icon: WeekendEmblem },
+      { id: "touring", title: "Long-distance touring", description: "Big days, long routes, real distance.", icon: TouringEmblem },
+      { id: "adventure", title: "Adventure & mixed terrain", description: "Asphalt, gravel and beyond.", icon: AdventureEmblem },
+      { id: "sport", title: "Sport & spirited riding", description: "Twisty roads, pace and precision.", icon: SportEmblem },
     ],
   },
   {
@@ -344,11 +405,11 @@ export const QUESTIONS: Question[] = [
       body: "We score feel and temperament alongside the measurable numbers.",
     },
     options: [
-      { id: "easy", title: "Easy & approachable", description: "Light, forgiving, confidence-building.", icon: LeafIcon },
-      { id: "fun", title: "Fun & playful", description: "Agile, lively, always up for it.", icon: SparkIcon },
-      { id: "fast", title: "Fast & exciting", description: "Sharp, urgent, thrilling.", icon: BoltIcon },
-      { id: "comfortable", title: "Comfortable & relaxed", description: "Unhurried, easygoing, smooth.", icon: ArmchairIcon },
-      { id: "capable", title: "Capable & adventurous", description: "Ready for anything, anywhere.", icon: CompassIcon },
+      { id: "easy", title: "Easy & approachable", description: "Light, forgiving, confidence-building.", icon: EasyEmblem },
+      { id: "fun", title: "Fun & playful", description: "Agile, lively, always up for it.", icon: FunEmblem },
+      { id: "fast", title: "Fast & exciting", description: "Sharp, urgent, thrilling.", icon: FastEmblem },
+      { id: "comfortable", title: "Comfortable & relaxed", description: "Unhurried, easygoing, smooth.", icon: ComfortEmblem },
+      { id: "capable", title: "Capable & adventurous", description: "Ready for anything, anywhere.", icon: CapableEmblem },
     ],
   },
   {
@@ -361,10 +422,10 @@ export const QUESTIONS: Question[] = [
       body: "DCT, Y-AMT and CVT are fully automatic; Honda's E-Clutch still shifts with your foot. We score them differently because they are different.",
     },
     options: [
-      { id: "manual", title: "I want a manual", description: "Clutch, gears, full control.", icon: LeverIcon },
-      { id: "automatic", title: "I prefer automatic", description: "DCT, Y-AMT or CVT — no shifting.", icon: AutoIcon },
-      { id: "either", title: "Either is fine", description: "The right bike matters more.", icon: EitherIcon },
-      { id: "unknown", title: "I don't know yet", description: "Show me what fits and I'll decide.", icon: QuestionIcon },
+      { id: "manual", title: "I want a manual", description: "Clutch, gears, full control.", icon: ManualEmblem },
+      { id: "automatic", title: "I prefer automatic", description: "DCT, Y-AMT or CVT — no shifting.", icon: AutoEmblem },
+      { id: "either", title: "Either is fine", description: "The right bike matters more.", icon: EitherEmblem },
+      { id: "unknown", title: "I don't know yet", description: "Show me what fits and I'll decide.", icon: UndecidedEmblem },
     ],
   },
   {
@@ -377,10 +438,10 @@ export const QUESTIONS: Question[] = [
       body: "A 200 hp superbike is a poor match for a relaxed brief. Honest answers get better matches.",
     },
     options: [
-      { id: "easy", title: "Easy & manageable", description: "Predictable and forgiving.", icon: <GaugeIcon level={0} /> },
-      { id: "balanced", title: "Balanced", description: "Enough for everything, never scary.", icon: <GaugeIcon level={1} /> },
-      { id: "strong", title: "Strong performance", description: "Properly quick when you want it.", icon: <GaugeIcon level={2} /> },
-      { id: "maximum", title: "Maximum performance", description: "Performance is the priority.", icon: <GaugeIcon level={3} /> },
+      { id: "easy", title: "Easy & manageable", description: "Predictable and forgiving.", icon: <GaugeEmblem level={0} /> },
+      { id: "balanced", title: "Balanced", description: "Enough for everything, never scary.", icon: <GaugeEmblem level={1} /> },
+      { id: "strong", title: "Strong performance", description: "Properly quick when you want it.", icon: <GaugeEmblem level={2} /> },
+      { id: "maximum", title: "Maximum performance", description: "Performance is the priority.", icon: <GaugeEmblem level={3} /> },
     ],
   },
   {
@@ -393,11 +454,11 @@ export const QUESTIONS: Question[] = [
       body: "Flat feet at a stop light matter more than any spec-sheet bragging right.",
     },
     options: [
-      { id: "low-seat", title: "Low, easy-to-reach seat", description: "Both feet flat on the ground.", icon: SeatLowIcon },
-      { id: "standard", title: "Standard", description: "A typical riding position works for me.", icon: SeatStdIcon },
-      { id: "tall", title: "Tall, commanding position", description: "I like sitting up high.", icon: SeatTallIcon },
-      { id: "lightweight", title: "Lightweight & easy to handle", description: "Low weight beats everything else.", icon: FeatherIcon },
-      { id: "no-preference", title: "No strong preference", description: "I'll adapt to the right bike.", icon: NeutralIcon },
+      { id: "low-seat", title: "Low, easy-to-reach seat", description: "Both feet flat on the ground.", icon: <SeatEmblem h={27.5} /> },
+      { id: "standard", title: "Standard", description: "A typical riding position works for me.", icon: <SeatEmblem h={21.5} /> },
+      { id: "tall", title: "Tall, commanding position", description: "I like sitting up high.", icon: <SeatEmblem h={15} /> },
+      { id: "lightweight", title: "Lightweight & easy to handle", description: "Low weight beats everything else.", icon: LightweightEmblem },
+      { id: "no-preference", title: "No strong preference", description: "I'll adapt to the right bike.", icon: AnyFitEmblem },
     ],
   },
   {
@@ -410,11 +471,11 @@ export const QUESTIONS: Question[] = [
       body: "We use indicative European list prices and flag every approximation — always confirm with a dealer.",
     },
     options: [
-      { id: "under-5000", title: "Under €5,000", description: "Value first.", icon: <BudgetIcon level={1} /> },
-      { id: "5000-8000", title: "€5,000 – €8,000", description: "The sweet spot for first bikes.", icon: <BudgetIcon level={2} /> },
-      { id: "8000-12000", title: "€8,000 – €12,000", description: "Serious mid-range choice.", icon: <BudgetIcon level={3} /> },
-      { id: "12000-18000", title: "€12,000 – €18,000", description: "Premium territory.", icon: <BudgetIcon level={4} /> },
-      { id: "18000-plus", title: "€18,000+", description: "The budget isn't the constraint.", icon: <BudgetIcon level={5} /> },
+      { id: "under-5000", title: "Under €5,000", description: "Value first.", icon: <BudgetEmblem level={1} /> },
+      { id: "5000-8000", title: "€5,000 – €8,000", description: "The sweet spot for first bikes.", icon: <BudgetEmblem level={2} /> },
+      { id: "8000-12000", title: "€8,000 – €12,000", description: "Serious mid-range choice.", icon: <BudgetEmblem level={3} /> },
+      { id: "12000-18000", title: "€12,000 – €18,000", description: "Premium territory.", icon: <BudgetEmblem level={4} /> },
+      { id: "18000-plus", title: "€18,000+", description: "The budget isn't the constraint.", icon: <BudgetEmblem level={5} /> },
     ],
   },
   {
@@ -427,10 +488,10 @@ export const QUESTIONS: Question[] = [
       body: "If the bike is part of your routine, practicality quietly decides how much you'll actually ride.",
     },
     options: [
-      { id: "extremely", title: "Extremely important", description: "It has to earn its keep every day.", icon: <CargoIcon level={3} /> },
-      { id: "quite", title: "Quite important", description: "Practical matters, within reason.", icon: <CargoIcon level={2} /> },
-      { id: "somewhat", title: "Somewhat important", description: "Nice to have, not decisive.", icon: <CargoIcon level={1} /> },
-      { id: "not", title: "Not important", description: "I just want to ride.", icon: <CargoIcon level={0} /> },
+      { id: "extremely", title: "Extremely important", description: "It has to earn its keep every day.", icon: <CargoEmblem level={3} /> },
+      { id: "quite", title: "Quite important", description: "Practical matters, within reason.", icon: <CargoEmblem level={2} /> },
+      { id: "somewhat", title: "Somewhat important", description: "Nice to have, not decisive.", icon: <CargoEmblem level={1} /> },
+      { id: "not", title: "Not important", description: "I just want to ride.", icon: <CargoEmblem level={0} /> },
     ],
   },
   {
@@ -443,10 +504,10 @@ export const QUESTIONS: Question[] = [
       body: "A great solo bike can be a miserable passenger bike. We score pillion comfort explicitly.",
     },
     options: [
-      { id: "frequently", title: "Yes, frequently", description: "A passenger is part of the plan.", icon: <RidersIcon pillion="solid" /> },
-      { id: "sometimes", title: "Sometimes", description: "Now and then, not every ride.", icon: <RidersIcon pillion="faded" /> },
-      { id: "rarely", title: "Rarely", description: "Almost always riding solo.", icon: <RidersIcon pillion="none" /> },
-      { id: "never", title: "Almost never", description: "This bike is just for me.", icon: <RidersIcon pillion="none" /> },
+      { id: "frequently", title: "Yes, frequently", description: "A passenger is part of the plan.", icon: <PillionEmblem mode="solid" stage={4} /> },
+      { id: "sometimes", title: "Sometimes", description: "Now and then, not every ride.", icon: <PillionEmblem mode="open" stage={3} /> },
+      { id: "rarely", title: "Rarely", description: "Almost always riding solo.", icon: <PillionEmblem mode="dashed" stage={2} /> },
+      { id: "never", title: "Almost never", description: "This bike is just for me.", icon: <PillionEmblem mode="none" stage={1} /> },
     ],
   },
   {
@@ -459,10 +520,10 @@ export const QUESTIONS: Question[] = [
       body: "Your matches are one question away. We'll score every motorcycle in the database against your answers.",
     },
     options: [
-      { id: "new-only", title: "New only", description: "Zero kilometres, full warranty.", icon: TagNewIcon },
-      { id: "mostly-new", title: "Mostly new", description: "New preferred, open to exceptions.", icon: TagIcon },
-      { id: "new-or-used", title: "New or used", description: "Whatever the right bike is.", icon: CycleIcon },
-      { id: "used-preferred", title: "Used is preferred", description: "Let someone else pay depreciation.", icon: CycleBoldIcon },
+      { id: "new-only", title: "New only", description: "Zero kilometres, full warranty.", icon: <ConditionEmblem frac={1} /> },
+      { id: "mostly-new", title: "Mostly new", description: "New preferred, open to exceptions.", icon: <ConditionEmblem frac={0.75} /> },
+      { id: "new-or-used", title: "New or used", description: "Whatever the right bike is.", icon: <ConditionEmblem frac={0.5} /> },
+      { id: "used-preferred", title: "Used is preferred", description: "Let someone else pay depreciation.", icon: <ConditionEmblem frac={0.25} /> },
     ],
   },
 ];
