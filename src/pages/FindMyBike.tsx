@@ -215,7 +215,7 @@ export default function FindMyBike() {
                       {o.icon}
                     </span>
                     <span
-                      className={`data mt-3 block text-[11px] uppercase tracking-[0.14em] ${
+                      className={`data mt-4 block text-[11px] uppercase tracking-[0.14em] ${
                         on ? "text-fg" : "text-fg/90"
                       }`}
                     >
@@ -231,7 +231,7 @@ export default function FindMyBike() {
 
             {/* Contextual note */}
             <div className="relative mt-3 overflow-hidden rounded-2xl border border-line bg-ink/50 px-4 py-3 md:px-5">
-              <div className="flex items-start gap-3.5 pr-16">
+              <div className="flex items-start gap-3.5 pr-[clamp(5rem,10vw,9rem)]">
                 <span
                   className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-accent/40 text-accent"
                   aria-hidden
@@ -249,7 +249,7 @@ export default function FindMyBike() {
                 </span>
               </div>
               <span
-                className="ghost-index pointer-events-none absolute -right-1 top-1/2 -translate-y-1/2 text-[3.6rem] leading-none md:text-[4.2rem]"
+                className="ghost-index pointer-events-none absolute right-[clamp(1.25rem,3vw,3.5rem)] top-1/2 -translate-y-1/2 text-[3.6rem] leading-none md:text-[4.2rem]"
                 aria-hidden
               >
                 {String(step + 1).padStart(2, "0")}

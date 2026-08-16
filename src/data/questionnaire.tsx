@@ -28,40 +28,60 @@ export interface Question {
  * needing 40+ bespoke drawings. */
 
 const P = {
-  width: 26,
-  height: 26,
   viewBox: "0 0 24 24",
   fill: "none",
   stroke: "currentColor",
   strokeWidth: 1.5,
   strokeLinecap: "round",
   strokeLinejoin: "round",
+  /* One optical size for the whole family; responsive via CSS. */
+  className: "h-10 w-10 lg:h-11 lg:w-11",
 } as const;
 
 const HelmetIcon = (
   <svg {...P} aria-hidden>
-    <path d="M4.5 12.5a7.5 7.5 0 0 1 15 0v3.5a2 2 0 0 1-2 2h-11a2 2 0 0 1-2-2z" />
-    <path d="M7.5 12h9a1 1 0 0 1 0 2.6h-9a1.3 1.3 0 0 1 0-2.6z" />
+    {/* full-face shell, 3/4 stance */}
+    <path d="M4.6 12.1C4.6 7.3 7.9 4 12 4s7.4 3.3 7.4 8.1v3.4a3.3 3.3 0 0 1-3.3 3.3H7.9a3.3 3.3 0 0 1-3.3-3.3z" />
+    {/* visor aperture */}
+    <path d="M7 11.2h9.2a1.5 1.5 0 0 1 1.5 1.5v.1a1.5 1.5 0 0 1-1.5 1.5H9.8a2.8 2.8 0 0 1-2.8-2.8z" />
+    {/* chin vent */}
+    <path d="M13.6 17h3" />
   </svg>
 );
 
 const GlovesIcon = (
   <svg {...P} aria-hidden>
-    <path d="M8 20V8.5a1.3 1.3 0 0 1 2.6 0V12M10.6 12V6.5a1.3 1.3 0 0 1 2.6 0V12M13.2 12V7.5a1.3 1.3 0 0 1 2.6 0V13" />
-    <path d="M15.8 13l1.4-1.6a1.2 1.2 0 0 1 2 1.2L16.6 18a4.5 4.5 0 0 1-4.2 3H11a3 3 0 0 1-3-3" />
+    {/* fingers */}
+    <path d="M8.3 11.5V6.6a1.15 1.15 0 0 1 2.3 0V11" />
+    <path d="M10.6 11V5.4a1.15 1.15 0 0 1 2.3 0V11" />
+    <path d="M12.9 11V6a1.15 1.15 0 0 1 2.3 0v5.6" />
+    {/* thumb + palm to gauntlet cuff */}
+    <path d="M15.2 11.9l1.1-1.5a1.3 1.3 0 0 1 2.1 1.5l-2.1 4.4a4.9 4.9 0 0 1-4.4 2.8h-1.5A4.4 4.4 0 0 1 6 14.7V9.2a1.15 1.15 0 0 1 2.3 0" />
+    {/* knuckle armour */}
+    <path d="M8.7 13.5c1.8-.7 3.7-.7 5.4 0" />
   </svg>
 );
 
 const JacketIcon = (
   <svg {...P} aria-hidden>
-    <path d="M9 4h6l3 3v13h-4v-8h-4v8H6V7l3-3z" />
-    <path d="M9 4c0 2 1.3 3 3 3s3-1 3-3" />
+    {/* torso + sleeves */}
+    <path d="M9.3 4.4L5.9 6.6 4.6 11l2.2.8V19h10.4v-7.2l2.2-.8-1.3-4.4-3.4-2.2" />
+    {/* collar */}
+    <path d="M9.3 4.4L12 6.4l2.7-2" />
+    {/* main zip */}
+    <path d="M12 6.4V19" />
+    {/* chest panel seams */}
+    <path d="M7.6 13.4h2.6M13.8 13.4h2.6" />
   </svg>
 );
 
 const RoadIcon = (
   <svg {...P} aria-hidden>
-    <path d="M4 20C9 16 8 10 6 4M20 20c-5-4-4-10-2-16M12 5v2.5M12 11v2.5M12 17v2.5" />
+    {/* road edges converging to the horizon */}
+    <path d="M5.2 20c3.4-4.8 4-10.5 4.6-15.5" />
+    <path d="M18.8 20c-3.4-4.8-4-10.5-4.6-15.5" />
+    {/* centreline, foreshortened */}
+    <path d="M12 19.6v-2.4M12 14.2v-1.9M12 9.4V7.9M12 5.4v-1" />
   </svg>
 );
 
