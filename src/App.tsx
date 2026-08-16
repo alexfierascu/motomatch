@@ -14,6 +14,7 @@ import Explore from "./pages/Explore";
 import BikeDetail from "./pages/BikeDetail";
 import Compare from "./pages/Compare";
 import FindMyBike from "./pages/FindMyBike";
+import Results from "./pages/Results";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import { getBike } from "./data/motorcycles";
@@ -344,6 +345,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/find-my-bike" element={<FindMyBike />} />
+            <Route path="/results" element={<Results />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/bikes/:id" element={<BikeDetail />} />
             <Route path="/compare" element={<Compare />} />

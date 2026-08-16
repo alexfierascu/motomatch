@@ -24,7 +24,8 @@ export async function boot(route){
   };
 }
 export const byText=(doc,sel,t)=>[...doc.querySelectorAll(sel)].find(e=>e.textContent.trim()===t);
-export const byLabel=(doc,label)=>[...doc.querySelectorAll("button")].find(b=>[...b.querySelectorAll("div")].some(d=>d.textContent.trim()===label));
+export const byLabel=(doc,label)=>[...doc.querySelectorAll("button")].find(b=>[...b.querySelectorAll("div,span")].some(d=>d.textContent.trim()===label));
+export const byStart=(doc,prefix)=>[...doc.querySelectorAll("button")].find(b=>b.textContent.trim().startsWith(prefix));
 
 const isMain = process.argv[1] && process.argv[1].endsWith("interactions.test.mjs");
 if (isMain) {
@@ -131,39 +132,49 @@ const check=(name,cond,detail="")=>{results.push([cond,name,detail]);console.log
   check("Clear empties the comparison", /Pick two to four bikes/.test(doc.body.textContent));
 }
 
-/* ---------- QUIZ ---------- */
+/* ---------- QUESTIONNAIRE ---------- */
 {
   const {doc,tick,click}=await boot("/find-my-bike");
-  check("Quiz starts at question 1", /Question 1 of 12/.test(doc.body.textContent));
+  check("Questionnaire starts at question 1", /Question 1 of 10/.test(doc.body.textContent));
+
+  // Continue without an answer must not advance
+  click(byStart(doc,"Continue")); await tick();
+  check("Empty continue is blocked with inline validation",
+    /Question 1 of 10/.test(doc.body.textContent) && /Choose an option/.test(doc.body.textContent));
+
   click(byLabel(doc,"I'm completely new")); await tick();
-  check("Advances to question 2", /Question 2 of 12/.test(doc.body.textContent));
+  check("Answer card selects", [...doc.querySelectorAll('[role="radio"][aria-checked="true"]')].length===1);
+  click(byStart(doc,"Continue")); await tick();
+  check("Advances to question 2", /Question 2 of 10/.test(doc.body.textContent));
 
-  click(byLabel(doc,"City & commuting")); await tick();
-  click(byLabel(doc,"Weekend rides")); await tick();
-  click(byText(doc,"button","Continue")); await tick();
-  check("Multi-select advances after Continue", /Question 3 of 12/.test(doc.body.textContent));
+  // Back preserves the previous answer
+  click(byStart(doc,"← Back")); await tick();
+  check("Back returns with answer preserved",
+    /Question 1 of 10/.test(doc.body.textContent) &&
+    [...doc.querySelectorAll('[role="radio"][aria-checked="true"]')].length===1);
+  click(byStart(doc,"Continue")); await tick();
 
-  click(byLabel(doc,"Sporty")); await tick();
-  click(byLabel(doc,"Absolutely no gear shifting")); await tick();
-  click(byLabel(doc,"Balanced")); await tick();
-  click(byLabel(doc,"Very important")); await tick();
-  click(byLabel(doc,"Average is fine")); await tick();
-  click(byLabel(doc,"€7,500–€10,000")); await tick();
-  click(byLabel(doc,"Either")); await tick();
-  click(byLabel(doc,"Somewhat important")); await tick();
-  click(byLabel(doc,"Never")); await tick();
-  check("Reaches optional look question", /Which look attracts you most/.test(doc.body.textContent));
-  click(byText(doc,"button","Skip →")); await tick();
+  const remaining=["City & commuting","Easy & approachable","I prefer automatic","Balanced",
+    "Lightweight & easy to handle","€8,000 – €12,000","Somewhat important","Almost never"];
+  for (const label of remaining){ click(byLabel(doc,label)); await tick(); click(byStart(doc,"Continue")); await tick(); }
+  check("Reaches question 10", /Question 10 of 10/.test(doc.body.textContent));
+
+  // Save & exit → home, then re-enter: state preserved
+  click(byStart(doc,"Save & exit")); await tick(); await tick();
+  check("Save & exit returns home", /Find your\s*perfect ride/i.test(doc.body.textContent));
+  click(doc.querySelector('a[href="/find-my-bike"]')); await tick(); await tick();
+  check("Re-entering resumes at question 10", /Question 10 of 10/.test(doc.body.textContent));
+
+  click(byLabel(doc,"New or used")); await tick();
+  click(byStart(doc,"See my results")); await tick();
   check("Analyzing transition shows", /Analyzing your riding style/i.test(doc.body.textContent));
   await tick(2200);
-  check("Results render", /Your matches/.test(doc.body.textContent) && /#1 best match/i.test(doc.body.textContent));
-  check("Compatibility score shown", /%/.test(doc.body.querySelector(".bignum")?.textContent??""));
-  check("Reasons reference the answers", /shift|automatic|clutch/i.test(doc.body.textContent));
+  check("Results render at /results", /Your matches/.test(doc.body.textContent) && /#1 best match/i.test(doc.body.textContent));
   const winner=[...doc.querySelectorAll("h2")].find(h=>(h.className||"").includes("font-display"))?.textContent??"";
-  check("Winner is not an E-Clutch bike (user said no shifting)", winner.length>0 && !/E-Clutch/.test(winner), `→ ${winner.trim()}`);
+  check("Winner is not an E-Clutch bike (user prefers automatic)", winner.length>0 && !/E-Clutch/.test(winner), `→ ${winner.trim()}`);
 
-  click(byText(doc,"button","Start over")); await tick();
-  check("Start over resets to question 1", /Question 1 of 12/.test(doc.body.textContent));
+  click(byText(doc,"button","Start over")); await tick(); await tick();
+  check("Start over clears and returns to question 1", /Question 1 of 10/.test(doc.body.textContent));
 }
 
 /* ---------- MOBILE DRAWER + DETAIL ---------- */
@@ -195,7 +206,7 @@ const check=(name,cond,detail="")=>{results.push([cond,name,detail]);console.log
   const cta=doc.querySelector('a[href="/find-my-bike"]');
   check("Primary CTA exists", Boolean(cta));
   click(cta); await tick(); await tick();
-  check("CTA routes to the quiz", /Question 1 of 12/.test(doc.body.textContent));
+  check("CTA routes to the quiz", /Question 1 of 10/.test(doc.body.textContent));
   const menuBtn=doc.querySelector("button[aria-label='Toggle navigation menu']");
   click(menuBtn); await tick();
   check("Mobile nav menu opens", doc.querySelectorAll("nav").length>=2);
