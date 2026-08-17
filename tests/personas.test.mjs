@@ -57,7 +57,7 @@ const D = await runPersona(
   ["I've been riding for years", "Sport & spirited riding", "Fast & exciting",
    "I want a manual", "Maximum performance", "No strong preference", "€18,000+",
    "Not important", "Almost never", "New or used"],
-  /S 1000 RR|Street Triple/i,
+  /S 1000 RR|Street Triple|Panigale/i,
   /Meteor|Eliminator|Forza|XMAX|Burgman/i,
 );
 

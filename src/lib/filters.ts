@@ -45,6 +45,7 @@ export const FILTER_GROUPS: FilterGroup[] = [
       { id: "automatic", label: "Fully automatic", hint: "no gear changes at all" },
       { id: "dct", label: "Honda DCT" },
       { id: "y-amt", label: "Yamaha Y-AMT" },
+      { id: "asa", label: "BMW ASA" },
       { id: "cvt", label: "CVT scooter" },
       { id: "e-clutch", label: "Honda E-Clutch", hint: "you still shift" },
       { id: "manual", label: "Manual" },

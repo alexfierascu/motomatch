@@ -50,6 +50,17 @@ export const TRANSMISSIONS: Record<TransmissionType, TransmissionInfo> = {
       "A belt runs between two variable-width pulleys, so the ratio changes smoothly and continuously with no steps at all. There are no gears to speak of. This is what every twist-and-go scooter uses, and it is the simplest thing to ride that exists on two wheels — but it only comes in scooters, which changes the riding position, wheel size and feel considerably.",
     usedBy: "Honda Forza and ADV, Yamaha XMAX, BMW C 400, Suzuki Burgman",
   },
+  asa: {
+    type: "asa",
+    label: "BMW ASA (Automated Shift Assistant)",
+    short: "ASA",
+    verdict: "automatic",
+    verdictLabel: "Fully automatic",
+    riderDoes: "Twist the throttle and brake. In M mode you may shift with your foot — there is no clutch lever either way.",
+    explanation:
+      "Two electromechanical actuators operate the clutch and the conventional six-speed gearbox, so there is no clutch lever at all. In D mode the bike chooses gears entirely by itself, using ride mode, lean angle and throttle data. In M mode you pick gears with the normal foot lever while the clutch stays automated — closer to a quickshifter that can also pull away for you. BMW introduced it in 2024 on the R 1300 GS family.",
+    usedBy: "BMW — R 1300 GS, R 1300 GS Adventure, R 1300 RT, R 1300 R",
+  },
   "e-clutch": {
     type: "e-clutch",
     label: "Honda E-Clutch",

@@ -27,7 +27,7 @@ export type RidingStyle =
 export type VehicleType = "motorcycle" | "scooter";
 
 /** How the gearbox is operated. This is the axis the whole site is organised around. */
-export type TransmissionType = "manual" | "dct" | "y-amt" | "cvt" | "e-clutch";
+export type TransmissionType = "manual" | "dct" | "y-amt" | "cvt" | "e-clutch" | "asa";
 
 /** Confidence in a stored figure. Drives the "~" prefix and the sourcing notes. */
 export type Confidence = "confirmed" | "approximate";
